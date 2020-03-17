@@ -16,6 +16,11 @@ final class TitledCell: UITableViewCell {
     
     // MARK: MAIN
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        backgroundColor = GXTheme.backgroundColor
+    }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         titleLabel.text = nil

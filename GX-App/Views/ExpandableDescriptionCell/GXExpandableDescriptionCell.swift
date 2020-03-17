@@ -33,13 +33,18 @@ final class GXExpandableDescriptionCell: UITableViewCell {
             descriptionLabel.setLineSpacing(4)
         }
     }
-    @IBOutlet private weak var readMoreBtn: UIButton!
+    @IBOutlet private weak var readMoreBtn: UIButton! {
+        didSet {
+            readMoreBtn.tintColor = GXTheme.primaryColor
+        }
+    }
     
     // MARK: MAIN
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        backgroundColor = GXTheme.backgroundColor
         selectionStyle = .none
         isExpanded = false
     }

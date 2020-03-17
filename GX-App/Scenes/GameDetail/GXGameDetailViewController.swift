@@ -8,6 +8,12 @@
 
 import UIKit
 
+enum GXGameDetailTableLayoutItems: Int, CaseIterable {
+    case description    = 0
+    case visitReddit    = 1
+    case visitWebsite   = 2
+}
+
 final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
 
     // MARK: INITIALIZERS
@@ -36,6 +42,7 @@ final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
             // Configs
             tableView.backgroundColor = GXTheme.backgroundColor
             tableView.rowHeight = UITableView.automaticDimension
+            tableView.showsVerticalScrollIndicator = false
             tableView.tableFooterView = UIView()
             // Setting Datasource
             tableView.dataSource = self
@@ -57,6 +64,9 @@ final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
         super.viewDidLoad()
         setupNavigationItem()
         setupGameHeaderView()
+        // ViewModel methods
+        setupVMBindings()
+        viewModel.inputs.viewDidLoaded()
     }
     
     override func viewDidLayoutSubviews() {
@@ -74,6 +84,10 @@ final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
         gameHeaderView.setupForDevelopment()
     }
     
+    private func setupVMBindings() {
+        
+    }
+    
     // MARK: ACTIONS
     
     @objc private func favourite(_ sender: UIBarButtonItem) {
@@ -87,34 +101,48 @@ final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
 extension GXGameDetailViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return viewModel.outputs.numberOfItems()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.row {
-        case 0:
+        let layoutItem = viewModel.outputs.layoutItem(for: indexPath.row)
+        
+        switch layoutItem {
+        case .description:
             let descriptionCell = tableView.dequeue(cellClass: GXExpandableDescriptionCell.self, forIndexPath: indexPath)
+            
             descriptionCell.setupForDevelopment {
                 tableView.performBatchUpdates(nil)
             }
+            
             return descriptionCell
-        case 1, 2:
+        case .visitReddit, .visitWebsite:
             let titledCell = tableView.dequeue(cellClass: TitledCell.self, forIndexPath: indexPath)
             
-            if indexPath.row == 1 {
+            switch layoutItem {
+            case .visitReddit:
                 titledCell.setup(with: "Visit reddit")
-            } else if indexPath.row == 2 {
+            case .visitWebsite:
                 titledCell.setup(with: "Visit website")
+            default:
+                break
             }
             
             return titledCell
-        default:
-            return UITableViewCell()
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        let selectedLayoutItem = viewModel.outputs.layoutItem(for: indexPath.row)
+       
+        switch selectedLayoutItem {
+        case .visitReddit, .visitWebsite:
+            print("Open Safari")
+        default:
+            break
+        }
     }
     
 }

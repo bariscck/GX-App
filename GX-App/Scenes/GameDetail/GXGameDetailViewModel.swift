@@ -9,11 +9,12 @@
 import Foundation
 
 protocol GXGameDetailViewModelInputs {
-
+    func viewDidLoaded()
 }
 
 protocol GXGameDetailViewModelOutputs {
-    
+    func numberOfItems() -> Int
+    func layoutItem(for index: Int) -> GXGameDetailTableLayoutItems
 }
 
 protocol GXGameDetailViewModelType {
@@ -32,6 +33,21 @@ final class GXGameDetailViewModel: GXGameDetailViewModelType, GXGameDetailViewMo
     
     // MARK: INPUTS
     
+    func viewDidLoaded() {
+        
+    }
+    
     // MARK: OUTPUTS
+    
+    func numberOfItems() -> Int {
+        return GXGameDetailTableLayoutItems.allCases.count
+    }
+    
+    func layoutItem(for index: Int) -> GXGameDetailTableLayoutItems {
+        guard let item = GXGameDetailTableLayoutItems.init(rawValue: index) else {
+            fatalError("Error: \(GXGameDetailTableLayoutItems.self) does not contain index: \(index)")
+        }
+        return item
+    }
     
 }
