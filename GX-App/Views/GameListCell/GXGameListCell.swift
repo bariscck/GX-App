@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class GXGameListCell: UITableViewCell {
+final class GXGameListCell: UICollectionViewCell {
 
     // MARK: VIEWS
     
@@ -33,7 +33,6 @@ final class GXGameListCell: UITableViewCell {
     @IBOutlet private weak var genresLabel: UILabel! {
         didSet {
             genresLabel.textColor = GXTheme.textTertiaryColor
-            genresLabel.numberOfLines = 2
             genresLabel.adjustsFontSizeToFitWidth = true
         }
     }

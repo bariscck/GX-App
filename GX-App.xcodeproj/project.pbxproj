@@ -52,6 +52,7 @@
 		23BDF01C2420D8D40055C3B9 /* GX_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF01B2420D8D40055C3B9 /* GX_AppTests.swift */; };
 		23BDF02D2420DADD0055C3B9 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF02C2420DADD0055C3B9 /* AppRouter.swift */; };
 		23CAA74E24212F200007D2FA /* GXImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CAA74D24212F200007D2FA /* GXImageLoader.swift */; };
+		23CAA754242168E00007D2FA /* UICollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CAA753242168E00007D2FA /* UICollectionView+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +111,7 @@
 		23BDF01D2420D8D40055C3B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		23BDF02C2420DADD0055C3B9 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
 		23CAA74D24212F200007D2FA /* GXImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXImageLoader.swift; sourceTree = "<group>"; };
+		23CAA753242168E00007D2FA /* UICollectionView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +174,7 @@
 				2365A8F42420F82200F48D9C /* UIView+Extensions.swift */,
 				2365EEDA242106A400A70EE7 /* UILabel+Extensions.swift */,
 				2365EEFC2421255A00A70EE7 /* Bundle+Extensions.swift */,
+				23CAA753242168E00007D2FA /* UICollectionView+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -478,6 +481,7 @@
 				2365EEEF2421126E00A70EE7 /* GamexAPI.swift in Sources */,
 				2365EEF42421138500A70EE7 /* GXGameListResponse.swift in Sources */,
 				2365EEFD2421255A00A70EE7 /* Bundle+Extensions.swift in Sources */,
+				23CAA754242168E00007D2FA /* UICollectionView+Extensions.swift in Sources */,
 				2365EEF7242113C400A70EE7 /* GXGame.swift in Sources */,
 				2365EED8242104EA00A70EE7 /* TitledCell.swift in Sources */,
 				2365A8F52420F82200F48D9C /* UIView+Extensions.swift in Sources */,

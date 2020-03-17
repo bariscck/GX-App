@@ -27,18 +27,14 @@ final class GXGameListViewController: UIViewController {
     
     // MARK: VIEWS
     
-    @IBOutlet private weak var tableView: UITableView! {
+    @IBOutlet weak var collectionView: UICollectionView! {
         didSet {
-            // Configs
-            tableView.backgroundColor = GXTheme.tableGroupedBackgroundColor
-            tableView.rowHeight = UITableView.automaticDimension
-            tableView.estimatedRowHeight = 136
-            tableView.separatorStyle = .none
+            collectionView.backgroundColor = GXTheme.tableGroupedBackgroundColor
             // Setting Datasource
-            tableView.dataSource = self
-            tableView.delegate = self
+            collectionView.dataSource = self
+            collectionView.delegate = self
             // Register Cells
-            tableView.register(xibClass: GXGameListCell.self)
+            collectionView.register(xibClass: GXGameListCell.self)
         }
     }
     
@@ -61,6 +57,11 @@ final class GXGameListViewController: UIViewController {
         viewModel.inputs.viewDidLoaded()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        collectionView.collectionViewLayout.invalidateLayout()
+    }
+    
     private func setupNavigationItem() {
         navigationItem.title = "Games"
         navigationItem.largeTitleDisplayMode = .automatic
@@ -70,7 +71,7 @@ final class GXGameListViewController: UIViewController {
     
     private func setupVMBindings() {
         viewModel.outputs.reloadNotifier = { [unowned self] in
-            self.tableView.reloadData()
+            self.collectionView.reloadData()
         }
         
         viewModel.outputs.didReceiveServiceErrorNotifier = { serviceError in
@@ -80,16 +81,14 @@ final class GXGameListViewController: UIViewController {
 
 }
 
-extension GXGameListViewController: UITableViewDataSource, UITableViewDelegate {
+extension GXGameListViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.outputs.numberOfItems()
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeue(cellClass: GXGameListCell.self, forIndexPath: indexPath)
-        cell.accessoryType = .disclosureIndicator
-        cell.selectionStyle = .none
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeue(cellClass: GXGameListCell.self, forIndexPath: indexPath)
         
         let presentation = viewModel.outputs.itemForIndex(indexPath.row)
         cell.setup(with: presentation)
@@ -97,7 +96,7 @@ extension GXGameListViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         GXFeedbackGenerator.generate()
         
         let selectedPresentation = viewModel.outputs.selectedItemForIndex(indexPath.row)
@@ -106,14 +105,43 @@ extension GXGameListViewController: UITableViewDataSource, UITableViewDelegate {
     
 }
 
+extension GXGameListViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let orientation = UIApplication.shared.statusBarOrientation
+        let width = collectionView.bounds.width
+        
+        switch orientation {
+        case .portrait, .portraitUpsideDown:
+            return CGSize(width: width, height: 136)
+        case .landscapeLeft, .landscapeRight:
+            return CGSize(width: width / 2, height: 136)
+        default:
+            return .zero
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return .zero
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return .zero
+    }
+    
+}
+
 extension GXGameListViewController: UISearchResultsUpdating {
+    
     func updateSearchResults(for searchController: UISearchController) {
         let searchQuery = searchController.searchBar.text ?? ""
         print(searchQuery)
     }
+    
 }
 
 extension GXGameListViewController: UISearchBarDelegate {
+    
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         viewModel.inputs.setSearchActive(isActive: true)
     }
@@ -125,4 +153,5 @@ extension GXGameListViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         viewModel.inputs.setSearchActive(isActive: false)
     }
+    
 }
