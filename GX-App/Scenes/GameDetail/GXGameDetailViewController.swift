@@ -25,11 +25,68 @@ final class GXGameDetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: VIEWS
+    
+    private lazy var gameHeaderView: GXGameHeaderView = {
+        return GXGameHeaderView.fromNib()
+    }()
+    
+    @IBOutlet private weak var tableView: UITableView! {
+        didSet {
+            // Configs
+            tableView.backgroundColor = GXTheme.backgroundColor
+            tableView.rowHeight = UITableView.automaticDimension
+            tableView.tableFooterView = UIView()
+            // Setting Datasource
+            tableView.dataSource = self
+            tableView.delegate = self
+        }
+    }
+    
+    private lazy var favouriteBtn: UIBarButtonItem = {
+        return UIBarButtonItem(title: "Favourite", style: .plain, target: self,
+                               action: #selector(favourite(_:)))
+    }()
+    
     // MARK: MAIN
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        setupNavigationItem()
+        setupGameHeaderView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        gameHeaderView.frame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 290)
+    }
+    
+    private func setupNavigationItem() {
+        navigationItem.rightBarButtonItem = favouriteBtn
+        navigationItem.largeTitleDisplayMode = .never
+    }
+    
+    private func setupGameHeaderView() {
+        tableView.tableHeaderView = gameHeaderView
+        gameHeaderView.setupForDevelopment()
+    }
+    
+    // MARK: ACTIONS
+    
+    @objc private func favourite(_ sender: UIBarButtonItem) {
+        print("Favourite")
     }
 
+}
+
+extension GXGameDetailViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }
+    
 }
