@@ -86,6 +86,7 @@ extension GXGameListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        GXFeedbackGenerator.generate()
         tableView.deselectRow(at: indexPath, animated: true)
         router.pushGameDetailVC()
     }
