@@ -18,9 +18,9 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="290"/>
                 </imageView>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Kmv-9m-WVc">
-                    <rect key="frame" x="0.0" y="83" width="414" height="207"/>
+                    <rect key="frame" x="0.0" y="100" width="414" height="190"/>
                     <constraints>
-                        <constraint firstAttribute="width" secondItem="Kmv-9m-WVc" secondAttribute="height" multiplier="2:1" id="FU7-ZN-edg"/>
+                        <constraint firstAttribute="height" constant="190" id="moj-O4-A8r"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Game Title" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UEl-EJ-8K6">

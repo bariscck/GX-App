@@ -9,9 +9,7 @@
 import UIKit
 
 enum GXGameDetailTableLayoutItems: Int, CaseIterable {
-    case description    = 0
-    case visitReddit    = 1
-    case visitWebsite   = 2
+    case description = 0, visitReddit, visitWebsite
 }
 
 final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
@@ -25,6 +23,7 @@ final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
         self.viewModel = viewModel
         self.router = router
         super.init(nibName: nil, bundle: nil)
+        edgesForExtendedLayout = []
     }
     
     required init?(coder: NSCoder) {
@@ -34,6 +33,10 @@ final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
     deinit {
         print(String(describing: self) + " is deallocated!")
     }
+    
+    // MARK: PROPERTIES
+    
+    private let headerHeight: CGFloat = 290
     
     // MARK: VIEWS
     
@@ -46,6 +49,7 @@ final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
             // Configs
             tableView.backgroundColor = GXTheme.backgroundColor
             tableView.rowHeight = UITableView.automaticDimension
+            tableView.estimatedRowHeight = 120
             tableView.showsVerticalScrollIndicator = false
             tableView.tableFooterView = UIView()
             // Setting Datasource
@@ -75,8 +79,8 @@ final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        gameHeaderView.frame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 290)
-        tableView.performBatchUpdates(nil)
+        updateHeaderViewFrame()
+        tableView.reloadData()
     }
     
     private func setupNavigationItem() {
@@ -85,8 +89,21 @@ final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
     }
     
     private func setupGameHeaderView() {
-        tableView.tableHeaderView = gameHeaderView
         gameHeaderView.setup(with: viewModel.outputs.currentPresentation)
+        tableView.addSubview(gameHeaderView)
+        tableView.contentInset = UIEdgeInsets(top: headerHeight, left: 0, bottom: 0, right: 0)
+        tableView.contentOffset = CGPoint(x: 0, y: -headerHeight)
+    }
+    
+    private func updateHeaderViewFrame() {
+        var headerFrame = CGRect(x: 0, y: -headerHeight, width: view.bounds.width, height: headerHeight)
+        
+        if tableView.contentOffset.y < headerHeight {
+            headerFrame.origin.y = tableView.contentOffset.y
+            headerFrame.size.height = -tableView.contentOffset.y
+        }
+        
+        gameHeaderView.frame = headerFrame
     }
     
     private func setupVMBindings() {
@@ -161,6 +178,14 @@ extension GXGameDetailViewController: UITableViewDataSource, UITableViewDelegate
         if let url = url {
             router.openSFSafariController(for: url)
         }
+    }
+    
+}
+
+extension GXGameDetailViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        updateHeaderViewFrame()
     }
     
 }

@@ -40,7 +40,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="60D-KP-CHb">
                                 <rect key="frame" x="0.0" y="55" width="288" height="34"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="deN-An-w3X"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="deN-An-w3X"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
                                 <state key="normal" title="Read More"/>
