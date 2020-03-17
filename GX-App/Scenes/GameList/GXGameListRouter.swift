@@ -9,7 +9,7 @@
 import UIKit.UIViewController
 
 protocol GXGameListRouterType {
-    
+    func pushGameDetailVC()
 }
 
 final class GXGameListRouter: GXGameListRouterType {
@@ -30,5 +30,10 @@ final class GXGameListRouter: GXGameListRouterType {
     }
     
     // MARK: ROUTING
+ 
+    func pushGameDetailVC() {
+        let gameDetailViewController = GXGameDetailRouter.build()
+        viewController?.navigationController?.pushViewController(gameDetailViewController, animated: true)
+    }
     
 }

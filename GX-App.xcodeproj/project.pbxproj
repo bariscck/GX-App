@@ -17,6 +17,10 @@
 		2365A8E02420E3D200F48D9C /* Development.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2365A8DF2420E3D200F48D9C /* Development.xcassets */; };
 		2365A8E22420E84100F48D9C /* Theme.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2365A8E12420E84100F48D9C /* Theme.xcassets */; };
 		2365A8E52420EAE200F48D9C /* GXTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2365A8E42420EAE200F48D9C /* GXTheme.swift */; };
+		2365A8E92420F1E900F48D9C /* GXGameDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2365A8E72420F1E900F48D9C /* GXGameDetailViewController.swift */; };
+		2365A8EA2420F1E900F48D9C /* GXGameDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2365A8E82420F1E900F48D9C /* GXGameDetailViewController.xib */; };
+		2365A8EC2420F1F500F48D9C /* GXGameDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2365A8EB2420F1F500F48D9C /* GXGameDetailViewModel.swift */; };
+		2365A8EE2420F20100F48D9C /* GXGameDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2365A8ED2420F20100F48D9C /* GXGameDetailRouter.swift */; };
 		23BDF0052420D8D30055C3B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF0042420D8D30055C3B9 /* AppDelegate.swift */; };
 		23BDF0072420D8D30055C3B9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF0062420D8D30055C3B9 /* SceneDelegate.swift */; };
 		23BDF00E2420D8D40055C3B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23BDF00D2420D8D40055C3B9 /* Assets.xcassets */; };
@@ -46,6 +50,10 @@
 		2365A8DF2420E3D200F48D9C /* Development.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Development.xcassets; sourceTree = "<group>"; };
 		2365A8E12420E84100F48D9C /* Theme.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Theme.xcassets; sourceTree = "<group>"; };
 		2365A8E42420EAE200F48D9C /* GXTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXTheme.swift; sourceTree = "<group>"; };
+		2365A8E72420F1E900F48D9C /* GXGameDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXGameDetailViewController.swift; sourceTree = "<group>"; };
+		2365A8E82420F1E900F48D9C /* GXGameDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GXGameDetailViewController.xib; sourceTree = "<group>"; };
+		2365A8EB2420F1F500F48D9C /* GXGameDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXGameDetailViewModel.swift; sourceTree = "<group>"; };
+		2365A8ED2420F20100F48D9C /* GXGameDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXGameDetailRouter.swift; sourceTree = "<group>"; };
 		23BDF0012420D8D30055C3B9 /* GameX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23BDF0042420D8D30055C3B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23BDF0062420D8D30055C3B9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -120,6 +128,17 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		2365A8E62420F1CC00F48D9C /* GameDetail */ = {
+			isa = PBXGroup;
+			children = (
+				2365A8E72420F1E900F48D9C /* GXGameDetailViewController.swift */,
+				2365A8E82420F1E900F48D9C /* GXGameDetailViewController.xib */,
+				2365A8EB2420F1F500F48D9C /* GXGameDetailViewModel.swift */,
+				2365A8ED2420F20100F48D9C /* GXGameDetailRouter.swift */,
+			);
+			path = GameDetail;
+			sourceTree = "<group>";
+		};
 		23BDEFF82420D8D30055C3B9 = {
 			isa = PBXGroup;
 			children = (
@@ -178,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				2365A8CD2420DCCE00F48D9C /* GameList */,
+				2365A8E62420F1CC00F48D9C /* GameDetail */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -264,6 +284,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2365A8DA2420DFFA00F48D9C /* GXGameListCell.xib in Resources */,
+				2365A8EA2420F1E900F48D9C /* GXGameDetailViewController.xib in Resources */,
 				23BDF0112420D8D40055C3B9 /* LaunchScreen.storyboard in Resources */,
 				23BDF00E2420D8D40055C3B9 /* Assets.xcassets in Resources */,
 				2365A8E22420E84100F48D9C /* Theme.xcassets in Resources */,
@@ -288,8 +309,11 @@
 			files = (
 				2365A8E52420EAE200F48D9C /* GXTheme.swift in Sources */,
 				23BDF0052420D8D30055C3B9 /* AppDelegate.swift in Sources */,
+				2365A8E92420F1E900F48D9C /* GXGameDetailViewController.swift in Sources */,
 				2365A8D52420DD1600F48D9C /* GXGameListRouter.swift in Sources */,
+				2365A8EE2420F20100F48D9C /* GXGameDetailRouter.swift in Sources */,
 				2365A8D92420DFFA00F48D9C /* GXGameListCell.swift in Sources */,
+				2365A8EC2420F1F500F48D9C /* GXGameDetailViewModel.swift in Sources */,
 				2365A8DE2420E17500F48D9C /* UITableView+Extensions.swift in Sources */,
 				2365A8D32420DCFE00F48D9C /* GXGameListViewModel.swift in Sources */,
 				2365A8D02420DCE700F48D9C /* GXGameListViewController.swift in Sources */,
