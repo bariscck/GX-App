@@ -51,6 +51,7 @@
 		23BDF0112420D8D40055C3B9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23BDF00F2420D8D40055C3B9 /* LaunchScreen.storyboard */; };
 		23BDF01C2420D8D40055C3B9 /* GX_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF01B2420D8D40055C3B9 /* GX_AppTests.swift */; };
 		23BDF02D2420DADD0055C3B9 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF02C2420DADD0055C3B9 /* AppRouter.swift */; };
+		23CAA74E24212F200007D2FA /* GXImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CAA74D24212F200007D2FA /* GXImageLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +109,7 @@
 		23BDF01B2420D8D40055C3B9 /* GX_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GX_AppTests.swift; sourceTree = "<group>"; };
 		23BDF01D2420D8D40055C3B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		23BDF02C2420DADD0055C3B9 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
+		23CAA74D24212F200007D2FA /* GXImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXImageLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +182,7 @@
 				2365A8E42420EAE200F48D9C /* GXTheme.swift */,
 				2365A8F62420FADA00F48D9C /* GXFeedbackGenerator.swift */,
 				2365A8F82420FE2400F48D9C /* GXAlertPresenter.swift */,
+				23CAA74D24212F200007D2FA /* GXImageLoader.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -225,8 +228,6 @@
 		2365EEDD24210FC000A70EE7 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				2365EEFF2421271E00A70EE7 /* gamelist-response.json */,
-				2365EEFE2421271D00A70EE7 /* gamedetail-response.json */,
 				2365EEDE24210FC900A70EE7 /* API */,
 				2365EEF22421134800A70EE7 /* Responses */,
 				2365EEDF24210FD200A70EE7 /* Services */,
@@ -245,6 +246,7 @@
 		2365EEDF24210FD200A70EE7 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				23CAA74F242149D30007D2FA /* MockJSON */,
 				2365EEF02421132000A70EE7 /* GXGameServiceType.swift */,
 				2365EEF82421164B00A70EE7 /* GXMockGameService.swift */,
 				2365EEFA242117E900A70EE7 /* GXGameService.swift */,
@@ -340,6 +342,15 @@
 				2365A8E62420F1CC00F48D9C /* GameDetail */,
 			);
 			path = Scenes;
+			sourceTree = "<group>";
+		};
+		23CAA74F242149D30007D2FA /* MockJSON */ = {
+			isa = PBXGroup;
+			children = (
+				2365EEFF2421271E00A70EE7 /* gamelist-response.json */,
+				2365EEFE2421271D00A70EE7 /* gamedetail-response.json */,
+			);
+			path = MockJSON;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -490,6 +501,7 @@
 				23BDF0072420D8D30055C3B9 /* SceneDelegate.swift in Sources */,
 				2365A8FC2421009100F48D9C /* GXExpandableDescriptionCell.swift in Sources */,
 				23BDF02D2420DADD0055C3B9 /* AppRouter.swift in Sources */,
+				23CAA74E24212F200007D2FA /* GXImageLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

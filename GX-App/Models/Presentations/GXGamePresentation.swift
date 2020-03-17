@@ -20,6 +20,10 @@ struct GXGamePresentation {
     
     // MARK: PRESENTATION
     
+    var id: Int {
+        return game.id
+    }
+    
     var title: String {
         return game.name
     }
@@ -37,6 +41,10 @@ struct GXGamePresentation {
     
     var genresText: String {
         return game.genres.map { $0.name }.joined(separator: ", ")
+    }
+    
+    var description: String? {
+        return game.descriptionRaw
     }
     
 }

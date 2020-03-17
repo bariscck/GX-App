@@ -10,9 +10,14 @@ import Foundation
 
 protocol GXGameDetailViewModelInputs {
     func viewDidLoaded()
+    func fetchGameDetail()
 }
 
 protocol GXGameDetailViewModelOutputs {
+    var currentPresentation: GXGamePresentation { get set }
+    var reloadNotifier: () -> Void { get set }
+    var presentationFetchedNotifier: (GXGamePresentation) -> Void { get set }
+    var didReceiveServiceErrorNotifier: (GXGameServiceError) -> Void { get set }
     func numberOfItems() -> Int
     func layoutItem(for index: Int) -> GXGameDetailTableLayoutItems
 }
@@ -24,6 +29,32 @@ protocol GXGameDetailViewModelType {
 
 final class GXGameDetailViewModel: GXGameDetailViewModelType, GXGameDetailViewModelInputs, GXGameDetailViewModelOutputs {
     
+    struct Dependency {
+        let presentation: GXGamePresentation
+        let gameService: GXGameServiceType
+    }
+    
+    // MARK: INITIALIZERS
+    
+    private let dependency: Dependency
+    
+    init(dependency: Dependency) {
+        self.dependency = dependency
+        currentPresentation = dependency.presentation
+    }
+    
+    deinit {
+        print(String(describing: self) + " is deallocated!")
+    }
+    
+    // MARK: PROPERTIES
+    
+    private var isLoading: Bool = false {
+        didSet {
+            reloadNotifier()
+        }
+    }
+    
     // MARK: VIEWMODEL TYPE
     
     var inputs: GXGameDetailViewModelInputs { return self }
@@ -31,16 +62,41 @@ final class GXGameDetailViewModel: GXGameDetailViewModelType, GXGameDetailViewMo
         get { return self } set {}
     }
     
+    var currentPresentation: GXGamePresentation {
+        didSet {
+            presentationFetchedNotifier(currentPresentation)
+            reloadNotifier()
+        }
+    }
+    
     // MARK: INPUTS
     
     func viewDidLoaded() {
-        
+        fetchGameDetail()
+    }
+    
+    func fetchGameDetail() {
+        isLoading = true
+        dependency.gameService.fetchGameDetail(gameId: dependency.presentation.id) { [weak self] (result) in
+            self?.isLoading = false
+            switch result {
+            case .success(let game):
+                let presentation = GXGamePresentation.init(game: game)
+                self?.currentPresentation = presentation
+            case .failure(let error):
+                self?.didReceiveServiceErrorNotifier(error)
+            }
+        }
     }
     
     // MARK: OUTPUTS
     
+    var reloadNotifier: () -> Void = {}
+    var presentationFetchedNotifier: (GXGamePresentation) -> Void = {_ in}
+    var didReceiveServiceErrorNotifier: (GXGameServiceError) -> Void = {_ in}
+    
     func numberOfItems() -> Int {
-        return GXGameDetailTableLayoutItems.allCases.count
+        return isLoading ? 0 : GXGameDetailTableLayoutItems.allCases.count
     }
     
     func layoutItem(for index: Int) -> GXGameDetailTableLayoutItems {

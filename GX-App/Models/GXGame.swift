@@ -25,6 +25,8 @@ struct GXGame: Decodable {
     let backgroundImage: URL
     let metacritic: Int?
     let genres: [Genre]
+    let description: String?
+    let descriptionRaw: String?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -32,5 +34,7 @@ struct GXGame: Decodable {
         case backgroundImage = "background_image"
         case metacritic
         case genres
+        case description
+        case descriptionRaw = "description_raw"
     }
 }

@@ -29,7 +29,7 @@ final class AppRouter {
     }
     
     private func makeGameListVC() -> UIViewController {
-        let gameService = GXMockGameService()
+        let gameService = GXGameService()
         let gameListVC = GXGameListRouter.build(gameService: gameService)
         return gameListVC
     }

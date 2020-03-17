@@ -9,7 +9,7 @@
 import UIKit.UIViewController
 
 protocol GXGameListRouterType {
-    func pushGameDetailVC()
+    func pushGameDetailVC(for presentation: GXGamePresentation)
 }
 
 final class GXGameListRouter: GXGameListRouterType {
@@ -17,6 +17,7 @@ final class GXGameListRouter: GXGameListRouterType {
     // MARK: BUILDER
     
     private weak var viewController: UIViewController?
+    private var gameService: GXGameServiceType?
     
     static func build(gameService: GXGameServiceType) -> UIViewController {
         let viewModel = GXGameListViewModel(dependency: .init(gameService: gameService))
@@ -25,14 +26,18 @@ final class GXGameListRouter: GXGameListRouterType {
                                                       router: router)
         
         router.viewController = viewController
+        router.gameService = gameService
         
         return viewController
     }
     
     // MARK: ROUTING
  
-    func pushGameDetailVC() {
-        let gameDetailViewController = GXGameDetailRouter.build()
+    func pushGameDetailVC(for presentation: GXGamePresentation) {
+        guard let gameService = gameService else {
+            fatalError("Error: \(String(describing: self)) does not have \(String(describing: GXGameService.self))")
+        }
+        let gameDetailViewController = GXGameDetailRouter.build(presentation: presentation, gameService: gameService)
         viewController?.navigationController?.pushViewController(gameDetailViewController, animated: true)
     }
     

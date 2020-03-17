@@ -15,13 +15,14 @@ final class GXGameHeaderView: UIView {
     @IBOutlet private weak var coverImageView: UIImageView! {
         didSet {
             coverImageView.contentMode = .scaleAspectFill
+            coverImageView.backgroundColor = .black
         }
     }
 
     @IBOutlet private weak var overlayImageView: UIImageView! {
         didSet {
             overlayImageView.contentMode = .scaleToFill
-            overlayImageView.image = UIImage(named: "overlay")
+            overlayImageView.loadLocalImage(name: "overlay")
         }
     }
     
@@ -35,9 +36,14 @@ final class GXGameHeaderView: UIView {
     
     // MARK: MAIN
     
+    func setup(with presentation: GXGamePresentation) {
+        coverImageView.loadRemoteImage(url: presentation.coverImageURL)
+        titleLabel.text = presentation.title
+    }
+    
     func setupForDevelopment() {
         #if DEBUG
-            coverImageView.image = UIImage(named: "gtaV")
+            coverImageView.loadLocalImage(name: "gtaV")
         #endif
         titleLabel.text = "Grand Theft Auto V"
     }

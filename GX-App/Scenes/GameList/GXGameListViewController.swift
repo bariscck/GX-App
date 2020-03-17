@@ -67,7 +67,13 @@ final class GXGameListViewController: UIViewController {
     }
     
     private func setupVMBindings() {
+        viewModel.outputs.reloadNotifier = { [unowned self] in
+            self.tableView.reloadData()
+        }
         
+        viewModel.outputs.didReceiveServiceErrorNotifier = { serviceError in
+            print(serviceError)
+        }
     }
 
 }
@@ -81,14 +87,19 @@ extension GXGameListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeue(cellClass: GXGameListCell.self, forIndexPath: indexPath)
         cell.accessoryType = .disclosureIndicator
-        cell.setupForDevelopment()
+        
+        let presentation = viewModel.outputs.itemForIndex(indexPath.row)
+        cell.setup(with: presentation)
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        GXFeedbackGenerator.generate()
         tableView.deselectRow(at: indexPath, animated: true)
-        router.pushGameDetailVC()
+        GXFeedbackGenerator.generate()
+        
+        let selectedPresentation = viewModel.outputs.itemForIndex(indexPath.row)
+        router.pushGameDetailVC(for: selectedPresentation)
     }
     
 }

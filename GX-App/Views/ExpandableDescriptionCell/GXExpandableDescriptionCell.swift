@@ -33,6 +33,8 @@ final class GXExpandableDescriptionCell: UITableViewCell {
         didSet {
             descriptionLabel.textColor = GXTheme.textSecondaryColor
             descriptionLabel.setLineSpacing(4)
+            // TODO: - Explain
+            descriptionLabel.contentMode = .top
         }
     }
     @IBOutlet private weak var readMoreBtn: UIButton! {
@@ -66,6 +68,13 @@ final class GXExpandableDescriptionCell: UITableViewCell {
         }
         
         descriptionLabel.numberOfLines = isExpanded ? 0 : 4
+    }
+    
+    func setup(with presentation: GXGamePresentation, expandStateChangeNotifier: (() -> Void)?) {
+        self.expandStateChangeNotifier = expandStateChangeNotifier
+        
+        titleLabel.text = "Game Description"
+        descriptionLabel.text = presentation.description
     }
     
     func setupForDevelopment(expandStateChangeNotifier: (() -> Void)?) {

@@ -10,9 +10,12 @@ import Foundation
 
 protocol GXGameListViewModelInputs {
     func viewDidLoaded()
+    func fetchGameList()
 }
 
 protocol GXGameListViewModelOutputs {
+    var reloadNotifier: () -> Void { get set }
+    var didReceiveServiceErrorNotifier: (GXGameServiceError) -> Void { get set }
     func numberOfItems() -> Int
     func itemForIndex(_ index: Int) -> GXGamePresentation
 }
@@ -45,22 +48,33 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     
     // MARK: PROPERTIES
     
-    private var gameListPresentations: [GXGamePresentation] = []
+    private var gameListPresentations: [GXGamePresentation] = [] {
+        didSet {
+            reloadNotifier()
+        }
+    }
     
     // MARK: INPUTS
     
     func viewDidLoaded() {
-        dependency.gameService.fetchGameList(query: nil, nextURL: nil) { (result) in
+        fetchGameList()
+    }
+    
+    func fetchGameList() {
+        dependency.gameService.fetchGameList(query: nil, nextURL: nil) { [weak self] (result) in
             switch result {
             case .success(let response):
-                print(response)
+                self?.gameListPresentations = response.results.map(GXGamePresentation.init(game:))
             case .failure(let error):
-                print(error.localizedDescription)
+                self?.didReceiveServiceErrorNotifier(error)
             }
         }
     }
     
     // MARK: OUTPUTS
+    
+    var reloadNotifier: () -> Void = {}
+    var didReceiveServiceErrorNotifier: (GXGameServiceError) -> Void = {_ in}
     
     func numberOfItems() -> Int {
         return gameListPresentations.count

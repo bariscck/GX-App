@@ -24,6 +24,7 @@ final class GXGameListCell: UITableViewCell {
             nameLabel.numberOfLines = 2
         }
     }
+    @IBOutlet weak var metacriticContainerStack: UIStackView!
     @IBOutlet private weak var metacriticPointLabel: UILabel! {
         didSet {
             metacriticPointLabel.textColor = GXTheme.redColor
@@ -49,13 +50,27 @@ final class GXGameListCell: UITableViewCell {
         super.prepareForReuse()
         coverImageView.image = nil
         nameLabel.text = nil
+        metacriticContainerStack.isHidden = false
         metacriticPointLabel.text = nil
         genresLabel.text = nil
     }
     
+    func setup(with presentation: GXGamePresentation) {
+        coverImageView.loadRemoteImage(url: presentation.coverImageURL)
+        nameLabel.text = presentation.title
+        genresLabel.text = presentation.genresText
+        
+        if let metacriticText = presentation.metacriticText {
+            metacriticPointLabel.text = metacriticText
+            metacriticContainerStack.isHidden = false
+        } else {
+            metacriticContainerStack.isHidden = true
+        }
+    }
+    
     func setupForDevelopment() {
         #if DEBUG
-            coverImageView.image = UIImage(named: "gtaV")
+            coverImageView.loadLocalImage(name: "gtaV")
         #endif
         nameLabel.text = "Grand Theft Auto V"
         metacriticPointLabel.text = "96"

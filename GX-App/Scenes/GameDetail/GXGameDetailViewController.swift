@@ -31,6 +31,10 @@ final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print(String(describing: self) + " is deallocated!")
+    }
+    
     // MARK: VIEWS
     
     private lazy var gameHeaderView: GXGameHeaderView = {
@@ -81,11 +85,18 @@ final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
     
     private func setupGameHeaderView() {
         tableView.tableHeaderView = gameHeaderView
-        gameHeaderView.setupForDevelopment()
+        gameHeaderView.setup(with: viewModel.outputs.currentPresentation)
     }
     
     private func setupVMBindings() {
+        viewModel.outputs.presentationFetchedNotifier = { [unowned self] presentation in
+            self.gameHeaderView.setup(with: presentation)
+            self.tableView.reloadData()
+        }
         
+        viewModel.outputs.didReceiveServiceErrorNotifier = { serviceError in
+            print(serviceError)
+        }
     }
     
     // MARK: ACTIONS
@@ -93,7 +104,7 @@ final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
     @objc private func favourite(_ sender: UIBarButtonItem) {
         GXFeedbackGenerator.generate()
         print("Favourite")
-        presentInfoAlert(title: "GAME_NAME is added your favourite list.")
+        presentInfoAlert(title: "\(viewModel.outputs.currentPresentation.title) is added your favourite list.")
     }
 
 }
@@ -111,7 +122,7 @@ extension GXGameDetailViewController: UITableViewDataSource, UITableViewDelegate
         case .description:
             let descriptionCell = tableView.dequeue(cellClass: GXExpandableDescriptionCell.self, forIndexPath: indexPath)
             
-            descriptionCell.setupForDevelopment {
+            descriptionCell.setup(with: viewModel.outputs.currentPresentation) {
                 tableView.performBatchUpdates(nil)
             }
             

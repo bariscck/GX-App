@@ -80,6 +80,7 @@
             <connections>
                 <outlet property="coverImageView" destination="y4j-9J-9mQ" id="jTu-g2-4eC"/>
                 <outlet property="genresLabel" destination="ikX-YS-CBb" id="8fC-qG-YW4"/>
+                <outlet property="metacriticContainerStack" destination="Eru-VH-jXd" id="ebm-69-GhE"/>
                 <outlet property="metacriticPointLabel" destination="DQu-Jg-PDW" id="WsZ-XU-oTG"/>
                 <outlet property="nameLabel" destination="ZJ6-Ew-4F0" id="ew2-gd-ySL"/>
             </connections>
