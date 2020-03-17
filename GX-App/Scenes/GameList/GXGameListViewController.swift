@@ -30,6 +30,7 @@ final class GXGameListViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView! {
         didSet {
             // Configs
+            tableView.backgroundColor = GXTheme.tableGroupedBackgroundColor
             tableView.rowHeight = UITableView.automaticDimension
             tableView.estimatedRowHeight = 136
             tableView.separatorStyle = .none

@@ -24,7 +24,11 @@ final class GXGameListCell: UITableViewCell {
             nameLabel.numberOfLines = 2
         }
     }
-    @IBOutlet private weak var metacriticPointLabel: UILabel!
+    @IBOutlet private weak var metacriticPointLabel: UILabel! {
+        didSet {
+            metacriticPointLabel.textColor = GXTheme.redColor
+        }
+    }
     @IBOutlet private weak var genresLabel: UILabel! {
         didSet {
             genresLabel.numberOfLines = 2
@@ -37,6 +41,7 @@ final class GXGameListCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        backgroundColor = GXTheme.backgroundColor
     }
     
     override func prepareForReuse() {

@@ -15,6 +15,8 @@
 		2365A8DA2420DFFA00F48D9C /* GXGameListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2365A8D82420DFFA00F48D9C /* GXGameListCell.xib */; };
 		2365A8DE2420E17500F48D9C /* UITableView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2365A8DD2420E17500F48D9C /* UITableView+Extensions.swift */; };
 		2365A8E02420E3D200F48D9C /* Development.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2365A8DF2420E3D200F48D9C /* Development.xcassets */; };
+		2365A8E22420E84100F48D9C /* Theme.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2365A8E12420E84100F48D9C /* Theme.xcassets */; };
+		2365A8E52420EAE200F48D9C /* GXTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2365A8E42420EAE200F48D9C /* GXTheme.swift */; };
 		23BDF0052420D8D30055C3B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF0042420D8D30055C3B9 /* AppDelegate.swift */; };
 		23BDF0072420D8D30055C3B9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF0062420D8D30055C3B9 /* SceneDelegate.swift */; };
 		23BDF00E2420D8D40055C3B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23BDF00D2420D8D40055C3B9 /* Assets.xcassets */; };
@@ -42,6 +44,8 @@
 		2365A8D82420DFFA00F48D9C /* GXGameListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GXGameListCell.xib; sourceTree = "<group>"; };
 		2365A8DD2420E17500F48D9C /* UITableView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extensions.swift"; sourceTree = "<group>"; };
 		2365A8DF2420E3D200F48D9C /* Development.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Development.xcassets; sourceTree = "<group>"; };
+		2365A8E12420E84100F48D9C /* Theme.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Theme.xcassets; sourceTree = "<group>"; };
+		2365A8E42420EAE200F48D9C /* GXTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXTheme.swift; sourceTree = "<group>"; };
 		23BDF0012420D8D30055C3B9 /* GameX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23BDF0042420D8D30055C3B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23BDF0062420D8D30055C3B9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -108,6 +112,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		2365A8E32420EAD200F48D9C /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				2365A8E42420EAE200F48D9C /* GXTheme.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		23BDEFF82420D8D30055C3B9 = {
 			isa = PBXGroup;
 			children = (
@@ -133,8 +145,10 @@
 				23BDF0282420DA860055C3B9 /* Scenes */,
 				2365A8D62420DF8900F48D9C /* Views */,
 				2365A8DC2420E16400F48D9C /* Extensions */,
+				2365A8E32420EAD200F48D9C /* Utils */,
 				23BDF00D2420D8D40055C3B9 /* Assets.xcassets */,
 				2365A8DF2420E3D200F48D9C /* Development.xcassets */,
+				2365A8E12420E84100F48D9C /* Theme.xcassets */,
 				23BDF00F2420D8D40055C3B9 /* LaunchScreen.storyboard */,
 				23BDF0122420D8D40055C3B9 /* Info.plist */,
 			);
@@ -252,6 +266,7 @@
 				2365A8DA2420DFFA00F48D9C /* GXGameListCell.xib in Resources */,
 				23BDF0112420D8D40055C3B9 /* LaunchScreen.storyboard in Resources */,
 				23BDF00E2420D8D40055C3B9 /* Assets.xcassets in Resources */,
+				2365A8E22420E84100F48D9C /* Theme.xcassets in Resources */,
 				2365A8D12420DCE700F48D9C /* GXGameListViewController.xib in Resources */,
 				2365A8E02420E3D200F48D9C /* Development.xcassets in Resources */,
 			);
@@ -271,6 +286,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2365A8E52420EAE200F48D9C /* GXTheme.swift in Sources */,
 				23BDF0052420D8D30055C3B9 /* AppDelegate.swift in Sources */,
 				2365A8D52420DD1600F48D9C /* GXGameListRouter.swift in Sources */,
 				2365A8D92420DFFA00F48D9C /* GXGameListCell.swift in Sources */,
