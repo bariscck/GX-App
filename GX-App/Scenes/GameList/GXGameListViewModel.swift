@@ -13,7 +13,7 @@ protocol GXGameListViewModelInputs {
 }
 
 protocol GXGameListViewModelOutputs {
-    
+    func numberOfItems() -> Int
 }
 
 protocol GXGameListViewModelType {
@@ -37,5 +37,9 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     }
     
     // MARK: OUTPUTS
+    
+    func numberOfItems() -> Int {
+        return 10
+    }
     
 }

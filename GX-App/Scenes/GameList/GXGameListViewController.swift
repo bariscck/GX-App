@@ -25,17 +25,67 @@ final class GXGameListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: VIEWS
+    
+    @IBOutlet private weak var tableView: UITableView! {
+        didSet {
+            // Configs
+            tableView.rowHeight = UITableView.automaticDimension
+            tableView.estimatedRowHeight = 136
+            tableView.separatorStyle = .none
+            // Setting Datasource
+            tableView.dataSource = self
+            tableView.delegate = self
+            // Register Cells
+            tableView.register(xibClass: GXGameListCell.self)
+        }
+    }
+    
+    private lazy var searchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search for the games"
+        return searchController
+    }()
+    
     // MARK: MAIN
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        setupNavigationItem()
+        // ViewModel methods
         setupVMBindings()
         viewModel.inputs.viewDidLoaded()
+    }
+    
+    private func setupNavigationItem() {
+        navigationItem.title = "Games"
+        navigationItem.largeTitleDisplayMode = .automatic
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     private func setupVMBindings() {
         
     }
 
+}
+
+extension GXGameListViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.outputs.numberOfItems()
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeue(cellClass: GXGameListCell.self, forIndexPath: indexPath)
+        cell.accessoryType = .disclosureIndicator
+        cell.setupForDevelopment()
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
 }

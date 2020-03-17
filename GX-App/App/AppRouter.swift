@@ -21,10 +21,16 @@ final class AppRouter {
     // MARK: MAIN
     
     func start() {
-        let rootViewController = UIViewController()
-        rootViewController.view.backgroundColor = .red
-        window.rootViewController = rootViewController
+        let rootViewController = makeGameListVC()
+        let navigationController = UINavigationController(rootViewController: rootViewController)
+        navigationController.navigationBar.prefersLargeTitles = true
+        window.rootViewController = navigationController
         window.makeKeyAndVisible()
+    }
+    
+    private func makeGameListVC() -> UIViewController {
+        let gameListVC = GXGameListRouter.build()
+        return gameListVC
     }
     
 }
