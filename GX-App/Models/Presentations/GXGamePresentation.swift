@@ -48,11 +48,11 @@ struct GXGamePresentation {
     }
     
     var redditURL: URL? {
-        return game.redditURL
+        return URL(string: game.reddit ?? "")
     }
     
     var websiteURL: URL? {
-        return game.websiteURL
+        return URL(string: game.website ?? "")
     }
     
     var isViewedBefore: Bool = false
