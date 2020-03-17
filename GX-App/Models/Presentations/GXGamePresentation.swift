@@ -47,4 +47,16 @@ struct GXGamePresentation {
         return game.descriptionRaw
     }
     
+    var isViewedBefore: Bool = false
+ 
+    mutating func setViewed() {
+        isViewedBefore = true
+    }
+    
+}
+
+extension GXGamePresentation: Hashable {
+    static func == (lhs: GXGamePresentation, rhs: GXGamePresentation) -> Bool {
+        return lhs.id == rhs.id
+    }
 }

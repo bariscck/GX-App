@@ -66,6 +66,12 @@ final class GXGameListCell: UITableViewCell {
         } else {
             metacriticContainerStack.isHidden = true
         }
+        
+        backgroundColor = color(forViewedState: presentation.isViewedBefore)
+    }
+    
+    private func color(forViewedState isViewed: Bool) -> UIColor {
+        return isViewed ? GXTheme.tableSelectedColor : GXTheme.backgroundColor
     }
     
     func setupForDevelopment() {

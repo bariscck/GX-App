@@ -10,7 +10,7 @@ import Foundation
 
 protocol GXGameListViewModelInputs {
     func viewDidLoaded()
-    func fetchGameList()
+    func fetchGameList(with pagination: Bool)
 }
 
 protocol GXGameListViewModelOutputs {
@@ -18,6 +18,7 @@ protocol GXGameListViewModelOutputs {
     var didReceiveServiceErrorNotifier: (GXGameServiceError) -> Void { get set }
     func numberOfItems() -> Int
     func itemForIndex(_ index: Int) -> GXGamePresentation
+    func selectedItemForIndex(_ index: Int) -> GXGamePresentation
 }
 
 protocol GXGameListViewModelType {
@@ -47,6 +48,8 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     }
     
     // MARK: PROPERTIES
+
+    private var nextPageURL: URL?
     
     private var gameListPresentations: [GXGamePresentation] = [] {
         didSet {
@@ -54,17 +57,22 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
         }
     }
     
+    private var viewedGamePresentationIds: [Int] = []
+    
     // MARK: INPUTS
     
     func viewDidLoaded() {
         fetchGameList()
     }
     
-    func fetchGameList() {
-        dependency.gameService.fetchGameList(query: nil, nextURL: nil) { [weak self] (result) in
+    func fetchGameList(with pagination: Bool = true) {
+        let nextURL = pagination ? self.nextPageURL : nil
+        dependency.gameService.fetchGameList(query: nil, nextURL: nextURL) { [weak self] (result) in
             switch result {
             case .success(let response):
-                self?.gameListPresentations = response.results.map(GXGamePresentation.init(game:))
+                let presentations = response.results.map(GXGamePresentation.init(game:))
+                self?.gameListPresentations.append(contentsOf: presentations)
+                self?.nextPageURL = response.next
             case .failure(let error):
                 self?.didReceiveServiceErrorNotifier(error)
             }
@@ -82,6 +90,14 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     
     func itemForIndex(_ index: Int) -> GXGamePresentation {
         return gameListPresentations[index]
+    }
+    
+    func selectedItemForIndex(_ index: Int) -> GXGamePresentation {
+        var item = gameListPresentations[index]
+        viewedGamePresentationIds.append(item.id)
+        item.setViewed()
+        gameListPresentations[index] = item
+        return item
     }
     
 }

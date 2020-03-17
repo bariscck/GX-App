@@ -38,3 +38,15 @@ struct GXGame: Decodable {
         case descriptionRaw = "description_raw"
     }
 }
+
+extension GXGame: Hashable {
+    static func == (lhs: GXGame, rhs: GXGame) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
+
+extension GXGame.Genre: Hashable {
+    static func == (lhs: GXGame.Genre, rhs: GXGame.Genre) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
