@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class GXGameDetailViewController: UIViewController {
+final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
 
     // MARK: INITIALIZERS
     
@@ -76,14 +76,7 @@ final class GXGameDetailViewController: UIViewController {
     @objc private func favourite(_ sender: UIBarButtonItem) {
         GXFeedbackGenerator.generate()
         print("Favourite")
-        let alertController = UIAlertController(title: "GAME_NAME is added your favourite list.",
-                                                message: nil, preferredStyle: .alert)
-        
-        present(alertController, animated: true) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                alertController.dismiss(animated: true)
-            }
-        }
+        presentInfoAlert(title: "GAME_NAME is added your favourite list.")
     }
 
 }
