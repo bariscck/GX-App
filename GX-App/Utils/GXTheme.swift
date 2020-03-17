@@ -25,6 +25,10 @@ enum GXTheme {
         return assetColor(for: "TextSecondaryColor")
     }
     
+    static var textTertiaryColor: UIColor {
+        return assetColor(for: "TextSecondaryColor")
+    }
+    
     static var tableBackgroundColor: UIColor {
         return assetColor(for: "TableBackgroundColor")
     }

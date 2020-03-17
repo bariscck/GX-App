@@ -12,7 +12,11 @@ final class TitledCell: UITableViewCell {
     
     // MARK: VIEWS
     
-    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var titleLabel: UILabel! {
+        didSet {
+            titleLabel.textColor = GXTheme.textSecondaryColor
+        }
+    }
     
     // MARK: MAIN
     
