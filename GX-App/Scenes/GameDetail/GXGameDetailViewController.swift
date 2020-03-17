@@ -40,6 +40,9 @@ final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
             // Setting Datasource
             tableView.dataSource = self
             tableView.delegate = self
+            // Register Cells
+            tableView.register(xibClass: GXExpandableDescriptionCell.self)
+            tableView.register(xibClass: TitledCell.self)
         }
     }
     
@@ -84,11 +87,34 @@ final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
 extension GXGameDetailViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return 3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        switch indexPath.row {
+        case 0:
+            let descriptionCell = tableView.dequeue(cellClass: GXExpandableDescriptionCell.self, forIndexPath: indexPath)
+            descriptionCell.setupForDevelopment {
+                tableView.performBatchUpdates(nil)
+            }
+            return descriptionCell
+        case 1, 2:
+            let titledCell = tableView.dequeue(cellClass: TitledCell.self, forIndexPath: indexPath)
+            
+            if indexPath.row == 1 {
+                titledCell.setup(with: "Visit reddit")
+            } else if indexPath.row == 2 {
+                titledCell.setup(with: "Visit website")
+            }
+            
+            return titledCell
+        default:
+            return UITableViewCell()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
 }
