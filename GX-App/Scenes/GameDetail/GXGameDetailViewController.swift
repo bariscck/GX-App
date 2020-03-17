@@ -76,6 +76,7 @@ final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         gameHeaderView.frame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 290)
+        tableView.performBatchUpdates(nil)
     }
     
     private func setupNavigationItem() {

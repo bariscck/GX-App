@@ -46,6 +46,8 @@ final class GXGameListViewController: UIViewController {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search for the games"
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
         return searchController
     }()
     
@@ -87,6 +89,7 @@ extension GXGameListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeue(cellClass: GXGameListCell.self, forIndexPath: indexPath)
         cell.accessoryType = .disclosureIndicator
+        cell.selectionStyle = .none
         
         let presentation = viewModel.outputs.itemForIndex(indexPath.row)
         cell.setup(with: presentation)
@@ -95,11 +98,31 @@ extension GXGameListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //tableView.deselectRow(at: indexPath, animated: true)
         GXFeedbackGenerator.generate()
         
         let selectedPresentation = viewModel.outputs.selectedItemForIndex(indexPath.row)
         router.pushGameDetailVC(for: selectedPresentation)
     }
     
+}
+
+extension GXGameListViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchQuery = searchController.searchBar.text ?? ""
+        print(searchQuery)
+    }
+}
+
+extension GXGameListViewController: UISearchBarDelegate {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        viewModel.inputs.setSearchActive(isActive: true)
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        viewModel.inputs.setSearchActive(isActive: false)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        viewModel.inputs.setSearchActive(isActive: false)
+    }
 }
