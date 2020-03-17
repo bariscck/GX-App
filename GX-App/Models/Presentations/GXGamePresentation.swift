@@ -47,6 +47,14 @@ struct GXGamePresentation {
         return game.descriptionRaw
     }
     
+    var redditURL: URL? {
+        return game.redditURL
+    }
+    
+    var websiteURL: URL? {
+        return game.websiteURL
+    }
+    
     var isViewedBefore: Bool = false
  
     mutating func setViewed() {

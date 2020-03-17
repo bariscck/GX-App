@@ -14,6 +14,7 @@ final class GXGameListCell: UICollectionViewCell {
     
     @IBOutlet private weak var coverImageView: UIImageView! {
         didSet {
+            coverImageView.backgroundColor = GXTheme.tableGroupedBackgroundColor
             coverImageView.contentMode = .scaleAspectFill
             coverImageView.layer.cornerRadius = 6
             coverImageView.clipsToBounds = true

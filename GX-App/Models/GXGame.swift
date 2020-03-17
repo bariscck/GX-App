@@ -27,6 +27,8 @@ struct GXGame: Decodable {
     let genres: [Genre]
     let description: String?
     let descriptionRaw: String?
+    let redditURL: URL?
+    let websiteURL: URL?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -36,6 +38,8 @@ struct GXGame: Decodable {
         case genres
         case description
         case descriptionRaw = "description_raw"
+        case redditURL = "reddit_url"
+        case websiteURL = "website"
     }
 }
 

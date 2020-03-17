@@ -7,9 +7,10 @@
 //
 
 import UIKit.UIViewController
+import SafariServices
 
 protocol GXGameDetailRouterType {
-    
+    func openSFSafariController(for url: URL)
 }
 
 final class GXGameDetailRouter: GXGameDetailRouterType {
@@ -27,6 +28,13 @@ final class GXGameDetailRouter: GXGameDetailRouterType {
         router.viewController = viewController
         
         return viewController
+    }
+    
+    // MARK: ROUTING
+    
+    func openSFSafariController(for url: URL) {
+        let sfController = SFSafariViewController(url: url)
+        viewController?.present(sfController, animated: true)
     }
     
 }

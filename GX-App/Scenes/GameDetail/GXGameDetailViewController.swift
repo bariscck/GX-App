@@ -148,12 +148,18 @@ extension GXGameDetailViewController: UITableViewDataSource, UITableViewDelegate
         tableView.deselectRow(at: indexPath, animated: true)
         
         let selectedLayoutItem = viewModel.outputs.layoutItem(for: indexPath.row)
-       
+        let currentPresentation = viewModel.outputs.currentPresentation
+        var url: URL?
+        
         switch selectedLayoutItem {
-        case .visitReddit, .visitWebsite:
-            print("Open Safari")
+        case .visitReddit   : url = currentPresentation.redditURL
+        case .visitWebsite  : url = currentPresentation.websiteURL
         default:
-            break
+            return
+        }
+        
+        if let url = url {
+            router.openSFSafariController(for: url)
         }
     }
     
