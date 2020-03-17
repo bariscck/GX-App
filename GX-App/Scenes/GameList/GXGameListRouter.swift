@@ -18,8 +18,8 @@ final class GXGameListRouter: GXGameListRouterType {
     
     private weak var viewController: UIViewController?
     
-    static func build() -> UIViewController {
-        let viewModel = GXGameListViewModel()
+    static func build(gameService: GXGameServiceType) -> UIViewController {
+        let viewModel = GXGameListViewModel(dependency: .init(gameService: gameService))
         let router = GXGameListRouter()
         let viewController = GXGameListViewController(viewModel: viewModel,
                                                       router: router)

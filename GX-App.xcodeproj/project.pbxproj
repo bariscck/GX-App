@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -31,6 +31,20 @@
 		2365EED8242104EA00A70EE7 /* TitledCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2365EED6242104EA00A70EE7 /* TitledCell.swift */; };
 		2365EED9242104EA00A70EE7 /* TitledCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2365EED7242104EA00A70EE7 /* TitledCell.xib */; };
 		2365EEDB242106A400A70EE7 /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2365EEDA242106A400A70EE7 /* UILabel+Extensions.swift */; };
+		2365EEE22421107B00A70EE7 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2365EEE12421107B00A70EE7 /* RealmSwift */; };
+		2365EEE42421107B00A70EE7 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 2365EEE32421107B00A70EE7 /* Realm */; };
+		2365EEEA2421118100A70EE7 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 2365EEE92421118100A70EE7 /* Kingfisher */; };
+		2365EEED2421124200A70EE7 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 2365EEEC2421124200A70EE7 /* Moya */; };
+		2365EEEF2421126E00A70EE7 /* GamexAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2365EEEE2421126E00A70EE7 /* GamexAPI.swift */; };
+		2365EEF12421132000A70EE7 /* GXGameServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2365EEF02421132000A70EE7 /* GXGameServiceType.swift */; };
+		2365EEF42421138500A70EE7 /* GXGameListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2365EEF32421138500A70EE7 /* GXGameListResponse.swift */; };
+		2365EEF7242113C400A70EE7 /* GXGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2365EEF6242113C400A70EE7 /* GXGame.swift */; };
+		2365EEF92421164B00A70EE7 /* GXMockGameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2365EEF82421164B00A70EE7 /* GXMockGameService.swift */; };
+		2365EEFB242117E900A70EE7 /* GXGameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2365EEFA242117E900A70EE7 /* GXGameService.swift */; };
+		2365EEFD2421255A00A70EE7 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2365EEFC2421255A00A70EE7 /* Bundle+Extensions.swift */; };
+		2365EF002421271E00A70EE7 /* gamedetail-response.json in Resources */ = {isa = PBXBuildFile; fileRef = 2365EEFE2421271D00A70EE7 /* gamedetail-response.json */; };
+		2365EF012421271E00A70EE7 /* gamelist-response.json in Resources */ = {isa = PBXBuildFile; fileRef = 2365EEFF2421271E00A70EE7 /* gamelist-response.json */; };
+		2365EF0324212A0100A70EE7 /* GXGamePresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2365EF0224212A0100A70EE7 /* GXGamePresentation.swift */; };
 		23BDF0052420D8D30055C3B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF0042420D8D30055C3B9 /* AppDelegate.swift */; };
 		23BDF0072420D8D30055C3B9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF0062420D8D30055C3B9 /* SceneDelegate.swift */; };
 		23BDF00E2420D8D40055C3B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23BDF00D2420D8D40055C3B9 /* Assets.xcassets */; };
@@ -74,6 +88,16 @@
 		2365EED6242104EA00A70EE7 /* TitledCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitledCell.swift; sourceTree = "<group>"; };
 		2365EED7242104EA00A70EE7 /* TitledCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitledCell.xib; sourceTree = "<group>"; };
 		2365EEDA242106A400A70EE7 /* UILabel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
+		2365EEEE2421126E00A70EE7 /* GamexAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamexAPI.swift; sourceTree = "<group>"; };
+		2365EEF02421132000A70EE7 /* GXGameServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXGameServiceType.swift; sourceTree = "<group>"; };
+		2365EEF32421138500A70EE7 /* GXGameListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXGameListResponse.swift; sourceTree = "<group>"; };
+		2365EEF6242113C400A70EE7 /* GXGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXGame.swift; sourceTree = "<group>"; };
+		2365EEF82421164B00A70EE7 /* GXMockGameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXMockGameService.swift; sourceTree = "<group>"; };
+		2365EEFA242117E900A70EE7 /* GXGameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXGameService.swift; sourceTree = "<group>"; };
+		2365EEFC2421255A00A70EE7 /* Bundle+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
+		2365EEFE2421271D00A70EE7 /* gamedetail-response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "gamedetail-response.json"; sourceTree = "<group>"; };
+		2365EEFF2421271E00A70EE7 /* gamelist-response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "gamelist-response.json"; sourceTree = "<group>"; };
+		2365EF0224212A0100A70EE7 /* GXGamePresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXGamePresentation.swift; sourceTree = "<group>"; };
 		23BDF0012420D8D30055C3B9 /* GameX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23BDF0042420D8D30055C3B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23BDF0062420D8D30055C3B9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -91,6 +115,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2365EEEA2421118100A70EE7 /* Kingfisher in Frameworks */,
+				2365EEE42421107B00A70EE7 /* Realm in Frameworks */,
+				2365EEED2421124200A70EE7 /* Moya in Frameworks */,
+				2365EEE22421107B00A70EE7 /* RealmSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,6 +169,7 @@
 				2365A8DD2420E17500F48D9C /* UITableView+Extensions.swift */,
 				2365A8F42420F82200F48D9C /* UIView+Extensions.swift */,
 				2365EEDA242106A400A70EE7 /* UILabel+Extensions.swift */,
+				2365EEFC2421255A00A70EE7 /* Bundle+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -193,6 +222,61 @@
 			path = TitledCell;
 			sourceTree = "<group>";
 		};
+		2365EEDD24210FC000A70EE7 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				2365EEFF2421271E00A70EE7 /* gamelist-response.json */,
+				2365EEFE2421271D00A70EE7 /* gamedetail-response.json */,
+				2365EEDE24210FC900A70EE7 /* API */,
+				2365EEF22421134800A70EE7 /* Responses */,
+				2365EEDF24210FD200A70EE7 /* Services */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		2365EEDE24210FC900A70EE7 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				2365EEEE2421126E00A70EE7 /* GamexAPI.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		2365EEDF24210FD200A70EE7 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				2365EEF02421132000A70EE7 /* GXGameServiceType.swift */,
+				2365EEF82421164B00A70EE7 /* GXMockGameService.swift */,
+				2365EEFA242117E900A70EE7 /* GXGameService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		2365EEF22421134800A70EE7 /* Responses */ = {
+			isa = PBXGroup;
+			children = (
+				2365EEF32421138500A70EE7 /* GXGameListResponse.swift */,
+			);
+			path = Responses;
+			sourceTree = "<group>";
+		};
+		2365EEF5242113A400A70EE7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2365EEF6242113C400A70EE7 /* GXGame.swift */,
+				2365EF0424212A0F00A70EE7 /* Presentations */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2365EF0424212A0F00A70EE7 /* Presentations */ = {
+			isa = PBXGroup;
+			children = (
+				2365EF0224212A0100A70EE7 /* GXGamePresentation.swift */,
+			);
+			path = Presentations;
+			sourceTree = "<group>";
+		};
 		23BDEFF82420D8D30055C3B9 = {
 			isa = PBXGroup;
 			children = (
@@ -215,7 +299,9 @@
 			isa = PBXGroup;
 			children = (
 				23BDF0272420DA720055C3B9 /* App */,
+				2365EEDD24210FC000A70EE7 /* Network */,
 				23BDF0282420DA860055C3B9 /* Scenes */,
+				2365EEF5242113A400A70EE7 /* Models */,
 				2365A8D62420DF8900F48D9C /* Views */,
 				2365A8DC2420E16400F48D9C /* Extensions */,
 				2365A8E32420EAD200F48D9C /* Utils */,
@@ -272,6 +358,12 @@
 			dependencies = (
 			);
 			name = "GX-App";
+			packageProductDependencies = (
+				2365EEE12421107B00A70EE7 /* RealmSwift */,
+				2365EEE32421107B00A70EE7 /* Realm */,
+				2365EEE92421118100A70EE7 /* Kingfisher */,
+				2365EEEC2421124200A70EE7 /* Moya */,
+			);
 			productName = "GX-App";
 			productReference = 23BDF0012420D8D30055C3B9 /* GameX.app */;
 			productType = "com.apple.product-type.application";
@@ -322,6 +414,11 @@
 				Base,
 			);
 			mainGroup = 23BDEFF82420D8D30055C3B9;
+			packageReferences = (
+				2365EEE02421107B00A70EE7 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
+				2365EEE82421118100A70EE7 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				2365EEEB2421124200A70EE7 /* XCRemoteSwiftPackageReference "Moya" */,
+			);
 			productRefGroup = 23BDF0022420D8D30055C3B9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -338,8 +435,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				2365A8DA2420DFFA00F48D9C /* GXGameListCell.xib in Resources */,
+				2365EF002421271E00A70EE7 /* gamedetail-response.json in Resources */,
 				2365A8EA2420F1E900F48D9C /* GXGameDetailViewController.xib in Resources */,
 				2365A8F32420F67600F48D9C /* GXGameHeaderView.xib in Resources */,
+				2365EF012421271E00A70EE7 /* gamelist-response.json in Resources */,
 				23BDF0112420D8D40055C3B9 /* LaunchScreen.storyboard in Resources */,
 				23BDF00E2420D8D40055C3B9 /* Assets.xcassets in Resources */,
 				2365A8E22420E84100F48D9C /* Theme.xcassets in Resources */,
@@ -365,8 +464,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				2365A8F92420FE2400F48D9C /* GXAlertPresenter.swift in Sources */,
+				2365EEEF2421126E00A70EE7 /* GamexAPI.swift in Sources */,
+				2365EEF42421138500A70EE7 /* GXGameListResponse.swift in Sources */,
+				2365EEFD2421255A00A70EE7 /* Bundle+Extensions.swift in Sources */,
+				2365EEF7242113C400A70EE7 /* GXGame.swift in Sources */,
 				2365EED8242104EA00A70EE7 /* TitledCell.swift in Sources */,
 				2365A8F52420F82200F48D9C /* UIView+Extensions.swift in Sources */,
+				2365EEF92421164B00A70EE7 /* GXMockGameService.swift in Sources */,
 				2365A8E52420EAE200F48D9C /* GXTheme.swift in Sources */,
 				2365A8F12420F66C00F48D9C /* GXGameHeaderView.swift in Sources */,
 				2365A8F72420FADA00F48D9C /* GXFeedbackGenerator.swift in Sources */,
@@ -374,10 +478,13 @@
 				2365A8E92420F1E900F48D9C /* GXGameDetailViewController.swift in Sources */,
 				2365EEDB242106A400A70EE7 /* UILabel+Extensions.swift in Sources */,
 				2365A8D52420DD1600F48D9C /* GXGameListRouter.swift in Sources */,
+				2365EEFB242117E900A70EE7 /* GXGameService.swift in Sources */,
 				2365A8EE2420F20100F48D9C /* GXGameDetailRouter.swift in Sources */,
 				2365A8D92420DFFA00F48D9C /* GXGameListCell.swift in Sources */,
 				2365A8EC2420F1F500F48D9C /* GXGameDetailViewModel.swift in Sources */,
 				2365A8DE2420E17500F48D9C /* UITableView+Extensions.swift in Sources */,
+				2365EF0324212A0100A70EE7 /* GXGamePresentation.swift in Sources */,
+				2365EEF12421132000A70EE7 /* GXGameServiceType.swift in Sources */,
 				2365A8D32420DCFE00F48D9C /* GXGameListViewModel.swift in Sources */,
 				2365A8D02420DCE700F48D9C /* GXGameListViewController.swift in Sources */,
 				23BDF0072420D8D30055C3B9 /* SceneDelegate.swift in Sources */,
@@ -645,6 +752,56 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2365EEE02421107B00A70EE7 /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-cocoa.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.3.2;
+			};
+		};
+		2365EEE82421118100A70EE7 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.13.2;
+			};
+		};
+		2365EEEB2421124200A70EE7 /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 14.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2365EEE12421107B00A70EE7 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2365EEE02421107B00A70EE7 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = RealmSwift;
+		};
+		2365EEE32421107B00A70EE7 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2365EEE02421107B00A70EE7 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = Realm;
+		};
+		2365EEE92421118100A70EE7 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2365EEE82421118100A70EE7 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		2365EEEC2421124200A70EE7 /* Moya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2365EEEB2421124200A70EE7 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 23BDEFF92420D8D30055C3B9 /* Project object */;
 }
