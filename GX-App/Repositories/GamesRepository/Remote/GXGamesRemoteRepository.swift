@@ -37,11 +37,11 @@ final class GXGamesRemoteRepository: GXGamesRepositoryType {
         }
     }
     
-    func fetchGameDetail(gameId: Int, completion: @escaping (Result<GXGameEntity?, GXGameServiceError>) -> Void) {
+    func fetchGameDetail(gameId: Int, completion: @escaping (Result<GXGameDetailEntity?, GXGameServiceError>) -> Void) {
         networkAdapter.request(.gameDetail(id: gameId)) { (result: Result<GXGameResponse, Error>) in
             switch result {
             case .success(let response):
-                let entity = GXGameEntity.init(gameResponse: response)
+                let entity = GXGameDetailEntity.init(detailResponse: response)
                 completion(.success(entity))
             case .failure(let error):
                 completion(.failure(.serverError(error)))

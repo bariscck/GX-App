@@ -17,7 +17,7 @@ enum GXGameServiceError: Error {
 
 protocol GXGamesRepositoryType {
     func fetchGameList(query: String?, completion: @escaping (Result<[GXGameEntity], GXGameServiceError>) -> Void)
-    func fetchGameDetail(gameId: Int, completion: @escaping (Result<GXGameEntity?, GXGameServiceError>) -> Void)
+    func fetchGameDetail(gameId: Int, completion: @escaping (Result<GXGameDetailEntity?, GXGameServiceError>) -> Void)
 }
 
 final class GXGamesRepository: GXGamesRepositoryType {
@@ -53,7 +53,7 @@ final class GXGamesRepository: GXGamesRepositoryType {
         }
     }
     
-    func fetchGameDetail(gameId: Int, completion: @escaping (Result<GXGameEntity?, GXGameServiceError>) -> Void) {
+    func fetchGameDetail(gameId: Int, completion: @escaping (Result<GXGameDetailEntity?, GXGameServiceError>) -> Void) {
         // 1. Fetching from local
         localRepository.fetchGameDetail(gameId: gameId) { [weak self] (result) in
             // 2. Displaying local result

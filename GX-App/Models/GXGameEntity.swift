@@ -14,28 +14,60 @@ final class GXGameEntity: Object {
     @objc dynamic private(set) var id: Int = 0
     @objc dynamic private(set) var name: String = ""
     @objc dynamic private(set) var backgroundImage: String = ""
-    @objc dynamic private(set) var descriptionText: String? = nil
-    @objc dynamic private(set) var descriptionTextRaw: String? = nil
-    @objc dynamic private(set) var reddit: String? = nil
-    @objc dynamic private(set) var website: String? = nil
+    let genres = List<GXGenreEntity>()
     let metacritic = RealmOptional<Int>()
     
     override class func primaryKey() -> String? {
         return "id"
     }
     
-}
-
-extension GXGameEntity {
     convenience init(gameResponse: GXGameResponse) {
         self.init()
         id = gameResponse.id
         name = gameResponse.name
         backgroundImage = gameResponse.backgroundImage
-        descriptionText = gameResponse.descriptionText
-        descriptionTextRaw = gameResponse.descriptionTextRaw
-        reddit = gameResponse.reddit
-        website = gameResponse.website
+        genres.append(objectsIn: gameResponse.genres.map(GXGenreEntity.init(genre:)))
         metacritic.value = gameResponse.metacritic
     }
+    
 }
+
+final class GXGenreEntity: Object {
+    @objc dynamic private(set) var id: Int = 0
+    @objc dynamic private(set) var name: String = ""
+    
+    override class func primaryKey() -> String? {
+        return "id"
+    }
+    
+    convenience init(genre: GXGameResponse.Genre) {
+        self.init()
+        id = genre.id
+        name = genre.name
+    }
+}
+
+//func update(with gameResponse: GXGameResponse) {
+//    id = gameResponse.id
+//    name = gameResponse.name
+//    backgroundImage = gameResponse.backgroundImage
+//
+//    if let descriptionText = gameResponse.descriptionText, descriptionText.count > 0 {
+//        self.descriptionText = descriptionText
+//    }
+//
+//    if let descriptionTextRaw = gameResponse.descriptionTextRaw, descriptionTextRaw.count > 0 {
+//        self.descriptionTextRaw = descriptionTextRaw
+//    }
+//
+//    if let reddit = gameResponse.reddit {
+//        self.reddit = reddit
+//    }
+//
+//    if let website = gameResponse.website {
+//        self.website = website
+//    }
+//
+//    genres.append(objectsIn: gameResponse.genres.map(GXGenreEntity.init(genre:)))
+//    metacritic.value = gameResponse.metacritic
+//}

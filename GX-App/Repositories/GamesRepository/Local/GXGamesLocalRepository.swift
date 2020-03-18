@@ -34,10 +34,10 @@ final class GXGamesLocalRepository: GXGamesRepositoryType {
         }
     }
     
-    func fetchGameDetail(gameId: Int, completion: @escaping (Result<GXGameEntity?, GXGameServiceError>) -> Void) {
+    func fetchGameDetail(gameId: Int, completion: @escaping (Result<GXGameDetailEntity?, GXGameServiceError>) -> Void) {
         let predicate = NSPredicate(format: "id = \(gameId)")
         
-        storageContext.fetch(GXGameEntity.self, predicate: predicate, sorted: nil) { (entities) in
+        storageContext.fetch(GXGameDetailEntity.self, predicate: predicate, sorted: nil) { (entities) in
             completion(.success(entities.first))
         }
     }

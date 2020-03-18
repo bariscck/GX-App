@@ -10,36 +10,47 @@ import Foundation
 
 final class GXGamePresentation {
     
-    // MARK: INITIALIZERS
-    
-    private let entity: GXGameEntity
-    
-    init(entity: GXGameEntity) {
-        self.entity = entity
-    }
-    
-    // MARK: PRESENTATION
-    
-    var id: Int { entity.id }
-    var title: String { entity.name }
-    var coverImageURL: URL? { URL(string: entity.backgroundImage) }
-    var metacriticText: String? {
-        if let metacritic = entity.metacritic.value {
-            return "\(metacritic)"
+    struct Link {
+        enum LinkType {
+            case reddit, website
         }
-        return nil
+        
+        let type: LinkType
+        let url: URL?
     }
-    var genresText: String {
-         "" //game.genres.map { $0.name }.joined(separator: ", ")
-    }
-    var description: String? { entity.descriptionTextRaw }
-    var redditURL: URL? { URL(string: entity.reddit ?? "") }
-    var websiteURL: URL? { URL(string: entity.website ?? "") }
+    
+    private(set) var id: Int = 0
+    private(set) var title: String = ""
+    private(set) var coverImageURL: URL?
+    private(set) var metacriticText: String?
+    private(set) var genresText: String = ""
+    private(set) var description: String?
+    private(set) var redditLink: Link?
+    private(set) var websiteLink: Link?
     
     private(set) var isViewedBefore: Bool = false
- 
+    
+    init(entity: GXGameEntity?) {
+        id = entity?.id ?? 0
+        title = entity?.name ?? ""
+        coverImageURL = URL(string: entity?.backgroundImage ?? "")
+        metacriticText = String(entity?.metacritic.value ?? 0)
+        genresText = entity?.genres.compactMap({ $0.name }).joined(separator: ", ") ?? ""
+    }
+    
+}
+
+extension GXGamePresentation {
+    convenience init(detailEntity: GXGameDetailEntity) {
+        self.init(entity: detailEntity.owner)
+        description = detailEntity.descriptionTextRaw
+        redditLink = Link(type: .reddit, url: URL(string: detailEntity.reddit ?? ""))
+        websiteLink = Link(type: .website, url: URL(string: detailEntity.website ?? ""))
+    }
+}
+
+extension GXGamePresentation {
     func setViewed() {
         isViewedBefore = true
     }
-    
 }

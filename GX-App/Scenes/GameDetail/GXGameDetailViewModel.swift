@@ -77,15 +77,14 @@ final class GXGameDetailViewModel: GXGameDetailViewModelType, GXGameDetailViewMo
     
     func fetchGameDetail() {
         isLoading = true
-        
         dependency.gamesRepository.fetchGameDetail(gameId: dependency.presentation.id) { [weak self] (result) in
             guard let strongSelf = self else { return }
-            strongSelf.isLoading = false
             
             switch result {
             case .success(let entity):
                 guard let entity = entity else { return }
-                let presentation = GXGamePresentation.init(entity: entity)
+                let presentation = GXGamePresentation.init(detailEntity: entity)
+                strongSelf.isLoading = false
                 strongSelf.currentPresentation = presentation
             case .failure(let error):
                 strongSelf.didReceiveServiceErrorNotifier(error)

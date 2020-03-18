@@ -32,6 +32,8 @@ final class GXRealmStorageContext: GXStorageContext {
             }
         }
         try self.realm = Realm(configuration: rmConfig)
+        
+        print("REALM FILE PATH: ", Realm.Configuration.defaultConfiguration.fileURL?.absoluteURL ?? "")
     }
     
     public func safeWrite(_ block: (() throws -> Void)) throws {
@@ -65,11 +67,7 @@ extension GXRealmStorageContext {
         }
         
         try self.safeWrite {
-            if update {
-                realm.add(object as! Object, update: .modified)
-            } else {
-                realm.add(object as! Object)
-            }
+            realm.add(object as! Object, update: update ? .modified : .error)
         }
     }
     
@@ -79,11 +77,7 @@ extension GXRealmStorageContext {
         }
         
         try self.safeWrite {
-            if update {
-                realm.add(objects as! [Object], update: .modified)
-            } else {
-                realm.add(objects as! [Object])
-            }
+            realm.add(objects as! [Object], update: update ? .modified : .error)
         }
     }
     

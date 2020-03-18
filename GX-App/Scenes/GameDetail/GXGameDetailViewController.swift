@@ -9,7 +9,7 @@
 import UIKit
 
 enum GXGameDetailTableLayoutItems: Int, CaseIterable {
-    case description = 0, visitReddit, visitWebsite
+    case description = 0, reddit, website
 }
 
 final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
@@ -145,13 +145,13 @@ extension GXGameDetailViewController: UITableViewDataSource, UITableViewDelegate
             }
             
             return descriptionCell
-        case .visitReddit, .visitWebsite:
+        case .reddit, .website:
             let titledCell = tableView.dequeue(cellClass: TitledCell.self, forIndexPath: indexPath)
             
             switch layoutItem {
-            case .visitReddit:
+            case .reddit:
                 titledCell.setup(with: "Visit reddit")
-            case .visitWebsite:
+            case .website:
                 titledCell.setup(with: "Visit website")
             default:
                 break
@@ -169,8 +169,8 @@ extension GXGameDetailViewController: UITableViewDataSource, UITableViewDelegate
         var url: URL?
         
         switch selectedLayoutItem {
-        case .visitReddit   : url = currentPresentation.redditURL
-        case .visitWebsite  : url = currentPresentation.websiteURL
+        case .reddit   : url = currentPresentation.redditLink?.url
+        case .website  : url = currentPresentation.websiteLink?.url
         default:
             return
         }

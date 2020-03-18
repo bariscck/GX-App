@@ -35,9 +35,9 @@ final class GXGamesMockRepository: GXGamesRepositoryType {
         }
     }
     
-    func fetchGameDetail(gameId: Int, completion: @escaping (Result<GXGameEntity?, GXGameServiceError>) -> Void) {
+    func fetchGameDetail(gameId: Int, completion: @escaping (Result<GXGameDetailEntity?, GXGameServiceError>) -> Void) {
         let response = Bundle.main.decode(GXGameResponse.self, from: "gamedetail-response.json")
-        let entity = GXGameEntity.init(gameResponse: response)
+        let entity = GXGameDetailEntity(detailResponse: response)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             completion(.success(entity))

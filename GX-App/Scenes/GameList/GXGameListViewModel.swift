@@ -12,6 +12,7 @@ protocol GXGameListViewModelInputs {
     func viewDidLoaded()
     func fetchGameList()
     func setSearchActive(isActive: Bool)
+    func setDisplayingIndex(index: Int)
 }
 
 protocol GXGameListViewModelOutputs {
@@ -50,7 +51,18 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     
     // MARK: PROPERTIES
 
+    private var currentlyDisplayingIndex: Int = 0 {
+        didSet {
+            if currentlyDisplayingIndex == displayedPresentations.count - 1 {
+                fetchGameList()
+            }
+        }
+    }
+    
+    private var isLoading: Bool = false
+    
     private var viewedGamePresentationIds: Set<Int> = []
+    
     private var isSearchActive: Bool = false {
         didSet {
             if oldValue != isSearchActive {
@@ -65,21 +77,13 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     }
     
     private var _gamePresentations: [GXGamePresentation] = []
-    //private var _gamesNextPageURL: URL?
     private var _searchedPresentations: [GXGamePresentation] = []
-    //private var _searchedNextPageURL: URL?
     
     private var displayedPresentations: [GXGamePresentation] {
         get {
             return isSearchActive ? _searchedPresentations : _gamePresentations
         }
     }
-    
-//    private var nextPageURL: URL? {
-//        get {
-//            return isSearchActive ? _searchedNextPageURL : _gamesNextPageURL
-//        }
-//    }
     
     // MARK: INPUTS
     
@@ -89,8 +93,12 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     }
     
     func fetchGameList() {
+        guard isLoading == false else { return }
+        
+        isLoading = true
         dependency.gamesRepository.fetchGameList(query: nil) { [weak self] (result) in
             guard let strongSelf = self else { return }
+            strongSelf.isLoading = false
             
             switch result {
             case .success(let entities):
@@ -107,6 +115,10 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
                 strongSelf.didReceiveServiceErrorNotifier(error)
             }
         }
+    }
+    
+    func setDisplayingIndex(index: Int) {
+        currentlyDisplayingIndex = index
     }
     
     func setSearchActive(isActive: Bool) {
