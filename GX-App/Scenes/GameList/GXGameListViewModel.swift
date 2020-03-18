@@ -30,7 +30,7 @@ protocol GXGameListViewModelType {
 final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInputs, GXGameListViewModelOutputs {
     
     struct Dependency {
-        let gameService: GXGameServiceType
+        let gamesRepository: GXGamesRepositoryType
     }
     
     // INITIALIZERS
@@ -57,7 +57,7 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
                 if isSearchActive { } else {
                     _searchedPresentations.removeAll()
                 }
-                _searchedNextPageURL = nil
+                //_searchedNextPageURL = nil
             }
             
             reloadNotifier()
@@ -65,9 +65,9 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     }
     
     private var _gamePresentations: [GXGamePresentation] = []
-    private var _gamesNextPageURL: URL?
+    //private var _gamesNextPageURL: URL?
     private var _searchedPresentations: [GXGamePresentation] = []
-    private var _searchedNextPageURL: URL?
+    //private var _searchedNextPageURL: URL?
     
     private var displayedPresentations: [GXGamePresentation] {
         get {
@@ -75,11 +75,11 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
         }
     }
     
-    private var nextPageURL: URL? {
-        get {
-            return isSearchActive ? _searchedNextPageURL : _gamesNextPageURL
-        }
-    }
+//    private var nextPageURL: URL? {
+//        get {
+//            return isSearchActive ? _searchedNextPageURL : _gamesNextPageURL
+//        }
+//    }
     
     // MARK: INPUTS
     
@@ -89,23 +89,22 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     }
     
     func fetchGameList() {
-        dependency.gameService.fetchGameList(query: nil, nextURL: nextPageURL) { [weak self] (result) in
+        dependency.gamesRepository.fetchGameList(query: nil) { [weak self] (result) in
             guard let strongSelf = self else { return }
+            
             switch result {
-            case .success(let response):
-                let presentations = response.results.map(GXGamePresentation.init(game:))
+            case .success(let entities):
+                let presentations = entities.map(GXGamePresentation.init(entity:))
                 
                 if strongSelf.isSearchActive {
                     strongSelf._searchedPresentations.append(contentsOf: presentations)
-                    strongSelf._searchedNextPageURL = response.next
                 } else {
                     strongSelf._gamePresentations.append(contentsOf: presentations)
-                    strongSelf._gamesNextPageURL = response.next
                 }
                 
                 strongSelf.reloadNotifier()
             case .failure(let error):
-                self?.didReceiveServiceErrorNotifier(error)
+                strongSelf.didReceiveServiceErrorNotifier(error)
             }
         }
     }
@@ -128,9 +127,10 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     }
     
     func selectedItemForIndex(_ index: Int) -> GXGamePresentation {
-        var item = displayedPresentations[index]
+        let item = displayedPresentations[index]
         viewedGamePresentationIds.update(with: item.id)
         item.setViewed()
+        reloadNotifier()
         return item
     }
     

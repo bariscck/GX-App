@@ -8,63 +8,38 @@
 
 import Foundation
 
-struct GXGamePresentation {
+final class GXGamePresentation {
     
     // MARK: INITIALIZERS
     
-    private let game: GXGame
+    private let entity: GXGameEntity
     
-    init(game: GXGame) {
-        self.game = game
+    init(entity: GXGameEntity) {
+        self.entity = entity
     }
     
     // MARK: PRESENTATION
     
-    var id: Int {
-        return game.id
-    }
-    
-    var title: String {
-        return game.name
-    }
-    
-    var coverImageURL: URL {
-        return game.backgroundImage
-    }
-    
+    var id: Int { entity.id }
+    var title: String { entity.name }
+    var coverImageURL: URL? { URL(string: entity.backgroundImage) }
     var metacriticText: String? {
-        if let metacritic = game.metacritic {
+        if let metacritic = entity.metacritic.value {
             return "\(metacritic)"
         }
         return nil
     }
-    
     var genresText: String {
-        return game.genres.map { $0.name }.joined(separator: ", ")
+         "" //game.genres.map { $0.name }.joined(separator: ", ")
     }
+    var description: String? { entity.descriptionTextRaw }
+    var redditURL: URL? { URL(string: entity.reddit ?? "") }
+    var websiteURL: URL? { URL(string: entity.website ?? "") }
     
-    var description: String? {
-        return game.descriptionRaw
-    }
-    
-    var redditURL: URL? {
-        return URL(string: game.reddit ?? "")
-    }
-    
-    var websiteURL: URL? {
-        return URL(string: game.website ?? "")
-    }
-    
-    var isViewedBefore: Bool = false
+    private(set) var isViewedBefore: Bool = false
  
-    mutating func setViewed() {
+    func setViewed() { 
         isViewedBefore = true
     }
     
-}
-
-extension GXGamePresentation: Hashable {
-    static func == (lhs: GXGamePresentation, rhs: GXGamePresentation) -> Bool {
-        return lhs.id == rhs.id
-    }
 }

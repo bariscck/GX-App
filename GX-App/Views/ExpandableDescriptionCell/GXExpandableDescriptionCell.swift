@@ -26,7 +26,6 @@ final class GXExpandableDescriptionCell: UITableViewCell {
     @IBOutlet private weak var titleLabel: UILabel! {
         didSet {
             titleLabel.textColor = GXTheme.textSecondaryColor
-            titleLabel.numberOfLines = 0
         }
     }
     @IBOutlet private weak var descriptionLabel: UILabel! {

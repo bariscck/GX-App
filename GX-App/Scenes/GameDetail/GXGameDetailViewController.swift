@@ -80,7 +80,6 @@ final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateHeaderViewFrame()
-        tableView.reloadData()
     }
     
     private func setupNavigationItem() {
@@ -141,7 +140,8 @@ extension GXGameDetailViewController: UITableViewDataSource, UITableViewDelegate
             let descriptionCell = tableView.dequeue(cellClass: GXExpandableDescriptionCell.self, forIndexPath: indexPath)
             
             descriptionCell.setup(with: viewModel.outputs.currentPresentation) {
-                tableView.performBatchUpdates(nil)
+                tableView.beginUpdates()
+                tableView.endUpdates()
             }
             
             return descriptionCell

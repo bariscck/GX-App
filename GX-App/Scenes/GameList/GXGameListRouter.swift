@@ -17,16 +17,16 @@ final class GXGameListRouter: GXGameListRouterType {
     // MARK: BUILDER
     
     private weak var viewController: UIViewController?
-    private var gameService: GXGameServiceType?
+    private var gamesRepository: GXGamesRepositoryType?
     
-    static func build(gameService: GXGameServiceType) -> UIViewController {
-        let viewModel = GXGameListViewModel(dependency: .init(gameService: gameService))
+    static func build(gamesRepository: GXGamesRepositoryType) -> UIViewController {
+        let viewModel = GXGameListViewModel(dependency: .init(gamesRepository: gamesRepository))
         let router = GXGameListRouter()
         let viewController = GXGameListViewController(viewModel: viewModel,
                                                       router: router)
         
         router.viewController = viewController
-        router.gameService = gameService
+        router.gamesRepository = gamesRepository
         
         return viewController
     }
@@ -34,10 +34,10 @@ final class GXGameListRouter: GXGameListRouterType {
     // MARK: ROUTING
  
     func pushGameDetailVC(for presentation: GXGamePresentation) {
-        guard let gameService = gameService else {
-            fatalError("Error: \(String(describing: self)) does not have \(String(describing: GXGameService.self))")
+        guard let gamesRepository = gamesRepository else {
+            fatalError("Error: \(String(describing: self)) does not have \(String(describing: GXGamesRepositoryType.self))")
         }
-        let gameDetailViewController = GXGameDetailRouter.build(presentation: presentation, gameService: gameService)
+        let gameDetailViewController = GXGameDetailRouter.build(presentation: presentation, gamesRepository: gamesRepository)
         viewController?.navigationController?.pushViewController(gameDetailViewController, animated: true)
     }
     

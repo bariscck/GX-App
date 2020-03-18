@@ -36,6 +36,10 @@ final class GXGameHeaderView: UIView {
     
     // MARK: MAIN
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    
     func setup(with presentation: GXGamePresentation) {
         coverImageView.loadRemoteImage(url: presentation.coverImageURL)
         titleLabel.text = presentation.title

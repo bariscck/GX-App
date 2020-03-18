@@ -90,6 +90,7 @@
             </collectionViewCellContentView>
             <size key="customSize" width="375" height="136"/>
             <connections>
+                <outlet property="containerView" destination="WMF-lI-HK5" id="bTW-fB-Pce"/>
                 <outlet property="coverImageView" destination="y4j-9J-9mQ" id="r7A-W5-LBy"/>
                 <outlet property="genresLabel" destination="ikX-YS-CBb" id="Ujz-5E-YpG"/>
                 <outlet property="metacriticContainerStack" destination="Eru-VH-jXd" id="bo8-Ma-iM7"/>

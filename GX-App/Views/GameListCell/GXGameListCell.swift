@@ -12,6 +12,12 @@ final class GXGameListCell: UICollectionViewCell {
 
     // MARK: VIEWS
     
+    @IBOutlet weak var containerView: UIView! {
+        didSet {
+            containerView.backgroundColor = GXTheme.backgroundColor
+        }
+    }
+    
     @IBOutlet private weak var coverImageView: UIImageView! {
         didSet {
             coverImageView.backgroundColor = GXTheme.tableGroupedBackgroundColor
@@ -67,7 +73,7 @@ final class GXGameListCell: UICollectionViewCell {
             metacriticContainerStack.isHidden = true
         }
         
-        backgroundColor = color(forViewedState: presentation.isViewedBefore)
+        containerView.backgroundColor = color(forViewedState: presentation.isViewedBefore)
     }
     
     private func color(forViewedState isViewed: Bool) -> UIColor {

@@ -19,8 +19,8 @@ final class GXGameDetailRouter: GXGameDetailRouterType {
     
     private weak var viewController: UIViewController?
     
-    static func build(presentation: GXGamePresentation, gameService: GXGameServiceType) -> UIViewController {
-        let viewModel = GXGameDetailViewModel(dependency: .init(presentation: presentation, gameService: gameService))
+    static func build(presentation: GXGamePresentation, gamesRepository: GXGamesRepositoryType) -> UIViewController {
+        let viewModel = GXGameDetailViewModel(dependency: .init(presentation: presentation, gamesRepository: gamesRepository))
         let router = GXGameDetailRouter()
         let viewController = GXGameDetailViewController(viewModel: viewModel,
                                                         router: router)

@@ -31,7 +31,7 @@ final class GXGameDetailViewModel: GXGameDetailViewModelType, GXGameDetailViewMo
     
     struct Dependency {
         let presentation: GXGamePresentation
-        let gameService: GXGameServiceType
+        let gamesRepository: GXGamesRepositoryType
     }
     
     // MARK: INITIALIZERS
@@ -77,14 +77,18 @@ final class GXGameDetailViewModel: GXGameDetailViewModelType, GXGameDetailViewMo
     
     func fetchGameDetail() {
         isLoading = true
-        dependency.gameService.fetchGameDetail(gameId: dependency.presentation.id) { [weak self] (result) in
-            self?.isLoading = false
+        
+        dependency.gamesRepository.fetchGameDetail(gameId: dependency.presentation.id) { [weak self] (result) in
+            guard let strongSelf = self else { return }
+            strongSelf.isLoading = false
+            
             switch result {
-            case .success(let game):
-                let presentation = GXGamePresentation.init(game: game)
-                self?.currentPresentation = presentation
+            case .success(let entity):
+                guard let entity = entity else { return }
+                let presentation = GXGamePresentation.init(entity: entity)
+                strongSelf.currentPresentation = presentation
             case .failure(let error):
-                self?.didReceiveServiceErrorNotifier(error)
+                strongSelf.didReceiveServiceErrorNotifier(error)
             }
         }
     }
