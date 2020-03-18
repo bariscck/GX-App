@@ -11,8 +11,9 @@ import Foundation
 protocol GXGameListViewModelInputs {
     func viewDidLoaded()
     func fetchGameList()
-    func setSearchActive(isActive: Bool)
     func setDisplayingIndex(index: Int)
+    func setSearchActive(isActive: Bool)
+    func setSearchQuery(query: String?)
 }
 
 protocol GXGameListViewModelOutputs {
@@ -59,58 +60,79 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
         }
     }
     
-    private var isLoading: Bool = false
-    
     private var viewedGamePresentationIds: Set<Int> = []
     
     private var isSearchActive: Bool = false {
         didSet {
-            if oldValue != isSearchActive {
-                if isSearchActive { } else {
-                    _searchedPresentations.removeAll()
-                }
+            reloadNotifier()
+        }
+    }
+    private var isLoading: Bool = false
+    private var searchQuery: String? {
+        didSet {
+            guard let searchQuery = searchQuery, searchQuery.count > 3 else {
+                _searchedPresentationsResults = []
+                reloadNotifier()
+                return
             }
-            
+        }
+    }
+    
+    private var _gamePresentationsResults: [GXGamePresentation] = [] {
+        didSet {
+            _gamePresentationsResults = _gamePresentationsResults.unique()
+            reloadNotifier()
+        }
+    }
+    private var _searchedPresentationsResults: [GXGamePresentation] = [] {
+        didSet {
+            _searchedPresentationsResults = _searchedPresentationsResults.unique()
             reloadNotifier()
         }
     }
     
-    private var _gamePresentations: [GXGamePresentation] = []
-    private var _searchedPresentations: [GXGamePresentation] = []
-    
     private var displayedPresentations: [GXGamePresentation] {
         get {
-            return isSearchActive ? _searchedPresentations : _gamePresentations
+            isSearchActive ? _searchedPresentationsResults : _gamePresentationsResults
         }
     }
     
     // MARK: INPUTS
     
     func viewDidLoaded() {
-        setSearchActive(isActive: false)
         fetchGameList()
     }
     
     func fetchGameList() {
         guard isLoading == false else { return }
         
+        let query = searchQuery?.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        if let query = query {
+            guard query.count > 3 else {
+                return
+            }
+        }
+        
         isLoading = true
-        dependency.gamesRepository.fetchGameList(query: nil) { [weak self] (result) in
+        
+        dependency.gamesRepository.fetchGameList(query: searchQuery) { [weak self] (result) in
             guard let strongSelf = self else { return }
             
             switch result {
             case .success(let entities):
                 let presentations = entities.map(GXGamePresentation.init(entity:))
                 
-                if strongSelf.isSearchActive {
-                    strongSelf._searchedPresentations.append(contentsOf: presentations)
+                if let query = query, query.count > 3 {
+                    strongSelf._searchedPresentationsResults.append(contentsOf: presentations)
                 } else {
-                    strongSelf._gamePresentations.append(contentsOf: presentations)
+                    strongSelf._gamePresentationsResults.append(contentsOf: presentations)
                 }
                 
                 strongSelf.isLoading = false
                 strongSelf.reloadNotifier()
             case .failure(let error):
+                strongSelf.isLoading = false
                 strongSelf.didReceiveServiceErrorNotifier(error)
             }
         }
@@ -121,7 +143,11 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     }
     
     func setSearchActive(isActive: Bool) {
-        self.isSearchActive = isActive
+        isSearchActive = isActive
+    }
+    
+    func setSearchQuery(query: String?) {
+        searchQuery = query
     }
     
     // MARK: OUTPUTS
@@ -145,4 +171,17 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
         return item
     }
     
+    // MARK: HELPERS
+    
+    private func checkIsSearching(for query: String?) -> Bool {
+        return (query ?? "").trimmingCharacters(in: .whitespacesAndNewlines).count > 0
+    }
+    
+}
+
+extension Sequence where Iterator.Element: Hashable {
+    func unique() -> [Iterator.Element] {
+        var seen: Set<Iterator.Element> = []
+        return filter { seen.insert($0).inserted }
+    }
 }

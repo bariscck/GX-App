@@ -23,6 +23,7 @@ final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
         self.viewModel = viewModel
         self.router = router
         super.init(nibName: nil, bundle: nil)
+        hidesBottomBarWhenPushed = true
         edgesForExtendedLayout = []
     }
     

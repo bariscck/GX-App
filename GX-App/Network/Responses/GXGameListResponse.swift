@@ -29,7 +29,7 @@ struct GXGameResponse: Decodable {
     
     var id: Int
     var name: String
-    var backgroundImage: String
+    var backgroundImage: String?
     var metacritic: Int?
     var genres: [Genre]
     var descriptionText: String?

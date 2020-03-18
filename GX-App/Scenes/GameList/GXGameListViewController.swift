@@ -140,20 +140,20 @@ extension GXGameListViewController: UICollectionViewDelegateFlowLayout {
 extension GXGameListViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
-        let searchQuery = searchController.searchBar.text ?? ""
-        print(searchQuery)
+        let query = searchController.searchBar.text ?? ""
+        viewModel.inputs.setSearchQuery(query: query)
     }
     
 }
 
 extension GXGameListViewController: UISearchBarDelegate {
     
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        viewModel.inputs.setSearchActive(isActive: true)
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        viewModel.inputs.fetchGameList()
     }
     
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        viewModel.inputs.setSearchActive(isActive: false)
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        viewModel.inputs.setSearchActive(isActive: true)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

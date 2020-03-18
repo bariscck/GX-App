@@ -13,7 +13,7 @@ final class GXGameEntity: Object {
     
     @objc dynamic private(set) var id: Int = 0
     @objc dynamic private(set) var name: String = ""
-    @objc dynamic private(set) var backgroundImage: String = ""
+    @objc dynamic private(set) var backgroundImage: String?
     let genres = List<GXGenreEntity>()
     let metacritic = RealmOptional<Int>()
     

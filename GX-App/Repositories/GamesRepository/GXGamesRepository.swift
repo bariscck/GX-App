@@ -46,40 +46,40 @@ final class GXGamesRepository: GXGamesRepositoryType {
     // MARK: REPOSITORY
     
     func fetchGameList(query: String?, completion: @escaping (Result<[GXGameEntity], GXGameServiceError>) -> Void) {
-        // 1. Fetching from local
+        // Fetching from local
         localRepository.fetchGameList(query: query) { [weak self] (result) in
             guard let strongSelf = self else { return }
-            // 2. Displaying local results if remote doesnt have next page
+            // Displaying local results if remote doesnt have next page
             if strongSelf.remoteHasNextPage == false {
                 completion(result)
             }
-            // 3. Fetching from remote
+            // Fetching from remote
             strongSelf.remoteRepository.fetchGameList(query: query, completion: { (result) in
-                // 4. Updating local results if success
-                if case .success(let response) = result {
+                // Updating local results if its not have query and result is successful
+                if query == nil, case .success(let response) = result {
                     try! strongSelf.storageContext.save(response, update: true)
                 }
-                // 5. Displaying updated data
+                // Displaying updated data
                 completion(result)
             })
         }
     }
     
     func fetchGameDetail(gameId: Int, completion: @escaping (Result<GXGameDetailEntity?, GXGameServiceError>) -> Void) {
-        // 1. Fetching from local
+        // Fetching from local
         localRepository.fetchGameDetail(gameId: gameId) { [weak self] (result) in
             guard let strongSelf = self else { return }
-            // 2. Displaying local result
+            // Displaying local result
             completion(result)
-            // 3. Fetching from remote
+            // Fetching from remote
             strongSelf.remoteRepository.fetchGameDetail(gameId: gameId, completion: { (result) in
-                // 4. Updating local result if success and result is not empty
+                // Updating local result if success and result is not empty
                 if case .success(let response) = result {
                     if let response = response {
                         try! strongSelf.storageContext.save(response, update: true)
                     }
                 }
-                // 5. Displaying updated data
+                // Displaying updated data
                 completion(result)
             })
         }
