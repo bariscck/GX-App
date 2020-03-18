@@ -38,6 +38,9 @@
 		2365EF002421271E00A70EE7 /* gamedetail-response.json in Resources */ = {isa = PBXBuildFile; fileRef = 2365EEFE2421271D00A70EE7 /* gamedetail-response.json */; };
 		2365EF012421271E00A70EE7 /* gamelist-response.json in Resources */ = {isa = PBXBuildFile; fileRef = 2365EEFF2421271E00A70EE7 /* gamelist-response.json */; };
 		2365EF0324212A0100A70EE7 /* GXGamePresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2365EF0224212A0100A70EE7 /* GXGamePresentation.swift */; };
+		23B835ED24223C0A004AA241 /* GXStorageContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B835EC24223C0A004AA241 /* GXStorageContext.swift */; };
+		23B835EF24223C30004AA241 /* GXStorageConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B835EE24223C30004AA241 /* GXStorageConfiguration.swift */; };
+		23B835F124223C65004AA241 /* GXRealmStorageContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B835F024223C65004AA241 /* GXRealmStorageContext.swift */; };
 		23BDF0052420D8D30055C3B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF0042420D8D30055C3B9 /* AppDelegate.swift */; };
 		23BDF0072420D8D30055C3B9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF0062420D8D30055C3B9 /* SceneDelegate.swift */; };
 		23BDF00E2420D8D40055C3B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23BDF00D2420D8D40055C3B9 /* Assets.xcassets */; };
@@ -51,8 +54,6 @@
 		23F521B324220A0500AE157E /* GXGamesLocalRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F521B224220A0500AE157E /* GXGamesLocalRepository.swift */; };
 		23F521B524220A5D00AE157E /* GXNetworkAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F521B424220A5D00AE157E /* GXNetworkAdapter.swift */; };
 		23F521BB2422148E00AE157E /* GXGamesMockRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F521BA2422148E00AE157E /* GXGamesMockRepository.swift */; };
-		23F521BD24221D0F00AE157E /* GXLocalDatabaseType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F521BC24221D0F00AE157E /* GXLocalDatabaseType.swift */; };
-		23F521C0242220D200AE157E /* GXRealmDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F521BF242220D200AE157E /* GXRealmDatabase.swift */; };
 		B2C50DB42FA7F421E8C07B7A /* Pods_GX_AppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F85AEF85AB3E3B570275B0D0 /* Pods_GX_AppTests.framework */; };
 		C4D0D2D408305D83FAFACAB6 /* Pods_GX_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46CA67557EB134385BAF3B7 /* Pods_GX_App.framework */; };
 /* End PBXBuildFile section */
@@ -99,6 +100,9 @@
 		2365EEFE2421271D00A70EE7 /* gamedetail-response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "gamedetail-response.json"; sourceTree = "<group>"; };
 		2365EEFF2421271E00A70EE7 /* gamelist-response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "gamelist-response.json"; sourceTree = "<group>"; };
 		2365EF0224212A0100A70EE7 /* GXGamePresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXGamePresentation.swift; sourceTree = "<group>"; };
+		23B835EC24223C0A004AA241 /* GXStorageContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXStorageContext.swift; sourceTree = "<group>"; };
+		23B835EE24223C30004AA241 /* GXStorageConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXStorageConfiguration.swift; sourceTree = "<group>"; };
+		23B835F024223C65004AA241 /* GXRealmStorageContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXRealmStorageContext.swift; sourceTree = "<group>"; };
 		23BDF0012420D8D30055C3B9 /* GameX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23BDF0042420D8D30055C3B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23BDF0062420D8D30055C3B9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -116,8 +120,6 @@
 		23F521B224220A0500AE157E /* GXGamesLocalRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXGamesLocalRepository.swift; sourceTree = "<group>"; };
 		23F521B424220A5D00AE157E /* GXNetworkAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXNetworkAdapter.swift; sourceTree = "<group>"; };
 		23F521BA2422148E00AE157E /* GXGamesMockRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXGamesMockRepository.swift; sourceTree = "<group>"; };
-		23F521BC24221D0F00AE157E /* GXLocalDatabaseType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXLocalDatabaseType.swift; sourceTree = "<group>"; };
-		23F521BF242220D200AE157E /* GXRealmDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXRealmDatabase.swift; sourceTree = "<group>"; };
 		3EE3753461A352133EECF954 /* Pods-GX-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GX-App.release.xcconfig"; path = "Target Support Files/Pods-GX-App/Pods-GX-App.release.xcconfig"; sourceTree = "<group>"; };
 		84D0CD475134FA2149FDB9AA /* Pods-GX-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GX-App.debug.xcconfig"; path = "Target Support Files/Pods-GX-App/Pods-GX-App.debug.xcconfig"; sourceTree = "<group>"; };
 		C6089B02A5BA802F4689B1A3 /* Pods-GX-AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GX-AppTests.debug.xcconfig"; path = "Target Support Files/Pods-GX-AppTests/Pods-GX-AppTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -281,6 +283,15 @@
 			path = Presentations;
 			sourceTree = "<group>";
 		};
+		236D92A524223D5C0095966F /* StorageContext */ = {
+			isa = PBXGroup;
+			children = (
+				23B835EC24223C0A004AA241 /* GXStorageContext.swift */,
+				23B835EE24223C30004AA241 /* GXStorageConfiguration.swift */,
+			);
+			path = StorageContext;
+			sourceTree = "<group>";
+		};
 		23BDEFF82420D8D30055C3B9 = {
 			isa = PBXGroup;
 			children = (
@@ -307,7 +318,7 @@
 				23BDF0272420DA720055C3B9 /* App */,
 				2365EEDD24210FC000A70EE7 /* Network */,
 				23F521BE24221D5800AE157E /* Database */,
-				23CAA75724217B6F0007D2FA /* Repository */,
+				23CAA75724217B6F0007D2FA /* Repositories */,
 				23BDF0282420DA860055C3B9 /* Scenes */,
 				2365EEF5242113A400A70EE7 /* Models */,
 				2365A8D62420DF8900F48D9C /* Views */,
@@ -350,12 +361,12 @@
 			path = Scenes;
 			sourceTree = "<group>";
 		};
-		23CAA75724217B6F0007D2FA /* Repository */ = {
+		23CAA75724217B6F0007D2FA /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
 				23CAA75824217B8A0007D2FA /* GamesRepository */,
 			);
-			path = Repository;
+			path = Repositories;
 			sourceTree = "<group>";
 		};
 		23CAA75824217B8A0007D2FA /* GamesRepository */ = {
@@ -406,8 +417,8 @@
 		23F521BE24221D5800AE157E /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				23F521BC24221D0F00AE157E /* GXLocalDatabaseType.swift */,
-				23F521BF242220D200AE157E /* GXRealmDatabase.swift */,
+				236D92A524223D5C0095966F /* StorageContext */,
+				23B835F024223C65004AA241 /* GXRealmStorageContext.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -616,20 +627,21 @@
 				2365EEFD2421255A00A70EE7 /* Bundle+Extensions.swift in Sources */,
 				23F521B1242209F000AE157E /* GXGamesRemoteRepository.swift in Sources */,
 				23CAA754242168E00007D2FA /* UICollectionView+Extensions.swift in Sources */,
+				23B835EF24223C30004AA241 /* GXStorageConfiguration.swift in Sources */,
 				2365EEF7242113C400A70EE7 /* GXGameEntity.swift in Sources */,
 				2365EED8242104EA00A70EE7 /* TitledCell.swift in Sources */,
 				2365A8F52420F82200F48D9C /* UIView+Extensions.swift in Sources */,
 				23CAA75C24217BB10007D2FA /* GXGamesRepository.swift in Sources */,
+				23B835F124223C65004AA241 /* GXRealmStorageContext.swift in Sources */,
 				2365A8E52420EAE200F48D9C /* GXTheme.swift in Sources */,
 				2365A8F12420F66C00F48D9C /* GXGameHeaderView.swift in Sources */,
 				2365A8F72420FADA00F48D9C /* GXFeedbackGenerator.swift in Sources */,
 				23F521B324220A0500AE157E /* GXGamesLocalRepository.swift in Sources */,
-				23F521BD24221D0F00AE157E /* GXLocalDatabaseType.swift in Sources */,
+				23B835ED24223C0A004AA241 /* GXStorageContext.swift in Sources */,
 				23BDF0052420D8D30055C3B9 /* AppDelegate.swift in Sources */,
 				2365A8E92420F1E900F48D9C /* GXGameDetailViewController.swift in Sources */,
 				2365EEDB242106A400A70EE7 /* UILabel+Extensions.swift in Sources */,
 				2365A8D52420DD1600F48D9C /* GXGameListRouter.swift in Sources */,
-				23F521C0242220D200AE157E /* GXRealmDatabase.swift in Sources */,
 				2365A8EE2420F20100F48D9C /* GXGameDetailRouter.swift in Sources */,
 				2365A8D92420DFFA00F48D9C /* GXGameListCell.swift in Sources */,
 				2365A8EC2420F1F500F48D9C /* GXGameDetailViewModel.swift in Sources */,

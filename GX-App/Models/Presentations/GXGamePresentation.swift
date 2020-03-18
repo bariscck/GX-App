@@ -38,7 +38,7 @@ final class GXGamePresentation {
     
     private(set) var isViewedBefore: Bool = false
  
-    func setViewed() { 
+    func setViewed() {
         isViewedBefore = true
     }
     

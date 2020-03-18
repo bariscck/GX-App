@@ -30,7 +30,8 @@ final class AppRouter {
     
     private func makeGameListVC() -> UIViewController {
         let networkAdapter = GXNetworkAdapter<GameXAPI>()
-        let repository = GXGamesRepository(networkAdapter: networkAdapter)
+        let storageContext = try! GXRealmStorageContext()
+        let repository = GXGamesRepository(networkAdapter: networkAdapter, storageContext: storageContext)
         let gameListVC = GXGameListRouter.build(gamesRepository: repository)
         return gameListVC
     }
