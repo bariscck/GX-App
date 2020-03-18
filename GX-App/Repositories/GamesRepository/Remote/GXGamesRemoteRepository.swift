@@ -20,15 +20,22 @@ final class GXGamesRemoteRepository: GXGamesRepositoryType {
     
     // MARK: PROPERTIES
     
-    private var nextPageURL: URL?
+    public var hasNextPageNotifier: ((Bool) -> Void)?
+    
+    private var nextPageURL: URL? {
+        didSet {
+            hasNextPageNotifier?(nextPageURL != nil)
+        }
+    }
     
     // MARK: REPOSITORY
     
     func fetchGameList(query: String?, completion: @escaping (Result<[GXGameEntity], GXGameServiceError>) -> Void) {
         networkAdapter.request(.games(query: query, nextURL: nextPageURL)) { [weak self] (result: Result<GXGameListResponse, Error>) in
+            guard let strongSelf = self else { return }
             switch result {
             case .success(let response):
-                self?.nextPageURL = response.next
+                strongSelf.nextPageURL = response.next
                 let entities: [GXGameEntity] = response.results.map(GXGameEntity.init(gameResponse:))
                 completion(.success(entities))
             case .failure(let error):

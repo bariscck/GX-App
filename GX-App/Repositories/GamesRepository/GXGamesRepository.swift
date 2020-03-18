@@ -32,20 +32,32 @@ final class GXGamesRepository: GXGamesRepositoryType {
         remoteRepository = GXGamesRemoteRepository(networkAdapter: networkAdapter)
         localRepository = GXGamesLocalRepository(storageContext: storageContext)
         self.storageContext = storageContext
+        
+        remoteRepository.hasNextPageNotifier = { [weak self] hasNextPage in
+            guard let strongSelf = self else { return }
+            strongSelf.remoteHasNextPage = hasNextPage
+        }
     }
+    
+    // MARK: PROPERTIES
+    
+    private var remoteHasNextPage: Bool = false
     
     // MARK: REPOSITORY
     
     func fetchGameList(query: String?, completion: @escaping (Result<[GXGameEntity], GXGameServiceError>) -> Void) {
         // 1. Fetching from local
         localRepository.fetchGameList(query: query) { [weak self] (result) in
-            // 2. Displaying local results
-            completion(result)
+            guard let strongSelf = self else { return }
+            // 2. Displaying local results if remote doesnt have next page
+            if strongSelf.remoteHasNextPage == false {
+                completion(result)
+            }
             // 3. Fetching from remote
-            self?.remoteRepository.fetchGameList(query: query, completion: { (result) in
+            strongSelf.remoteRepository.fetchGameList(query: query, completion: { (result) in
                 // 4. Updating local results if success
                 if case .success(let response) = result {
-                    try! self?.storageContext.save(response, update: true)
+                    try! strongSelf.storageContext.save(response, update: true)
                 }
                 // 5. Displaying updated data
                 completion(result)
@@ -56,14 +68,15 @@ final class GXGamesRepository: GXGamesRepositoryType {
     func fetchGameDetail(gameId: Int, completion: @escaping (Result<GXGameDetailEntity?, GXGameServiceError>) -> Void) {
         // 1. Fetching from local
         localRepository.fetchGameDetail(gameId: gameId) { [weak self] (result) in
+            guard let strongSelf = self else { return }
             // 2. Displaying local result
             completion(result)
             // 3. Fetching from remote
-            self?.remoteRepository.fetchGameDetail(gameId: gameId, completion: { (result) in
+            strongSelf.remoteRepository.fetchGameDetail(gameId: gameId, completion: { (result) in
                 // 4. Updating local result if success and result is not empty
                 if case .success(let response) = result {
                     if let response = response {
-                        try! self?.storageContext.save(response, update: true)
+                        try! strongSelf.storageContext.save(response, update: true)
                     }
                 }
                 // 5. Displaying updated data

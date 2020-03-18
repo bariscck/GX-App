@@ -69,7 +69,6 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
                 if isSearchActive { } else {
                     _searchedPresentations.removeAll()
                 }
-                //_searchedNextPageURL = nil
             }
             
             reloadNotifier()
@@ -98,7 +97,6 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
         isLoading = true
         dependency.gamesRepository.fetchGameList(query: nil) { [weak self] (result) in
             guard let strongSelf = self else { return }
-            strongSelf.isLoading = false
             
             switch result {
             case .success(let entities):
@@ -110,6 +108,7 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
                     strongSelf._gamePresentations.append(contentsOf: presentations)
                 }
                 
+                strongSelf.isLoading = false
                 strongSelf.reloadNotifier()
             case .failure(let error):
                 strongSelf.didReceiveServiceErrorNotifier(error)

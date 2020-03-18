@@ -46,28 +46,3 @@ final class GXGenreEntity: Object {
         name = genre.name
     }
 }
-
-//func update(with gameResponse: GXGameResponse) {
-//    id = gameResponse.id
-//    name = gameResponse.name
-//    backgroundImage = gameResponse.backgroundImage
-//
-//    if let descriptionText = gameResponse.descriptionText, descriptionText.count > 0 {
-//        self.descriptionText = descriptionText
-//    }
-//
-//    if let descriptionTextRaw = gameResponse.descriptionTextRaw, descriptionTextRaw.count > 0 {
-//        self.descriptionTextRaw = descriptionTextRaw
-//    }
-//
-//    if let reddit = gameResponse.reddit {
-//        self.reddit = reddit
-//    }
-//
-//    if let website = gameResponse.website {
-//        self.website = website
-//    }
-//
-//    genres.append(objectsIn: gameResponse.genres.map(GXGenreEntity.init(genre:)))
-//    metacritic.value = gameResponse.metacritic
-//}

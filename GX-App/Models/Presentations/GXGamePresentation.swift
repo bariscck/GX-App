@@ -30,19 +30,22 @@ final class GXGamePresentation {
     
     private(set) var isViewedBefore: Bool = false
     
-    init(entity: GXGameEntity?) {
-        id = entity?.id ?? 0
-        title = entity?.name ?? ""
-        coverImageURL = URL(string: entity?.backgroundImage ?? "")
-        metacriticText = String(entity?.metacritic.value ?? 0)
-        genresText = entity?.genres.compactMap({ $0.name }).joined(separator: ", ") ?? ""
+    init(entity: GXGameEntity) {
+        id = entity.id
+        title = entity.name
+        coverImageURL = URL(string: entity.backgroundImage)
+        metacriticText = String(entity.metacritic.value ?? 0)
+        genresText = entity.genres.map { $0.name }.joined(separator: ", ")
     }
     
 }
 
 extension GXGamePresentation {
-    convenience init(detailEntity: GXGameDetailEntity) {
-        self.init(entity: detailEntity.owner)
+    convenience init?(detailEntity: GXGameDetailEntity) {
+        guard let owner = detailEntity.owner else {
+            return nil
+        }
+        self.init(entity: owner)
         description = detailEntity.descriptionTextRaw
         redditLink = Link(type: .reddit, url: URL(string: detailEntity.reddit ?? ""))
         websiteLink = Link(type: .website, url: URL(string: detailEntity.website ?? ""))

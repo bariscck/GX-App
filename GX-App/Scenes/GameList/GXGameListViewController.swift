@@ -71,7 +71,9 @@ final class GXGameListViewController: UIViewController {
     
     private func setupVMBindings() {
         viewModel.outputs.reloadNotifier = { [unowned self] in
-            self.collectionView.reloadData()
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
         }
         
         viewModel.outputs.didReceiveServiceErrorNotifier = { serviceError in
