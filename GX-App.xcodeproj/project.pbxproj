@@ -51,7 +51,8 @@
 		23F521B324220A0500AE157E /* GXGamesLocalRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F521B224220A0500AE157E /* GXGamesLocalRepository.swift */; };
 		23F521B524220A5D00AE157E /* GXNetworkAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F521B424220A5D00AE157E /* GXNetworkAdapter.swift */; };
 		23F521BB2422148E00AE157E /* GXGamesMockRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F521BA2422148E00AE157E /* GXGamesMockRepository.swift */; };
-		23F521BD24221D0F00AE157E /* GXLocalDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F521BC24221D0F00AE157E /* GXLocalDatabase.swift */; };
+		23F521BD24221D0F00AE157E /* GXLocalDatabaseType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F521BC24221D0F00AE157E /* GXLocalDatabaseType.swift */; };
+		23F521C0242220D200AE157E /* GXRealmDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F521BF242220D200AE157E /* GXRealmDatabase.swift */; };
 		B2C50DB42FA7F421E8C07B7A /* Pods_GX_AppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F85AEF85AB3E3B570275B0D0 /* Pods_GX_AppTests.framework */; };
 		C4D0D2D408305D83FAFACAB6 /* Pods_GX_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46CA67557EB134385BAF3B7 /* Pods_GX_App.framework */; };
 /* End PBXBuildFile section */
@@ -115,7 +116,8 @@
 		23F521B224220A0500AE157E /* GXGamesLocalRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXGamesLocalRepository.swift; sourceTree = "<group>"; };
 		23F521B424220A5D00AE157E /* GXNetworkAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXNetworkAdapter.swift; sourceTree = "<group>"; };
 		23F521BA2422148E00AE157E /* GXGamesMockRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXGamesMockRepository.swift; sourceTree = "<group>"; };
-		23F521BC24221D0F00AE157E /* GXLocalDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXLocalDatabase.swift; sourceTree = "<group>"; };
+		23F521BC24221D0F00AE157E /* GXLocalDatabaseType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXLocalDatabaseType.swift; sourceTree = "<group>"; };
+		23F521BF242220D200AE157E /* GXRealmDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXRealmDatabase.swift; sourceTree = "<group>"; };
 		3EE3753461A352133EECF954 /* Pods-GX-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GX-App.release.xcconfig"; path = "Target Support Files/Pods-GX-App/Pods-GX-App.release.xcconfig"; sourceTree = "<group>"; };
 		84D0CD475134FA2149FDB9AA /* Pods-GX-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GX-App.debug.xcconfig"; path = "Target Support Files/Pods-GX-App/Pods-GX-App.debug.xcconfig"; sourceTree = "<group>"; };
 		C6089B02A5BA802F4689B1A3 /* Pods-GX-AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GX-AppTests.debug.xcconfig"; path = "Target Support Files/Pods-GX-AppTests/Pods-GX-AppTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -404,7 +406,8 @@
 		23F521BE24221D5800AE157E /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				23F521BC24221D0F00AE157E /* GXLocalDatabase.swift */,
+				23F521BC24221D0F00AE157E /* GXLocalDatabaseType.swift */,
+				23F521BF242220D200AE157E /* GXRealmDatabase.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -621,11 +624,12 @@
 				2365A8F12420F66C00F48D9C /* GXGameHeaderView.swift in Sources */,
 				2365A8F72420FADA00F48D9C /* GXFeedbackGenerator.swift in Sources */,
 				23F521B324220A0500AE157E /* GXGamesLocalRepository.swift in Sources */,
-				23F521BD24221D0F00AE157E /* GXLocalDatabase.swift in Sources */,
+				23F521BD24221D0F00AE157E /* GXLocalDatabaseType.swift in Sources */,
 				23BDF0052420D8D30055C3B9 /* AppDelegate.swift in Sources */,
 				2365A8E92420F1E900F48D9C /* GXGameDetailViewController.swift in Sources */,
 				2365EEDB242106A400A70EE7 /* UILabel+Extensions.swift in Sources */,
 				2365A8D52420DD1600F48D9C /* GXGameListRouter.swift in Sources */,
+				23F521C0242220D200AE157E /* GXRealmDatabase.swift in Sources */,
 				2365A8EE2420F20100F48D9C /* GXGameDetailRouter.swift in Sources */,
 				2365A8D92420DFFA00F48D9C /* GXGameListCell.swift in Sources */,
 				2365A8EC2420F1F500F48D9C /* GXGameDetailViewModel.swift in Sources */,

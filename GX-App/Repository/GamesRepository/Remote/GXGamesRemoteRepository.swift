@@ -49,6 +49,4 @@ final class GXGamesRemoteRepository: GXGamesRepositoryType {
         }
     }
     
-    // MARK: HELPERS
-    
 }

@@ -26,10 +26,13 @@ final class GXGamesRepository: GXGamesRepositoryType {
     
     private let remoteRepository: GXGamesRemoteRepository
     private let localRepository: GXGamesLocalRepository
+    private let localDatabase: GXRealmDatabase
     
     init(networkAdapter: GXNetworkAdapter<GameXAPI>) {
         remoteRepository = GXGamesRemoteRepository(networkAdapter: networkAdapter)
-        localRepository = GXGamesLocalRepository()
+        let localDatabase = GXRealmDatabase()
+        localRepository = GXGamesLocalRepository(localDatabase: localDatabase)
+        self.localDatabase = localDatabase
     }
     
     // MARK: REPOSITORY
@@ -39,7 +42,7 @@ final class GXGamesRepository: GXGamesRepositoryType {
             completion(result)
             self?.remoteRepository.fetchGameList(query: query, completion: { (result) in
                 if case .success(let response) = result {
-                    self?.localRepository.save(objects: response)
+                    self?.localDatabase.save(models: response, update: true)
                 }
                 completion(result)
             })
@@ -52,7 +55,7 @@ final class GXGamesRepository: GXGamesRepositoryType {
             self?.remoteRepository.fetchGameDetail(gameId: gameId, completion: { (result) in
                 if case .success(let response) = result {
                     if let response = response {
-                        self?.localRepository.save(object: response)
+                        self?.localDatabase.save(model: response, update: true)
                     }
                 }
                 completion(result)

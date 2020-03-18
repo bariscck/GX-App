@@ -13,16 +13,16 @@ final class GXGamesLocalRepository: GXGamesRepositoryType {
     
     // MARK: INITIALIZERS
     
-    private let realm: Realm
+    private let localDatabase: GXRealmDatabase
     
-    init(realm: Realm = try! Realm()) {
-        self.realm = realm
+    init(localDatabase: GXRealmDatabase) {
+        self.localDatabase = localDatabase
     }
     
     // MARK: REPOSITORY
     
     func fetchGameList(query: String?, completion: @escaping (Result<[GXGameEntity], GXGameServiceError>) -> Void) {
-        let entities: [GXGameEntity] = realm.objects(GXGameEntity.self).map { $0 }
+        let entities: [GXGameEntity] = (localDatabase.objects(type: GXGameEntity.self) ?? []) as [GXGameEntity]
         
         if let query = query, query.count > 3 {
             let lowercasedQuery = query
@@ -37,22 +37,8 @@ final class GXGamesLocalRepository: GXGamesRepositoryType {
     }
     
     func fetchGameDetail(gameId: Int, completion: @escaping (Result<GXGameEntity?, GXGameServiceError>) -> Void) {
-        let entity: GXGameEntity? = realm.object(ofType: GXGameEntity.self, forPrimaryKey: gameId)
+        let entity: GXGameEntity? = localDatabase.object(type: GXGameEntity.self, primaryKey: gameId) as? GXGameEntity
         completion(.success(entity))
-    }
-    
-    // MARK: REALM
-    
-    func save(object: Object) {
-        try! realm.write({
-            realm.add(object, update: .modified)
-        })
-    }
-    
-    func save(objects: [Object]) {
-        try! realm.write({
-            realm.add(objects, update: .modified)
-        })
     }
     
 }
