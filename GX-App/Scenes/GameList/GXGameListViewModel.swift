@@ -57,7 +57,6 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
         didSet {
             if currentlyDisplayingIndex == displayedPresentations.count - 1 {
                 fetchGameList(isSearch: isSearchActive)
-                
             }
         }
     }
@@ -74,14 +73,8 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     
     private var searchQuery: String? {
         didSet {
-            defer {
-                if searchQuery != oldValue {
-                    reloadNotifier()
-                }
-            }
-            guard let searchQuery = searchQuery, searchQuery.count > 3 else {
+            if searchQuery != oldValue {
                 _searchedPresentationsResults = []
-                return
             }
         }
     }
@@ -135,8 +128,6 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
                 strongSelf.isLoading = false
                 
                 let presentations = entities.map(GXGamePresentation.init(entity:))
-                
-                print(presentations.map { $0.title })
                 
                 if isSearch {
                     strongSelf._searchedPresentationsResults.append(contentsOf: presentations)

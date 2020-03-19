@@ -52,20 +52,25 @@ final class GXGamesRepository: GXGamesRepositoryType {
             remoteRepository.fetchGameList(query: query, completion: completion)
         } else {
             // Fetching from local
-            localRepository.fetchGameList(query: query) { [weak self] (result) in
+            localRepository.fetchGameList(query: query) { [weak self] (localResult) in
                 guard let strongSelf = self else { return }
                 // Displaying local results if remote doesnt have next page
                 if strongSelf.remoteHasNextPage == false {
-                    completion(result)
+                    completion(localResult)
                 }
+                
                 // Fetching from remote
-                strongSelf.remoteRepository.fetchGameList(query: query, completion: { (result) in
-                    // Updating local results if result is successful
-                    if case .success(let response) = result {
+                strongSelf.remoteRepository.fetchGameList(query: query, completion: { (remoteResult) in
+                    if case .success(let response) = remoteResult {
+                        // Remove old local results
+                        if case .success(let response) = localResult {
+                            response.forEach({ try! strongSelf.storageContext.delete($0) })
+                        }
+                        // Save results if result is successful
                         try! strongSelf.storageContext.save(response, update: true)
                     }
                     // Displaying updated data
-                    completion(result)
+                    completion(remoteResult)
                 })
             }
         }
