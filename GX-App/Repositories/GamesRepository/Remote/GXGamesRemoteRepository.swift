@@ -32,10 +32,10 @@ final class GXGamesRemoteRepository: GXGamesRepositoryType {
         }
     }
     
-    private var _normalNextPageURL: URL? {
+    private var _gamesNextPageURL: URL? {
         didSet {
             guard isSearching == false else { return }
-            hasNextPageNotifier?(_normalNextPageURL != nil)
+            hasNextPageNotifier?(_gamesNextPageURL != nil)
         }
     }
     
@@ -47,12 +47,12 @@ final class GXGamesRemoteRepository: GXGamesRepositoryType {
     }
     
     private var nextPageURL: URL? {
-        return isSearching ? _searcingNextPageURL : _normalNextPageURL
+        return isSearching ? _searcingNextPageURL : _gamesNextPageURL
     }
     
     // MARK: REPOSITORY
     
-    func fetchGameList(query: String?, completion: @escaping (Result<[GXGameEntity], GXGameServiceError>) -> Void) {
+    func fetchGameList(query: String?, completion: @escaping (Result<GXGameListEntity, GXGameServiceError>) -> Void) {
         if let query = query {
             isSearching = query.count > 0
         } else {
@@ -66,15 +66,11 @@ final class GXGamesRemoteRepository: GXGamesRepositoryType {
                 if strongSelf.isSearching {
                     strongSelf._searcingNextPageURL = response.next
                 } else {
-                    strongSelf._normalNextPageURL = response.next
+                    strongSelf._gamesNextPageURL = response.next
                 }
                 
-                guard let results = response.results, results.count > 0 else {
-                    return completion(.success([]))
-                }
-                
-                let entities: [GXGameEntity] = results.map(GXGameEntity.init(gameResponse:))
-                completion(.success(entities))
+                let entity = GXGameListEntity(gameListResponse: response, type: .list)
+                completion(.success(entity))
             case .failure(let error):
                 completion(.failure(.serverError(error)))
             }

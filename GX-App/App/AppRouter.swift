@@ -23,6 +23,7 @@ final class AppRouter {
     func start() {
         let rootViewController = makeGameListVC()
         let navigationController = UINavigationController(rootViewController: rootViewController)
+        navigationController.view.backgroundColor = GXTheme.backgroundColor
         navigationController.navigationBar.prefersLargeTitles = true
         
         let tabbarItem = UITabBarItem(title: "Games", image: UIImage(named: "gamepad"), selectedImage: nil)

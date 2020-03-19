@@ -16,7 +16,7 @@ enum GXGameServiceError: Error {
 }
 
 protocol GXGamesRepositoryType {
-    func fetchGameList(query: String?, completion: @escaping (Result<[GXGameEntity], GXGameServiceError>) -> Void)
+    func fetchGameList(query: String?, completion: @escaping (Result<GXGameListEntity, GXGameServiceError>) -> Void)
     func fetchGameDetail(gameId: Int, completion: @escaping (Result<GXGameDetailEntity?, GXGameServiceError>) -> Void)
 }
 
@@ -42,10 +42,11 @@ final class GXGamesRepository: GXGamesRepositoryType {
     // MARK: PROPERTIES
     
     private var remoteHasNextPage: Bool = false
+    private var isRemoteFirstResponse: Bool = true
     
     // MARK: REPOSITORY
     
-    func fetchGameList(query: String?, completion: @escaping (Result<[GXGameEntity], GXGameServiceError>) -> Void) {
+    func fetchGameList(query: String?, completion: @escaping (Result<GXGameListEntity, GXGameServiceError>) -> Void) {
         
         if let query = query {
             // Fetching from remote
@@ -58,13 +59,15 @@ final class GXGamesRepository: GXGamesRepositoryType {
                 if strongSelf.remoteHasNextPage == false {
                     completion(localResult)
                 }
-                
                 // Fetching from remote
                 strongSelf.remoteRepository.fetchGameList(query: query, completion: { (remoteResult) in
-                    if case .success(let response) = remoteResult {
-                        // Remove old local results
+                    // Check its first response from remote and response result is success
+                    // Save only first response results
+                    if strongSelf.isRemoteFirstResponse, case .success(let response) = remoteResult {
+                        strongSelf.isRemoteFirstResponse = false
+                        // Remove old local results before save new results
                         if case .success(let response) = localResult {
-                            response.forEach({ try! strongSelf.storageContext.delete($0) })
+                            try! strongSelf.storageContext.delete(response)
                         }
                         // Save results if result is successful
                         try! strongSelf.storageContext.save(response, update: true)

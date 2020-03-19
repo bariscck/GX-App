@@ -124,10 +124,10 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
             guard let strongSelf = self else { return }
             
             switch result {
-            case .success(let entities):
+            case .success(let entity):
                 strongSelf.isLoading = false
                 
-                let presentations = entities.map(GXGamePresentation.init(entity:))
+                let presentations = entity.games.map(GXGamePresentation.init(entity:))
                 
                 if isSearch {
                     strongSelf._searchedPresentationsResults.append(contentsOf: presentations)
