@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GXGameListViewController" customModule="GameX" customModuleProvider="target">
             <connections>
-                <outlet property="collectionView" destination="4lz-TJ-lHS" id="Ye8-J5-Vdk"/>
+                <outlet property="tableView" destination="atX-Ow-G6O" id="31M-b3-Laz"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -19,23 +19,17 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="4lz-TJ-lHS">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="atX-Ow-G6O">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="fg2-dh-pjt">
-                        <size key="itemSize" width="128" height="128"/>
-                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    </collectionViewFlowLayout>
-                </collectionView>
+                </tableView>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="4lz-TJ-lHS" secondAttribute="bottom" id="4Fu-i9-VvE"/>
-                <constraint firstItem="4lz-TJ-lHS" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="MSJ-r5-RwU"/>
-                <constraint firstItem="4lz-TJ-lHS" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="X6B-DC-Q9d"/>
-                <constraint firstItem="4lz-TJ-lHS" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ySa-Sl-Lo7"/>
+                <constraint firstItem="atX-Ow-G6O" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="EYi-ex-BeC"/>
+                <constraint firstItem="atX-Ow-G6O" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="K4K-Iv-7u5"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="atX-Ow-G6O" secondAttribute="trailing" id="W4J-uF-yP8"/>
+                <constraint firstAttribute="bottom" secondItem="atX-Ow-G6O" secondAttribute="bottom" id="ctT-ge-MGp"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="137.68115942028987" y="152.67857142857142"/>

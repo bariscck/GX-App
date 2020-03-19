@@ -16,6 +16,7 @@ protocol GXGameListViewModelInputs {
     func setDisplayingIndex(index: Int)
     func setSearchActive(isActive: Bool)
     func setSearchQuery(query: String?)
+    func removeFavourite(index: Int)
 }
 
 protocol GXGameListViewModelOutputs {
@@ -211,6 +212,13 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     
     func setSearchQuery(query: String?) {
         searchQuery = query
+    }
+    
+    func removeFavourite(index: Int) {
+        let removableItem = _favouritePresentationsResults[index]
+        dependency.favouritesRepository.removeFavourite(game: removableItem.entity) { [weak self] in
+            self?._favouritePresentationsResults.remove(at: index)
+        }
     }
     
     // MARK: OUTPUTS

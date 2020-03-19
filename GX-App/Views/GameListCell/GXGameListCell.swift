@@ -8,15 +8,9 @@
 
 import UIKit
 
-final class GXGameListCell: UICollectionViewCell {
+final class GXGameListCell: UITableViewCell {
 
     // MARK: VIEWS
-    
-    @IBOutlet weak var containerView: UIView! {
-        didSet {
-            containerView.backgroundColor = GXTheme.backgroundColor
-        }
-    }
     
     @IBOutlet private weak var coverImageView: UIImageView! {
         didSet {
@@ -74,11 +68,11 @@ final class GXGameListCell: UICollectionViewCell {
         }
         
         if updateBackgroundColor {
-            containerView.backgroundColor = color(forViewedState: presentation.isViewedBefore)
+            backgroundColor = color(isViewedState: presentation.isViewedBefore)
         }
     }
     
-    private func color(forViewedState isViewed: Bool) -> UIColor {
+    private func color(isViewedState isViewed: Bool) -> UIColor {
         return isViewed ? GXTheme.tableSelectedColor : GXTheme.backgroundColor
     }
     

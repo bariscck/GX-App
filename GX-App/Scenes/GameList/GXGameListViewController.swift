@@ -33,15 +33,17 @@ final class GXGameListViewController: UIViewController {
     
     // MARK: VIEWS
     
-    @IBOutlet weak var collectionView: UICollectionView! {
+    @IBOutlet weak var tableView: UITableView! {
         didSet {
-            collectionView.backgroundColor = GXTheme.tableGroupedBackgroundColor
-            collectionView.alwaysBounceVertical = true
+            tableView.backgroundColor = GXTheme.tableGroupedBackgroundColor
+            tableView.separatorStyle = .none
+            tableView.rowHeight = UITableView.automaticDimension
+            tableView.estimatedRowHeight = 136
             // Setting Datasource
-            collectionView.dataSource = self
-            collectionView.delegate = self
+            tableView.dataSource = self
+            tableView.delegate = self
             // Register Cells
-            collectionView.register(xibClass: GXGameListCell.self)
+            tableView.register(xibClass: GXGameListCell.self)
         }
     }
     
@@ -69,12 +71,6 @@ final class GXGameListViewController: UIViewController {
         viewModel.inputs.viewWillAppeared()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        // Its necessary for orientation chages
-        collectionView.collectionViewLayout.invalidateLayout()
-    }
-    
     private func setupNavigationItem(for state: GXGameListViewState) {
         switch state {
         case .gameList:
@@ -91,7 +87,7 @@ final class GXGameListViewController: UIViewController {
     private func setupVMBindings() {
         viewModel.outputs.reloadNotifier = {
             DispatchQueue.main.async { [weak self] in
-                self?.collectionView.reloadData()
+                self?.tableView.reloadData()
             }
         }
         
@@ -99,25 +95,50 @@ final class GXGameListViewController: UIViewController {
             print(serviceError)
         }
     }
+    
+    private func presentRemoveFavouriteAlert(for presentation: GXGamePresentation, index: Int) {
+        let alertController = UIAlertController(title: "Are you sure?",
+                                                message: "\(presentation.title) is removing your favourites",
+                                                preferredStyle: .alert)
+        
+        let removeAction = UIAlertAction(title: "Remove", style: .destructive) { [weak self] (act) in
+            self?.viewModel.inputs.removeFavourite(index: index)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alertController.addAction(removeAction)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true)
+    }
 
 }
 
-extension GXGameListViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension GXGameListViewController: UITableViewDataSource, UITableViewDelegate {
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.outputs.numberOfItems()
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeue(cellClass: GXGameListCell.self, forIndexPath: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeue(cellClass: GXGameListCell.self, forIndexPath: indexPath)
+        cell.selectionStyle = .none
         
         let presentation = viewModel.outputs.itemForIndex(indexPath.row)
         cell.setup(with: presentation, updateBackgroundColor: viewState == .gameList)
-    
+        
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if viewState == .gameList {
+            // Update viewmodel's displaying index for pagination
+            viewModel.inputs.setDisplayingIndex(index: indexPath.item)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Generate feedback when item selected
         GXFeedbackGenerator.generate()
         
@@ -125,37 +146,18 @@ extension GXGameListViewController: UICollectionViewDataSource, UICollectionView
         router.pushGameDetailVC(for: selectedPresentation)
     }
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if viewState == .gameList {
-            // Update viewmodel's displaying index for pagination
-            viewModel.inputs.setDisplayingIndex(index: indexPath.item)
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            presentRemoveFavouriteAlert(for: viewModel.outputs.itemForIndex(indexPath.row), index: indexPath.row)
         }
     }
     
-}
-
-extension GXGameListViewController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let orientation = UIApplication.shared.statusBarOrientation
-        let width = collectionView.bounds.width
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        if viewState == .favourites {
+            return .delete
+        }
         
-        switch orientation {
-        case .portrait, .portraitUpsideDown:
-            return CGSize(width: width, height: 136)
-        case .landscapeLeft, .landscapeRight:
-            return CGSize(width: width / 2, height: 136)
-        default:
-            return .zero
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return .zero
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return .zero
+        return .none
     }
     
 }
