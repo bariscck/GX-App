@@ -82,11 +82,13 @@ final class GXGameDetailViewModel: GXGameDetailViewModelType, GXGameDetailViewMo
             
             switch result {
             case .success(let entity):
+                strongSelf.isLoading = false
                 guard let entity = entity else { return }
                 let presentation = strongSelf.currentPresentation
                 presentation.update(with: entity)
-                strongSelf.isLoading = false
                 strongSelf.currentPresentation = presentation
+                // Add item id to viewed games
+                GXViewedGamesStorage.addViewedGame(id: presentation.id)
             case .failure(let error):
                 strongSelf.isLoading = false
                 strongSelf.didReceiveServiceErrorNotifier(error)

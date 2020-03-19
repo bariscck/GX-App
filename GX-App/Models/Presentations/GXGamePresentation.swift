@@ -19,6 +19,8 @@ final class GXGamePresentation {
         let url: URL?
     }
     
+    private let entity: GXGameEntity
+    
     private(set) var id: Int = 0
     private(set) var title: String = ""
     private(set) var coverImageURL: URL?
@@ -27,15 +29,20 @@ final class GXGamePresentation {
     private(set) var description: String?
     private(set) var redditLink: Link?
     private(set) var websiteLink: Link?
-    private(set) var isViewedBefore: Bool = false
+    
+    var isViewedBefore: Bool {
+        return GXViewedGamesStorage.checkIsViewed(id: id)
+    }
     
     init(entity: GXGameEntity) {
+        self.entity = entity
         id = entity.id
         title = entity.name
         coverImageURL = URL(string: entity.backgroundImage ?? "")
-        metacriticText = String(entity.metacritic.value ?? 0)
+        if let metacritic = entity.metacritic.value {
+            metacriticText = String(metacritic)
+        }
         genresText = entity.genres.map { $0.name }.joined(separator: ", ")
-        isViewedBefore = entity.isViewed
     }
     
     func update(with detailEntity: GXGameDetailEntity) {

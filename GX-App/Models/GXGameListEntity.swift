@@ -49,6 +49,7 @@ extension GXGameListEntity {
     enum ListType: String {
         case list = "LIST"
         case favourite = "FAVOURITE"
+        case viewed = "VIEWED"
     }
     
     static func pk(for type: ListType) -> String {
