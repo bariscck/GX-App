@@ -52,7 +52,7 @@ final class GXGamesRemoteRepository: GXGamesRepositoryType {
     
     // MARK: REPOSITORY
     
-    func fetchGameList(query: String?, completion: @escaping (Result<GXGameListEntity, GXGameServiceError>) -> Void) {
+    func fetchGameList(query: String?, completion: @escaping (Result<GXGameListEntity?, GXGameServiceError>) -> Void) {
         if let query = query {
             isSearching = query.count > 0
         } else {

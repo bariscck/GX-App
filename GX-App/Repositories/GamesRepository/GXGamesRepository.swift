@@ -16,7 +16,7 @@ enum GXGameServiceError: Error {
 }
 
 protocol GXGamesRepositoryType {
-    func fetchGameList(query: String?, completion: @escaping (Result<GXGameListEntity, GXGameServiceError>) -> Void)
+    func fetchGameList(query: String?, completion: @escaping (Result<GXGameListEntity?, GXGameServiceError>) -> Void)
     func fetchGameDetail(gameId: Int, completion: @escaping (Result<GXGameDetailEntity?, GXGameServiceError>) -> Void)
 }
 
@@ -46,7 +46,7 @@ final class GXGamesRepository: GXGamesRepositoryType {
     
     // MARK: REPOSITORY
     
-    func fetchGameList(query: String?, completion: @escaping (Result<GXGameListEntity, GXGameServiceError>) -> Void) {
+    func fetchGameList(query: String?, completion: @escaping (Result<GXGameListEntity?, GXGameServiceError>) -> Void) {
         
         if let query = query {
             // Fetching from remote
@@ -63,14 +63,18 @@ final class GXGamesRepository: GXGamesRepositoryType {
                 strongSelf.remoteRepository.fetchGameList(query: query, completion: { (remoteResult) in
                     // Check its first response from remote and response result is success
                     // Save only first response results
-                    if strongSelf.isRemoteFirstResponse, case .success(let response) = remoteResult {
+                    if strongSelf.isRemoteFirstResponse, case .success(let remoteResponse) = remoteResult {
                         strongSelf.isRemoteFirstResponse = false
                         // Remove old local results before save new results
-                        if case .success(let response) = localResult {
-                            try! strongSelf.storageContext.delete(response)
+                        if case .success(let localResponse) = localResult {
+                            if let localResponse = localResponse {
+                                try! strongSelf.storageContext.delete(localResponse)
+                            }
                         }
                         // Save results if result is successful
-                        try! strongSelf.storageContext.save(response, update: true)
+                        if let remoteResponse = remoteResponse {
+                            try! strongSelf.storageContext.save(remoteResponse, update: true)
+                        }
                     }
                     // Displaying updated data
                     completion(remoteResult)

@@ -21,20 +21,14 @@ final class GXGamesLocalRepository: GXGamesRepositoryType {
     
     // MARK: REPOSITORY
     
-    func fetchGameList(query: String?, completion: @escaping (Result<GXGameListEntity, GXGameServiceError>) -> Void) {
-        let emptyEntity = GXGameListEntity(type: .list, games: [])
-        
+    func fetchGameList(query: String?, completion: @escaping (Result<GXGameListEntity?, GXGameServiceError>) -> Void) {
         if let query = query, query.count > 0 {
-            completion(.success(emptyEntity))
+            completion(.success(nil))
         }
         
         let predicate = NSPredicate(format: "pk == %@", GXGameListEntity.pk(for: .list))
         storageContext.fetch(GXGameListEntity.self, predicate: predicate, sorted: nil) { (entities) in
-            if let entity = entities.first {
-                completion(.success(entity))
-            } else {
-                completion(.success(emptyEntity))
-            }
+            completion(.success(entities.first))
         }
     }
     
