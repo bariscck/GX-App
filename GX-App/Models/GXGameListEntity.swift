@@ -12,11 +12,17 @@ import RealmSwift
 final class GXGameListEntity: Object {
     
     @objc dynamic private(set) var pk: String = ""
-    @objc dynamic private(set) var _typeRawValue: String = ""
+    @objc dynamic private var _typeRawValue: String = ""
+    @objc dynamic private var _next: String? = nil
     let games = List<GXGameEntity>()
     
     var type: ListType {
         return ListType(rawValue: _typeRawValue) ?? .list
+    }
+    
+    var nextURL: URL? {
+        guard let next = _next else { return nil }
+        return URL(string: next)
     }
     
     override class func primaryKey() -> String? {
@@ -42,6 +48,7 @@ extension GXGameListEntity {
     func update(with gameListResponse: GXGameListResponse) {
         let gameEntities = gameListResponse.results?.compactMap(GXGameEntity.init(gameResponse:)) ?? []
         games.append(objectsIn: gameEntities)
+        _next = gameListResponse.next?.absoluteString
     }
 }
 

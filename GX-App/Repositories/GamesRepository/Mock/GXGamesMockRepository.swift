@@ -20,7 +20,7 @@ final class GXGamesMockRepository: GXGamesRepositoryType {
     
     // MARK: REPOSITORY
     
-    func fetchGameList(query: String?, completion: @escaping (Result<GXGameListEntity?, GXGameServiceError>) -> Void) {
+    func fetchGameList(query: String?, nextURL: URL?, completion: @escaping (Result<GXGameListEntity?, GXGameServiceError>) -> Void) {
         if let query = query {
             guard query.count > 3 else {
                 return completion(.failure(.queryLimitError))

@@ -16,7 +16,7 @@ enum GXGameServiceError: Error {
 }
 
 protocol GXGamesRepositoryType {
-    func fetchGameList(query: String?, completion: @escaping (Result<GXGameListEntity?, GXGameServiceError>) -> Void)
+    func fetchGameList(query: String?, nextURL: URL?, completion: @escaping (Result<GXGameListEntity?, GXGameServiceError>) -> Void)
     func fetchGameDetail(gameId: Int, completion: @escaping (Result<GXGameDetailEntity?, GXGameServiceError>) -> Void)
 }
 
@@ -32,39 +32,31 @@ final class GXGamesRepository: GXGamesRepositoryType {
         remoteRepository = GXGamesRemoteRepository(networkAdapter: networkAdapter)
         localRepository = GXGamesLocalRepository(storageContext: storageContext)
         self.storageContext = storageContext
-        
-        remoteRepository.hasNextPageNotifier = { [weak self] hasNextPage in
-            guard let strongSelf = self else { return }
-            strongSelf.remoteHasNextPage = hasNextPage
-        }
     }
     
     // MARK: PROPERTIES
     
-    private var remoteHasNextPage: Bool = false
-    private var isRemoteFirstResponse: Bool = true
+    private var isGameListFirstResponse: Bool = true
     
     // MARK: REPOSITORY
     
-    func fetchGameList(query: String?, completion: @escaping (Result<GXGameListEntity?, GXGameServiceError>) -> Void) {
-        
+    func fetchGameList(query: String?, nextURL: URL?, completion: @escaping (Result<GXGameListEntity?, GXGameServiceError>) -> Void) {
         if let query = query {
             // Fetching from remote
-            remoteRepository.fetchGameList(query: query, completion: completion)
+            remoteRepository.fetchGameList(query: query, nextURL: nextURL, completion: completion)
         } else {
             // Fetching from local
-            localRepository.fetchGameList(query: query) { [weak self] (localResult) in
+            localRepository.fetchGameList(query: query, nextURL: nextURL) { [weak self] (localResult) in
                 guard let strongSelf = self else { return }
-                // Displaying local results if remote doesnt have next page
-                if strongSelf.remoteHasNextPage == false {
+                // Displaying local results if its first response
+                if strongSelf.isGameListFirstResponse == true {
                     completion(localResult)
                 }
                 // Fetching from remote
-                strongSelf.remoteRepository.fetchGameList(query: query, completion: { (remoteResult) in
+                strongSelf.remoteRepository.fetchGameList(query: query, nextURL: nextURL, completion: { (remoteResult) in
                     // Check its first response from remote and response result is success
                     // Save only first response results
-                    if strongSelf.isRemoteFirstResponse, case .success(let remoteResponse) = remoteResult {
-                        strongSelf.isRemoteFirstResponse = false
+                    if strongSelf.isGameListFirstResponse, case .success(let remoteResponse) = remoteResult {
                         // Remove old local results before save new results
                         if case .success(let localResponse) = localResult {
                             if let localResponse = localResponse {
@@ -78,6 +70,7 @@ final class GXGamesRepository: GXGamesRepositoryType {
                     }
                     // Displaying updated data
                     completion(remoteResult)
+                    strongSelf.isGameListFirstResponse = false
                 })
             }
         }

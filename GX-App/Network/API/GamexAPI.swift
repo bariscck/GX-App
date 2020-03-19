@@ -50,9 +50,7 @@ extension GameXAPI: TargetType {
     var task: Task {
         switch self {
         case .games(let query, _):
-            var parameters: [String: Any] = [
-                "page_size": 10,
-            ]
+            var parameters: [String: Any] = [:]
             
             if let query = query {
                 parameters["search"] = query

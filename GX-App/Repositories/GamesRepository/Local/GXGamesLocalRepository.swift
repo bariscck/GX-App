@@ -21,7 +21,7 @@ final class GXGamesLocalRepository: GXGamesRepositoryType {
     
     // MARK: REPOSITORY
     
-    func fetchGameList(query: String?, completion: @escaping (Result<GXGameListEntity?, GXGameServiceError>) -> Void) {
+    func fetchGameList(query: String?, nextURL: URL?, completion: @escaping (Result<GXGameListEntity?, GXGameServiceError>) -> Void) {
         if let query = query, query.count > 0 {
             completion(.success(nil))
         }

@@ -18,57 +18,12 @@ final class GXGamesRemoteRepository: GXGamesRepositoryType {
         self.networkAdapter = networkAdapter
     }
     
-    // MARK: CALLBACKS
-    
-    public var hasNextPageNotifier: ((Bool) -> Void)?
-    
-    // MARK: PROPERTIES
-    
-    private var isSearching: Bool = false {
-        didSet {
-            if oldValue != isSearching {
-                _searcingNextPageURL = nil
-            }
-        }
-    }
-    
-    private var _gamesNextPageURL: URL? {
-        didSet {
-            guard isSearching == false else { return }
-            hasNextPageNotifier?(_gamesNextPageURL != nil)
-        }
-    }
-    
-    private var _searcingNextPageURL: URL? {
-        didSet {
-            guard isSearching == true else { return }
-            hasNextPageNotifier?(_searcingNextPageURL != nil)
-        }
-    }
-    
-    private var nextPageURL: URL? {
-        return isSearching ? _searcingNextPageURL : _gamesNextPageURL
-    }
-    
     // MARK: REPOSITORY
     
-    func fetchGameList(query: String?, completion: @escaping (Result<GXGameListEntity?, GXGameServiceError>) -> Void) {
-        if let query = query {
-            isSearching = query.count > 0
-        } else {
-            isSearching = false
-        }
-        
-        networkAdapter.request(.games(query: query, nextURL: nextPageURL)) { [weak self] (result: Result<GXGameListResponse, Error>) in
-            guard let strongSelf = self else { return }
+    func fetchGameList(query: String?, nextURL: URL?, completion: @escaping (Result<GXGameListEntity?, GXGameServiceError>) -> Void) {
+        networkAdapter.request(.games(query: query, nextURL: nextURL)) { (result: Result<GXGameListResponse, Error>) in
             switch result {
             case .success(let response):
-                if strongSelf.isSearching {
-                    strongSelf._searcingNextPageURL = response.next
-                } else {
-                    strongSelf._gamesNextPageURL = response.next
-                }
-                
                 let entity = GXGameListEntity(gameListResponse: response, type: .list)
                 completion(.success(entity))
             case .failure(let error):

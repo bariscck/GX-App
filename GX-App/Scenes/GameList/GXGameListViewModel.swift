@@ -36,7 +36,7 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
         let gamesRepository: GXGamesRepositoryType
     }
     
-    // INITIALIZERS
+    // MARK: INITIALIZERS
     
     private let dependency: Dependency
     
@@ -52,7 +52,9 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     }
     
     // MARK: PROPERTIES
-
+    
+    private var isLoading: Bool = false
+    
     private var currentlyDisplayingIndex: Int = 0 {
         didSet {
             if currentlyDisplayingIndex == displayedPresentations.count - 1 {
@@ -61,7 +63,7 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
         }
     }
     
-    private var viewedGamePresentationIds: Set<Int> = []
+    /// Search Properties
     
     private var isSearchActive: Bool = false {
         didSet {
@@ -69,22 +71,26 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
         }
     }
     
-    private var isLoading: Bool = false
-    
     private var searchQuery: String? {
         didSet {
             if searchQuery != oldValue {
                 _searchedPresentationsResults = []
+                _searchedNextURL = nil
             }
         }
     }
     
+    /// Presentation Properties
+    
+    private var _gamesNextURL: URL?
     private var _gamePresentationsResults: [GXGamePresentation] = [] {
         didSet {
             _gamePresentationsResults = _gamePresentationsResults.unique()
             reloadNotifier()
         }
     }
+    
+    private var _searchedNextURL: URL?
     private var _searchedPresentationsResults: [GXGamePresentation] = [] {
         didSet {
             _searchedPresentationsResults = _searchedPresentationsResults.unique()
@@ -95,6 +101,11 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     private var displayedPresentations: [GXGamePresentation] {
         get {
             isSearchActive ? _searchedPresentationsResults : _gamePresentationsResults
+        }
+    }
+    private var nextURL: URL? {
+        get {
+            isSearchActive ? _searchedNextURL : _gamesNextURL
         }
     }
     
@@ -113,27 +124,32 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
         guard isLoading == false else { return }
         
         if isSearch {
-            guard (searchQuery ?? "").count > 3 else {
+            // Trim query characters for whitespaces
+            let trimmedQuery = searchQuery?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            // Check query count is valid. Count must be at least 4
+            guard trimmedQuery.count >= 4 else {
                 return
             }
         }
         
         isLoading = true
         
-        dependency.gamesRepository.fetchGameList(query: searchQuery) { [weak self] (result) in
+        dependency.gamesRepository.fetchGameList(query: searchQuery, nextURL: nextURL) { [weak self] (result) in
             guard let strongSelf = self else { return }
             
             switch result {
             case .success(let entity):
                 strongSelf.isLoading = false
                 guard let presentations: [GXGamePresentation] = entity?.games.compactMap(GXGamePresentation.init(entity:)) else {
-                    return // TODO: SHOW NO RESULTS
+                    return // TODO: SHOW NO RESULTS FOUND
                 }
                 
                 if isSearch {
                     strongSelf._searchedPresentationsResults.append(contentsOf: presentations)
+                    strongSelf._searchedNextURL = entity?.nextURL
                 } else {
                     strongSelf._gamePresentationsResults.append(contentsOf: presentations)
+                    strongSelf._gamesNextURL = entity?.nextURL
                 }
             case .failure(let error):
                 strongSelf.isLoading = false
@@ -151,7 +167,7 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     }
     
     func setSearchQuery(query: String?) {
-        searchQuery = query?.trimmingCharacters(in: .whitespacesAndNewlines)
+        searchQuery = query
     }
     
     // MARK: OUTPUTS
