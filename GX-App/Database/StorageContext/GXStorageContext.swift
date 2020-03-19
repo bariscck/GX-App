@@ -26,7 +26,7 @@ protocol GXStorageContext {
      Create a new object with default values
      return an object that is conformed to the `Storable` protocol
      */
-    func create<T: GXStorable>(_ model: T.Type, completion: @escaping ((T) -> Void)) throws
+    //func create<T: GXStorable>(_ model: T.Type, completion: @escaping ((T) -> Void)) throws
     /*
      Save an object that is conformed to the `Storable` protocol
     */
@@ -51,4 +51,19 @@ protocol GXStorageContext {
     Return a list of objects that are conformed to the `Storable` protocol
     */
     func fetch<T: GXStorable>(_ model: T.Type, predicate: NSPredicate?, sorted: GXSorted?, completion: (([T]) -> ()))
+}
+
+/* Storage config options */
+public enum GXConfigurationType {
+    case basic(url: String?)
+    case inMemory(identifier: String?)
+    
+    var associated: String? {
+        get {
+            switch self {
+            case .basic(let url)            : return url
+            case .inMemory(let identifier)  : return identifier
+            }
+        }
+    }
 }

@@ -21,6 +21,16 @@ final class GXGameEntity: Object {
         return "id"
     }
     
+    convenience init(id: Int, name: String, backgroundImage: String?,
+                     genres: [GXGenreEntity], metacritic: Int?) {
+        self.init()
+        self.id = id
+        self.name = name
+        self.backgroundImage = backgroundImage
+        self.genres.append(objectsIn: genres)
+        self.metacritic.value = metacritic
+    }
+    
     convenience init(gameResponse: GXGameResponse) {
         self.init()
         id = gameResponse.id
@@ -33,6 +43,7 @@ final class GXGameEntity: Object {
 }
 
 final class GXGenreEntity: Object {
+    
     @objc dynamic private(set) var id: Int = 0
     @objc dynamic private(set) var name: String = ""
     
@@ -40,9 +51,16 @@ final class GXGenreEntity: Object {
         return "id"
     }
     
+    convenience init(id: Int, name: String) {
+        self.init()
+        self.id = id
+        self.name = name
+    }
+    
     convenience init(genre: GXGameResponse.Genre) {
         self.init()
         id = genre.id
         name = genre.name
     }
+    
 }

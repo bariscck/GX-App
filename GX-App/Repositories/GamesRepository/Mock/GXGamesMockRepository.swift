@@ -18,7 +18,7 @@ final class GXGamesMockRepository: GXGamesRepositoryType {
         self.delay = delay
     }
     
-    // MARK: MAIN
+    // MARK: REPOSITORY
     
     func fetchGameList(query: String?, completion: @escaping (Result<[GXGameEntity], GXGameServiceError>) -> Void) {
         if let query = query {

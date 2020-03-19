@@ -50,16 +50,6 @@ final class GXRealmStorageContext: GXStorageContext {
 }
 
 extension GXRealmStorageContext {
-    func create<T: GXStorable>(_ model: T.Type, completion: @escaping ((T) -> Void)) throws {
-        guard let realm = self.realm else {
-            throw NSError()
-        }
-        
-        try self.safeWrite {
-            let newObject = realm.create(model as! Object.Type, value: []) as! T
-            completion(newObject)
-        }
-    }
     
     func save(_ object: GXStorable, update: Bool) throws {
         guard let realm = self.realm else {

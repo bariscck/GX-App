@@ -74,7 +74,6 @@ final class GXGamesRemoteRepository: GXGamesRepositoryType {
                 }
                 
                 let entities: [GXGameEntity] = response.results.map(GXGameEntity.init(gameResponse:))
-                print(query, entities.map { $0.name })
                 completion(.success(entities))
             case .failure(let error):
                 completion(.failure(.serverError(error)))
