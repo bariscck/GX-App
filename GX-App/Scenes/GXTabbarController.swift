@@ -1,41 +1,44 @@
 //
-//  AppRouter.swift
+//  GXTabbarController.swift
 //  GX-App
 //
-//  Created by M. Barış ÇİÇEK on 17.03.2020.
+//  Created by M. Barış ÇİÇEK on 19.03.2020.
 //  Copyright © 2020 M. Barış ÇİÇEK. All rights reserved.
 //
 
 import UIKit
 
-final class AppRouter {
+final class GXTabbarController: UITabBarController {
     
     // MARK: INITIALIZERS
     
-    private let window: UIWindow
+    private let networkAdapter: GXNetworkAdapter<GameXAPI>
+    private let storageContext: GXStorageContext
     
-    init(window: UIWindow) {
-        self.window = window
+    init(networkAdapter: GXNetworkAdapter<GameXAPI>, storageContext: GXStorageContext) {
+        self.networkAdapter = networkAdapter
+        self.storageContext = storageContext
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: MAIN
     
-    func start() {
-        let tabbarController = UITabBarController()
-        tabbarController.tabBar.tintColor = GXTheme.primaryColor
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tabBar.tintColor = GXTheme.primaryColor
+        delegate = self
         
-        tabbarController.viewControllers = [
+        viewControllers = [
             makeGameListVC(),
             makeFavouritesVC()
         ]
-        
-        window.rootViewController = tabbarController
-        window.makeKeyAndVisible()
     }
     
     private func makeGameListVC() -> UIViewController {
-        let networkAdapter = GXNetworkAdapter<GameXAPI>()
-        let storageContext = try! GXRealmStorageContext()
         let repository = GXGamesRepository(networkAdapter: networkAdapter, storageContext: storageContext)
         let gameListVC = GXGameListRouter.build(gamesRepository: repository)
         
@@ -62,5 +65,11 @@ final class AppRouter {
         
         return navigationController
     }
-    
+
+}
+
+extension GXTabbarController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        GXFeedbackGenerator.generate()
+    }
 }

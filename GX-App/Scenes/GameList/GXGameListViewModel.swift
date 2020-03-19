@@ -55,6 +55,7 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     
     private var isLoading: Bool = false
     
+    // Pagination for displaying index
     private var currentlyDisplayingIndex: Int = 0 {
         didSet {
             if currentlyDisplayingIndex == displayedPresentations.count - 1 {

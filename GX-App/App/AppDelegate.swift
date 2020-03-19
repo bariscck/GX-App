@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let window = UIWindow(frame: UIScreen.main.bounds)
             self.window = window
             // Starting AppRouter
-            let appRouter = AppRouter(window: window)
+            let appRouter = AppContainer(window: window)
             appRouter.start()
         }
         

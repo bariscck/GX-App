@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: wScene)
         self.window = window
         // Starting AppRouter
-        let appRouter = AppRouter(window: window)
+        let appRouter = AppContainer(window: window)
         appRouter.start()
     }
 

@@ -49,6 +49,7 @@
 		237396CB2423B17B00C1DCB4 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237396CA2423B17B00C1DCB4 /* UserDefaultsStorage.swift */; };
 		237396CF2423B93B00C1DCB4 /* GXFavouritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237396CD2423B93B00C1DCB4 /* GXFavouritesViewController.swift */; };
 		237396D02423B93B00C1DCB4 /* GXFavouritesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 237396CE2423B93B00C1DCB4 /* GXFavouritesViewController.xib */; };
+		237396D22423D4B700C1DCB4 /* GXTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237396D12423D4B700C1DCB4 /* GXTabbarController.swift */; };
 		23B835ED24223C0A004AA241 /* GXStorageContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B835EC24223C0A004AA241 /* GXStorageContext.swift */; };
 		23B835F124223C65004AA241 /* GXRealmStorageContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B835F024223C65004AA241 /* GXRealmStorageContext.swift */; };
 		23BDF0052420D8D30055C3B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF0042420D8D30055C3B9 /* AppDelegate.swift */; };
@@ -56,7 +57,7 @@
 		23BDF00E2420D8D40055C3B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23BDF00D2420D8D40055C3B9 /* Assets.xcassets */; };
 		23BDF0112420D8D40055C3B9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23BDF00F2420D8D40055C3B9 /* LaunchScreen.storyboard */; };
 		23BDF01C2420D8D40055C3B9 /* GX_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF01B2420D8D40055C3B9 /* GX_AppTests.swift */; };
-		23BDF02D2420DADD0055C3B9 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF02C2420DADD0055C3B9 /* AppRouter.swift */; };
+		23BDF02D2420DADD0055C3B9 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF02C2420DADD0055C3B9 /* AppContainer.swift */; };
 		23CAA74E24212F200007D2FA /* GXImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CAA74D24212F200007D2FA /* GXImageLoader.swift */; };
 		23CAA754242168E00007D2FA /* UICollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CAA753242168E00007D2FA /* UICollectionView+Extensions.swift */; };
 		23CAA75C24217BB10007D2FA /* GXGamesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CAA75B24217BB10007D2FA /* GXGamesRepository.swift */; };
@@ -121,6 +122,7 @@
 		237396CA2423B17B00C1DCB4 /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
 		237396CD2423B93B00C1DCB4 /* GXFavouritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXFavouritesViewController.swift; sourceTree = "<group>"; };
 		237396CE2423B93B00C1DCB4 /* GXFavouritesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GXFavouritesViewController.xib; sourceTree = "<group>"; };
+		237396D12423D4B700C1DCB4 /* GXTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXTabbarController.swift; sourceTree = "<group>"; };
 		23B835EC24223C0A004AA241 /* GXStorageContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXStorageContext.swift; sourceTree = "<group>"; };
 		23B835F024223C65004AA241 /* GXRealmStorageContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXRealmStorageContext.swift; sourceTree = "<group>"; };
 		23BDF0012420D8D30055C3B9 /* GameX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameX.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,7 +134,7 @@
 		23BDF0172420D8D40055C3B9 /* GX-AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GX-AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		23BDF01B2420D8D40055C3B9 /* GX_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GX_AppTests.swift; sourceTree = "<group>"; };
 		23BDF01D2420D8D40055C3B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		23BDF02C2420DADD0055C3B9 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
+		23BDF02C2420DADD0055C3B9 /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
 		23CAA74D24212F200007D2FA /* GXImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXImageLoader.swift; sourceTree = "<group>"; };
 		23CAA753242168E00007D2FA /* UICollectionView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extensions.swift"; sourceTree = "<group>"; };
 		23CAA75B24217BB10007D2FA /* GXGamesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXGamesRepository.swift; sourceTree = "<group>"; };
@@ -412,7 +414,7 @@
 			children = (
 				23BDF0042420D8D30055C3B9 /* AppDelegate.swift */,
 				23BDF0062420D8D30055C3B9 /* SceneDelegate.swift */,
-				23BDF02C2420DADD0055C3B9 /* AppRouter.swift */,
+				23BDF02C2420DADD0055C3B9 /* AppContainer.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -420,6 +422,7 @@
 		23BDF0282420DA860055C3B9 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				237396D12423D4B700C1DCB4 /* GXTabbarController.swift */,
 				2365A8CD2420DCCE00F48D9C /* GameList */,
 				2365A8E62420F1CC00F48D9C /* GameDetail */,
 				237396CC2423B91700C1DCB4 /* Favourites */,
@@ -731,9 +734,10 @@
 				23BDF0072420D8D30055C3B9 /* SceneDelegate.swift in Sources */,
 				2365A8FC2421009100F48D9C /* GXExpandableDescriptionCell.swift in Sources */,
 				23F521B524220A5D00AE157E /* GXNetworkAdapter.swift in Sources */,
-				23BDF02D2420DADD0055C3B9 /* AppRouter.swift in Sources */,
+				23BDF02D2420DADD0055C3B9 /* AppContainer.swift in Sources */,
 				237396CF2423B93B00C1DCB4 /* GXFavouritesViewController.swift in Sources */,
 				23CAA74E24212F200007D2FA /* GXImageLoader.swift in Sources */,
+				237396D22423D4B700C1DCB4 /* GXTabbarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
