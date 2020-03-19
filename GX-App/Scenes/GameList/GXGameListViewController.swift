@@ -12,7 +12,7 @@ enum GXGameListViewState {
     case gameList, favourites
 }
 
-final class GXGameListViewController: UIViewController {
+final class GXGameListViewController: UIViewController, GXAlertPresenter {
 
     // MARK: INITIALIZERS
 
@@ -91,8 +91,9 @@ final class GXGameListViewController: UIViewController {
             }
         }
         
-        viewModel.outputs.didReceiveServiceErrorNotifier = { serviceError in
-            print(serviceError)
+        viewModel.outputs.didReceiveServiceErrorNotifier = { [weak self] serviceError in
+            guard case let .serverError(error) = serviceError else { return }
+            self?.presentInfoAlert(title: error.localizedDescription)
         }
     }
     
