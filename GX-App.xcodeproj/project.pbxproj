@@ -47,6 +47,8 @@
 		237396C624238EDA00C1DCB4 /* GXRepositoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237396C524238EDA00C1DCB4 /* GXRepositoryResponse.swift */; };
 		237396C82423B0CC00C1DCB4 /* GXViewedGamesStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237396C72423B0CC00C1DCB4 /* GXViewedGamesStorage.swift */; };
 		237396CB2423B17B00C1DCB4 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237396CA2423B17B00C1DCB4 /* UserDefaultsStorage.swift */; };
+		237396CF2423B93B00C1DCB4 /* GXFavouritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237396CD2423B93B00C1DCB4 /* GXFavouritesViewController.swift */; };
+		237396D02423B93B00C1DCB4 /* GXFavouritesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 237396CE2423B93B00C1DCB4 /* GXFavouritesViewController.xib */; };
 		23B835ED24223C0A004AA241 /* GXStorageContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B835EC24223C0A004AA241 /* GXStorageContext.swift */; };
 		23B835F124223C65004AA241 /* GXRealmStorageContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B835F024223C65004AA241 /* GXRealmStorageContext.swift */; };
 		23BDF0052420D8D30055C3B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF0042420D8D30055C3B9 /* AppDelegate.swift */; };
@@ -117,6 +119,8 @@
 		237396C524238EDA00C1DCB4 /* GXRepositoryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXRepositoryResponse.swift; sourceTree = "<group>"; };
 		237396C72423B0CC00C1DCB4 /* GXViewedGamesStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXViewedGamesStorage.swift; sourceTree = "<group>"; };
 		237396CA2423B17B00C1DCB4 /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
+		237396CD2423B93B00C1DCB4 /* GXFavouritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXFavouritesViewController.swift; sourceTree = "<group>"; };
+		237396CE2423B93B00C1DCB4 /* GXFavouritesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GXFavouritesViewController.xib; sourceTree = "<group>"; };
 		23B835EC24223C0A004AA241 /* GXStorageContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXStorageContext.swift; sourceTree = "<group>"; };
 		23B835F024223C65004AA241 /* GXRealmStorageContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXRealmStorageContext.swift; sourceTree = "<group>"; };
 		23BDF0012420D8D30055C3B9 /* GameX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameX.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -344,6 +348,15 @@
 			path = UserDefaultsWrapper;
 			sourceTree = "<group>";
 		};
+		237396CC2423B91700C1DCB4 /* Favourites */ = {
+			isa = PBXGroup;
+			children = (
+				237396CD2423B93B00C1DCB4 /* GXFavouritesViewController.swift */,
+				237396CE2423B93B00C1DCB4 /* GXFavouritesViewController.xib */,
+			);
+			path = Favourites;
+			sourceTree = "<group>";
+		};
 		23BDEFF82420D8D30055C3B9 = {
 			isa = PBXGroup;
 			children = (
@@ -409,6 +422,7 @@
 			children = (
 				2365A8CD2420DCCE00F48D9C /* GameList */,
 				2365A8E62420F1CC00F48D9C /* GameDetail */,
+				237396CC2423B91700C1DCB4 /* Favourites */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -591,6 +605,7 @@
 				23BDF0112420D8D40055C3B9 /* LaunchScreen.storyboard in Resources */,
 				23BDF00E2420D8D40055C3B9 /* Assets.xcassets in Resources */,
 				2365A8E22420E84100F48D9C /* Theme.xcassets in Resources */,
+				237396D02423B93B00C1DCB4 /* GXFavouritesViewController.xib in Resources */,
 				2365A8FD2421009100F48D9C /* GXExpandableDescriptionCell.xib in Resources */,
 				2365A8D12420DCE700F48D9C /* GXGameListViewController.xib in Resources */,
 				2365A8E02420E3D200F48D9C /* Development.xcassets in Resources */,
@@ -717,6 +732,7 @@
 				2365A8FC2421009100F48D9C /* GXExpandableDescriptionCell.swift in Sources */,
 				23F521B524220A5D00AE157E /* GXNetworkAdapter.swift in Sources */,
 				23BDF02D2420DADD0055C3B9 /* AppRouter.swift in Sources */,
+				237396CF2423B93B00C1DCB4 /* GXFavouritesViewController.swift in Sources */,
 				23CAA74E24212F200007D2FA /* GXImageLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -75,7 +75,7 @@ final class GXExpandableDescriptionCell: UITableViewCell {
         titleLabel.text = "Game Description"
         descriptionLabel.text = presentation.description
         
-        readMoreBtn.isHidden = descriptionLabel.numberOfVisibleLines < 4
+        readMoreBtn.isHidden = descriptionLabel.maxNumberOfLines < 4
     }
     
     func setupForDevelopment(expandStateChangeNotifier: (() -> Void)?) {

@@ -152,7 +152,7 @@ extension GXGameListViewController: UISearchResultsUpdating {
 }
 
 extension GXGameListViewController: UISearchBarDelegate {
-    
+        
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         viewModel.inputs.fetchGameList(isSearch: true)
     }
