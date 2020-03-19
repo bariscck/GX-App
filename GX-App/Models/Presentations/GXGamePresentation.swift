@@ -27,7 +27,6 @@ final class GXGamePresentation {
     private(set) var description: String?
     private(set) var redditLink: Link?
     private(set) var websiteLink: Link?
-    
     private(set) var isViewedBefore: Bool = false
     
     init(entity: GXGameEntity) {
@@ -36,6 +35,7 @@ final class GXGamePresentation {
         coverImageURL = URL(string: entity.backgroundImage ?? "")
         metacriticText = String(entity.metacritic.value ?? 0)
         genresText = entity.genres.map { $0.name }.joined(separator: ", ")
+        isViewedBefore = entity.isViewed
     }
     
     func update(with detailEntity: GXGameDetailEntity) {
@@ -54,11 +54,5 @@ extension GXGamePresentation: Hashable {
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
-    }
-}
-
-extension GXGamePresentation {
-    func setViewed() {
-        isViewedBefore = true
     }
 }

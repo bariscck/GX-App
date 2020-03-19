@@ -17,6 +17,10 @@ final class GXGameEntity: Object {
     let genres = List<GXGenreEntity>()
     let metacritic = RealmOptional<Int>()
     
+    var isViewed: Bool {
+        return realm?.object(ofType: GXGameDetailEntity.self, forPrimaryKey: id) != nil
+    }
+    
     override class func primaryKey() -> String? {
         return "id"
     }

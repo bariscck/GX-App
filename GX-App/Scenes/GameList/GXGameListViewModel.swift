@@ -167,11 +167,10 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
         return displayedPresentations[index]
     }
     
+    // selectedItemForIndex and itemForIndex exactly same function
+    // selectedItemForIndex separated because maybe we will integrate analytics tool.
     func selectedItemForIndex(_ index: Int) -> GXGamePresentation {
-        let item = displayedPresentations[index]
-        viewedGamePresentationIds.update(with: item.id)
-        item.setViewed()
-        return item
+        return displayedPresentations[index]
     }
     
 }

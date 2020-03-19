@@ -75,9 +75,9 @@ final class GXGameListViewController: UIViewController {
     }
     
     private func setupVMBindings() {
-        viewModel.outputs.reloadNotifier = { [unowned self] in
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
+        viewModel.outputs.reloadNotifier = {
+            DispatchQueue.main.async { [weak self] in
+                self?.collectionView.reloadData()
             }
         }
         
