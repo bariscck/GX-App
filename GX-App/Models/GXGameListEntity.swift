@@ -38,6 +38,7 @@ final class GXGameListEntity: Object {
     
     convenience init(type: ListType, games: [GXGameEntity]) {
         self.init()
+        pk = GXGameListEntity.pk(for: type)
         self._typeRawValue = type.rawValue
         self.games.append(objectsIn: games)
     }

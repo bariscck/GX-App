@@ -8,14 +8,20 @@
 
 import UIKit
 
+enum GXGameListViewState {
+    case gameList, favourites
+}
+
 final class GXGameListViewController: UIViewController {
 
     // MARK: INITIALIZERS
 
+    private let viewState: GXGameListViewState
     private var viewModel: GXGameListViewModelType
     private let router: GXGameListRouterType
     
-    init(viewModel: GXGameListViewModelType, router: GXGameListRouterType) {
+    init(viewState: GXGameListViewState, viewModel: GXGameListViewModelType, router: GXGameListRouterType) {
+        self.viewState = viewState
         self.viewModel = viewModel
         self.router = router
         super.init(nibName: nil, bundle: nil)
@@ -30,6 +36,7 @@ final class GXGameListViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView! {
         didSet {
             collectionView.backgroundColor = GXTheme.tableGroupedBackgroundColor
+            collectionView.alwaysBounceVertical = true
             // Setting Datasource
             collectionView.dataSource = self
             collectionView.delegate = self
@@ -51,7 +58,7 @@ final class GXGameListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationItem()
+        setupNavigationItem(for: viewState)
         // ViewModel methods
         setupVMBindings()
         viewModel.inputs.viewDidLoaded()
@@ -68,11 +75,17 @@ final class GXGameListViewController: UIViewController {
         collectionView.collectionViewLayout.invalidateLayout()
     }
     
-    private func setupNavigationItem() {
-        navigationItem.title = "Games"
+    private func setupNavigationItem(for state: GXGameListViewState) {
+        switch state {
+        case .gameList:
+            navigationItem.title = "Games"
+            navigationItem.searchController = searchController
+            navigationItem.hidesSearchBarWhenScrolling = false
+        case .favourites:
+            navigationItem.title = "Favourites"
+        }
+        
         navigationItem.largeTitleDisplayMode = .automatic
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     private func setupVMBindings() {
@@ -99,8 +112,8 @@ extension GXGameListViewController: UICollectionViewDataSource, UICollectionView
         let cell = collectionView.dequeue(cellClass: GXGameListCell.self, forIndexPath: indexPath)
         
         let presentation = viewModel.outputs.itemForIndex(indexPath.row)
-        cell.setup(with: presentation)
-        
+        cell.setup(with: presentation, updateBackgroundColor: viewState == .gameList)
+    
         return cell
     }
     
@@ -113,8 +126,10 @@ extension GXGameListViewController: UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        // Update viewmodel's displaying index for pagination
-        viewModel.inputs.setDisplayingIndex(index: indexPath.item)
+        if viewState == .gameList {
+            // Update viewmodel's displaying index for pagination
+            viewModel.inputs.setDisplayingIndex(index: indexPath.item)
+        }
     }
     
 }

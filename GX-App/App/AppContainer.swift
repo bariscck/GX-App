@@ -8,26 +8,25 @@
 
 import UIKit
 
+let appContainer = AppContainer()
+
 final class AppContainer {
-    
-    // MARK: INITIALIZERS
-    
-    private let window: UIWindow
-    
-    init(window: UIWindow) {
-        self.window = window
-    }
     
     // MARK: DEPENDENCIES
     
     private let networkAdapter = GXNetworkAdapter<GameXAPI>()
     private let storageContext = try! GXRealmStorageContext()
     
-    // MARK: MAIN
+    public lazy var gamesRepository = GXGamesRepository(networkAdapter: networkAdapter,
+                                                         storageContext: storageContext)
     
-    func start() {
-        let rootViewController = GXTabbarController(networkAdapter: networkAdapter,
-                                                    storageContext: storageContext)
+    public lazy var favouritesRepository = GXFavouritesRepository(storageContext: storageContext)
+    
+    // MARK: ROUTING
+    
+    func start(in window: UIWindow) {
+        let rootViewController = GXTabbarController(gamesRepository: gamesRepository,
+                                                    favouritesRepository: favouritesRepository)
         window.rootViewController = rootViewController
         window.makeKeyAndVisible()
     }

@@ -19,7 +19,7 @@ final class GXGamePresentation {
         let url: URL?
     }
     
-    private let entity: GXGameEntity
+    let entity: GXGameEntity
     
     private(set) var id: Int = 0
     private(set) var title: String = ""

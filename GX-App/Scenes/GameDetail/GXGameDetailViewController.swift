@@ -14,6 +14,10 @@ enum GXGameDetailTableLayoutItems: Int, CaseIterable {
 
 final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
 
+    private enum FavoriteState {
+        case favorited, notFavorited
+    }
+    
     // MARK: INITIALIZERS
     
     private var viewModel: GXGameDetailViewModelType
@@ -37,6 +41,12 @@ final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
     
     // MARK: PROPERTIES
     
+    private var favouriteState: FavoriteState = .notFavorited {
+        didSet {
+            favouriteBtn.title = favouriteState == .favorited ? "Favourited" : "Favourite"
+            favouriteBtn.tintColor = favouriteState == .favorited ? .gray : view.tintColor
+        }
+    }
     private let headerHeight: CGFloat = 290
     
     // MARK: VIEWS
@@ -112,6 +122,10 @@ final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
             self.tableView.reloadData()
         }
         
+        viewModel.outputs.isInFavouriteNotifier = { [unowned self] isFavourite in
+            self.favouriteState = isFavourite ? .favorited : .notFavorited
+        }
+        
         viewModel.outputs.didReceiveServiceErrorNotifier = { serviceError in
             print(serviceError)
         }
@@ -121,8 +135,17 @@ final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
     
     @objc private func favourite(_ sender: UIBarButtonItem) {
         GXFeedbackGenerator.generate()
-        print("Favourite")
-        presentInfoAlert(title: "\(viewModel.outputs.currentPresentation.title) is added your favourite list.")
+        
+        switch favouriteState {
+        case .favorited:
+            print("Remove Favourite")
+            viewModel.inputs.removeFavourite()
+            presentInfoAlert(title: "\(viewModel.outputs.currentPresentation.title) is removed your favourite list.")
+        case .notFavorited:
+            print("Add Favourite")
+            viewModel.inputs.addFavourite()
+            presentInfoAlert(title: "\(viewModel.outputs.currentPresentation.title) is added your favourite list.")
+        }
     }
 
 }

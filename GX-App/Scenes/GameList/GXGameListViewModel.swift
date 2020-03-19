@@ -12,6 +12,7 @@ protocol GXGameListViewModelInputs {
     func viewDidLoaded()
     func viewWillAppeared()
     func fetchGameList(isSearch: Bool)
+    func fetchFavouriteList()
     func setDisplayingIndex(index: Int)
     func setSearchActive(isActive: Bool)
     func setSearchQuery(query: String?)
@@ -34,13 +35,16 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     
     struct Dependency {
         let gamesRepository: GXGamesRepositoryType
+        let favouritesRepository: GXFavouritesRepositoryType
     }
     
     // MARK: INITIALIZERS
     
+    private let viewState: GXGameListViewState
     private let dependency: Dependency
     
-    init(dependency: Dependency) {
+    init(viewState: GXGameListViewState, dependency: Dependency) {
+        self.viewState = viewState
         self.dependency = dependency
     }
     
@@ -83,6 +87,12 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     
     /// Presentation Properties
     
+    private var _favouritePresentationsResults: [GXGamePresentation] = [] {
+        didSet {
+            reloadNotifier()
+        }
+    }
+    
     private var _gamesNextURL: URL?
     private var _gamePresentationsResults: [GXGamePresentation] = [] {
         didSet {
@@ -101,7 +111,12 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     
     private var displayedPresentations: [GXGamePresentation] {
         get {
-            isSearchActive ? _searchedPresentationsResults : _gamePresentationsResults
+            switch viewState {
+            case .gameList:
+                return isSearchActive ? _searchedPresentationsResults : _gamePresentationsResults
+            case .favourites:
+                return _favouritePresentationsResults
+            }
         }
     }
     private var nextURL: URL? {
@@ -114,12 +129,23 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     
     func viewDidLoaded() {
         setSearchActive(isActive: false)
-        fetchGameList(isSearch: false)
+        
+        switch viewState {
+        case .gameList:
+            fetchGameList(isSearch: false)
+        case .favourites:
+            fetchFavouriteList()
+        }
     }
     
     func viewWillAppeared() {
-        // This reload necessary for item viewed updates
-        reloadNotifier()
+        switch viewState {
+        case .gameList:
+            // This reload necessary for item viewed updates
+            reloadNotifier()
+        case .favourites:
+            fetchFavouriteList()
+        }
     }
     
     func fetchGameList(isSearch: Bool) {
@@ -156,6 +182,21 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
             case .failure(let error):
                 strongSelf.isLoading = false
                 strongSelf.didReceiveServiceErrorNotifier(error)
+            }
+        }
+    }
+    
+    func fetchFavouriteList() {
+        dependency.favouritesRepository.fetchFavouriteList { [weak self] (result) in
+            guard let strongSelf = self else { return }
+            
+            switch result {
+            case .success(let entity):
+                guard let entity = entity else { return }
+                let presentations: [GXGamePresentation] = entity.games.map(GXGamePresentation.init(entity:))
+                strongSelf._favouritePresentationsResults = presentations
+            case .failure(let error):
+                print(error.localizedDescription)
             }
         }
     }

@@ -21,8 +21,9 @@ final class GXFavouritesMockRepository: GXFavouritesRepositoryType {
         completion(result)
     }
     
-    func fetchAllFavourites(completion: @escaping (Result<[GXGameEntity], Error>) -> Void) {
-        completion(.success(favourites))
+    func fetchFavouriteList(completion: @escaping (Result<GXGameListEntity?, Error>) -> Void) {
+        let result = GXGameListEntity(type: .favourite, games: favourites)
+        completion(.success(result))
     }
     
     func addFavourite(game: GXGameEntity, completion: @escaping () -> Void) {

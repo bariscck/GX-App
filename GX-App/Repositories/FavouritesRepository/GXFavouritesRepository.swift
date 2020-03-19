@@ -10,7 +10,7 @@ import Foundation
 
 protocol GXFavouritesRepositoryType {
     func checkIsFavourited(id: Int, completion: @escaping (Bool) -> Void)
-    func fetchAllFavourites(completion: @escaping (Result<[GXGameEntity], Error>) -> Void)
+    func fetchFavouriteList(completion: @escaping (Result<GXGameListEntity?, Error>) -> Void)
     func addFavourite(game: GXGameEntity, completion: @escaping () -> Void)
     func removeFavourite(game: GXGameEntity, completion: @escaping () -> Void)
 }
@@ -21,8 +21,8 @@ final class GXFavouritesRepository: GXFavouritesRepositoryType {
     
     private let localRepository: GXFavouritesLocalRepository
     
-    init(localRepository: GXFavouritesLocalRepository) {
-        self.localRepository = localRepository
+    init(storageContext: GXStorageContext) {
+        localRepository = GXFavouritesLocalRepository(storageContext: storageContext)
     }
     
     // MARK: REPOSITORY
@@ -31,8 +31,8 @@ final class GXFavouritesRepository: GXFavouritesRepositoryType {
         localRepository.checkIsFavourited(id: id, completion: completion)
     }
     
-    func fetchAllFavourites(completion: @escaping (Result<[GXGameEntity], Error>) -> Void) {
-        localRepository.fetchAllFavourites(completion: completion)
+    func fetchFavouriteList(completion: @escaping (Result<GXGameListEntity?, Error>) -> Void) {
+        localRepository.fetchFavouriteList(completion: completion)
     }
     
     func addFavourite(game: GXGameEntity, completion: @escaping () -> Void) {

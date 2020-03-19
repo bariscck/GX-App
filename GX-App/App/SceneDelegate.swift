@@ -24,8 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         /**
          - Starting App with AppContainer in window
          */
-        let appRouter = AppContainer(window: window)
-        appRouter.start()
+        appContainer.start(in: window)
     }
 
 

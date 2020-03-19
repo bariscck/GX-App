@@ -12,12 +12,12 @@ final class GXTabbarController: UITabBarController {
     
     // MARK: INITIALIZERS
     
-    private let networkAdapter: GXNetworkAdapter<GameXAPI>
-    private let storageContext: GXStorageContext
+    private let gamesRepository: GXGamesRepositoryType
+    private let favouritesRepository: GXFavouritesRepositoryType
     
-    init(networkAdapter: GXNetworkAdapter<GameXAPI>, storageContext: GXStorageContext) {
-        self.networkAdapter = networkAdapter
-        self.storageContext = storageContext
+    init(gamesRepository: GXGamesRepositoryType, favouritesRepository: GXFavouritesRepositoryType) {
+        self.gamesRepository = gamesRepository
+        self.favouritesRepository = favouritesRepository
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -33,25 +33,28 @@ final class GXTabbarController: UITabBarController {
         delegate = self
         
         viewControllers = [
-            makeGameListVC(),
-            makeFavouritesVC()
+            makeGameListVC(forViewState: .gameList),
+            makeGameListVC(forViewState: .favourites)
         ]
     }
     
-    private func makeGameListVC() -> UIViewController {
-        let repository = GXGamesRepository(networkAdapter: networkAdapter, storageContext: storageContext)
-        let gameListVC = GXGameListRouter.build(gamesRepository: repository)
+    private func makeGameListVC(forViewState state: GXGameListViewState) -> UIViewController {
+        let gameListVC = GXGameListRouter.build(viewState: state)
         
-        return makeNavController(rootViewController: gameListVC, with: UITabBarItem(title: "Games",
-                                                                                    image: UIImage(named: "gamepad"),
-                                                                                    selectedImage: nil))
-    }
-    
-    private func makeFavouritesVC() -> UIViewController {
-        let favouritesVC = GXFavouritesViewController()
-        return makeNavController(rootViewController: favouritesVC, with: UITabBarItem(title: "Favourites",
-                                                                                      image: UIImage(named: "favourites"),
-                                                                                      selectedImage: nil))
+        let tabbarItem: UITabBarItem
+        // Setting tabbar item for state
+        switch state {
+        case .gameList:
+            tabbarItem = UITabBarItem(title: "Games",
+                                      image: UIImage(named: "gamepad"),
+                                      selectedImage: nil)
+        case .favourites:
+            tabbarItem = UITabBarItem(title: "Favourites",
+                                      image: UIImage(named: "favourites"),
+                                      selectedImage: nil)
+        }
+        
+        return makeNavController(rootViewController: gameListVC, with: tabbarItem)
     }
     
     // MARK: HELPERS

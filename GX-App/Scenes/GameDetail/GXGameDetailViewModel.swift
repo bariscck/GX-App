@@ -11,11 +11,14 @@ import Foundation
 protocol GXGameDetailViewModelInputs {
     func viewDidLoaded()
     func fetchGameDetail()
+    func addFavourite()
+    func removeFavourite()
 }
 
 protocol GXGameDetailViewModelOutputs {
     var currentPresentation: GXGamePresentation { get set }
     var reloadNotifier: () -> Void { get set }
+    var isInFavouriteNotifier: (Bool) -> Void { get set }
     var presentationFetchedNotifier: (GXGamePresentation) -> Void { get set }
     var didReceiveServiceErrorNotifier: (GXGameServiceError) -> Void { get set }
     func numberOfItems() -> Int
@@ -32,6 +35,7 @@ final class GXGameDetailViewModel: GXGameDetailViewModelType, GXGameDetailViewMo
     struct Dependency {
         let presentation: GXGamePresentation
         let gamesRepository: GXGamesRepositoryType
+        let favouritesRepository: GXFavouritesRepositoryType
     }
     
     // MARK: INITIALIZERS
@@ -73,6 +77,11 @@ final class GXGameDetailViewModel: GXGameDetailViewModelType, GXGameDetailViewMo
     
     func viewDidLoaded() {
         fetchGameDetail()
+        
+        dependency.favouritesRepository.checkIsFavourited(id: currentPresentation.id) { [weak self] (isFavourited) in
+            print(isFavourited)
+            self?.isInFavouriteNotifier(isFavourited)
+        }
     }
     
     func fetchGameDetail() {
@@ -96,9 +105,22 @@ final class GXGameDetailViewModel: GXGameDetailViewModelType, GXGameDetailViewMo
         }
     }
     
+    func addFavourite() {
+        dependency.favouritesRepository.addFavourite(game: currentPresentation.entity) { [weak self] in
+            self?.isInFavouriteNotifier(true)
+        }
+    }
+    
+    func removeFavourite() {
+        dependency.favouritesRepository.removeFavourite(game: currentPresentation.entity) { [weak self] in
+            self?.isInFavouriteNotifier(false)
+        }
+    }
+    
     // MARK: OUTPUTS
     
     var reloadNotifier: () -> Void = {}
+    var isInFavouriteNotifier: (Bool) -> Void = {_ in}
     var presentationFetchedNotifier: (GXGamePresentation) -> Void = {_ in}
     var didReceiveServiceErrorNotifier: (GXGameServiceError) -> Void = {_ in}
     

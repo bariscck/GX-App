@@ -61,7 +61,7 @@ final class GXGameListCell: UICollectionViewCell {
         genresLabel.text = nil
     }
     
-    func setup(with presentation: GXGamePresentation) {
+    func setup(with presentation: GXGamePresentation, updateBackgroundColor: Bool) {
         coverImageView.loadRemoteImage(url: presentation.coverImageURL)
         nameLabel.text = presentation.title
         genresLabel.text = presentation.genresText
@@ -73,7 +73,9 @@ final class GXGameListCell: UICollectionViewCell {
             metacriticContainerStack.isHidden = true
         }
         
-        containerView.backgroundColor = color(forViewedState: presentation.isViewedBefore)
+        if updateBackgroundColor {
+            containerView.backgroundColor = color(forViewedState: presentation.isViewedBefore)
+        }
     }
     
     private func color(forViewedState isViewed: Bool) -> UIColor {
