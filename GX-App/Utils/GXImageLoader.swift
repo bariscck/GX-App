@@ -9,6 +9,11 @@
 import UIKit.UIImageView
 import Kingfisher
 
+/**
+ - GXImageLoader; async image loader and cache wrapper
+ - Only uses UIImageView.
+*/
+
 protocol GXImageLoader {
     func loadRemoteImage(url: URL?, placeholder: UIImage?)
     func loadLocalImage(name: String)

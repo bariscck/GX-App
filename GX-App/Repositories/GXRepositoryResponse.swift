@@ -8,8 +8,10 @@
 
 import Foundation
 
-// If need repository response where to came from
-// Use this response type
+/**
+ - If need repository response where to came from
+ - Use this response type
+ */
 struct GXRepositoryResponse<T> {
     
     enum ResponseSource {

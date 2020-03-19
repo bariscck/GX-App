@@ -118,6 +118,7 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     }
     
     func viewWillAppeared() {
+        // This reload necessary for item viewed updates
         reloadNotifier()
     }
     
@@ -184,8 +185,10 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
         return displayedPresentations[index]
     }
     
-    // selectedItemForIndex and itemForIndex exactly same function
-    // selectedItemForIndex separated because maybe we will integrate analytics tool.
+    /**
+     - selectedItemForIndex and itemForIndex exactly same function,
+     - separated because maybe we will integrate analytics tool.
+     */
     func selectedItemForIndex(_ index: Int) -> GXGamePresentation {
         return displayedPresentations[index]
     }

@@ -64,6 +64,7 @@ final class GXGameListViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        // Its necessary for orientation chages
         collectionView.collectionViewLayout.invalidateLayout()
     }
     
@@ -104,6 +105,7 @@ extension GXGameListViewController: UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // Generate feedback when item selected
         GXFeedbackGenerator.generate()
         
         let selectedPresentation = viewModel.outputs.selectedItemForIndex(indexPath.row)
@@ -111,6 +113,7 @@ extension GXGameListViewController: UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        // Update viewmodel's displaying index for pagination
         viewModel.inputs.setDisplayingIndex(index: indexPath.item)
     }
     

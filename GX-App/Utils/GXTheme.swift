@@ -8,6 +8,10 @@
 
 import UIKit.UIColor
 
+/**
+ - GXTheme; cenral theme color manager
+*/
+
 enum GXTheme {
     static var primaryColor: UIColor {
         return assetColor(for: "PrimaryColor")
@@ -49,7 +53,7 @@ enum GXTheme {
 extension GXTheme {
     static func assetColor(for name: String) -> UIColor {
         guard let color = UIColor(named: name) else {
-            fatalError("Error: ")
+            fatalError("Error: color name '\(name)' is not found your xcassets folders.")
         }
         return color
     }

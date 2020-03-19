@@ -70,6 +70,7 @@ final class GXTabbarController: UITabBarController {
 
 extension GXTabbarController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        // Generate feedback when tabbar item selected
         GXFeedbackGenerator.generate()
     }
 }

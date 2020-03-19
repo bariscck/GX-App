@@ -8,6 +8,10 @@
 
 import UIKit.UIImpactFeedbackGenerator
 
+/**
+ - GXFeedbackGenerator; cenral UIFeedback manager
+*/
+
 struct GXFeedbackGenerator {
     
     static private let generator = UIImpactFeedbackGenerator(style: .medium)

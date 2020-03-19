@@ -14,13 +14,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        
+        /**
+         - Check iOS version
+         * iOS 13+ versions uses SceneDelegate for window
+         * iOS 13- versions users AppDelegate for window
+         */
         if #available(iOS 13, *) {} else {
             // Setting window
             let window = UIWindow(frame: UIScreen.main.bounds)
             self.window = window
-            // Starting AppRouter
+            // Starting App with AppContainer
             let appRouter = AppContainer(window: window)
             appRouter.start()
         }
@@ -36,8 +39,6 @@ extension AppDelegate {
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        // Called when a new scene session is being created.
-        // Use this method to select a configuration to create the new scene with.
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
 }

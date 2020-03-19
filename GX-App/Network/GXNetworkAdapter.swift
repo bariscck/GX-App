@@ -21,6 +21,9 @@ final class GXNetworkAdapter<API: TargetType> {
     
     // MARK: PROPERTIES
     
+    /**
+     - Requests; container for all requests
+     */
     private var requests: [Cancellable] = []
     
     // MARK: MAIN
@@ -30,11 +33,12 @@ final class GXNetworkAdapter<API: TargetType> {
             switch result {
             case .success(let response):
                 do {
+                    // Map response to Decodable Object
                     let mappedResponse = try response.map(Model.self)
+                    
                     completion(.success(mappedResponse))
                 } catch {
                     completion(.failure(error))
-                    print(error.localizedDescription)
                 }
             case .failure(let error):
                 completion(.failure(error))
@@ -44,6 +48,9 @@ final class GXNetworkAdapter<API: TargetType> {
         requests.append(request)
     }
     
+    /**
+     - We can cancel all active requests with this method
+     */
     func cancelAllRequests() {
         requests.forEach({ $0.cancel() })
     }
