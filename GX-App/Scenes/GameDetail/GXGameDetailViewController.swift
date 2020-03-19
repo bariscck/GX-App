@@ -126,8 +126,9 @@ final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
             self.favouriteState = isFavourite ? .favorited : .notFavorited
         }
         
-        viewModel.outputs.didReceiveServiceErrorNotifier = { serviceError in
-            print(serviceError)
+        viewModel.outputs.didReceiveServiceErrorNotifier = { [weak self] serviceError in
+            guard case let .serverError(error) = serviceError else { return }
+            self?.presentInfoAlert(title: error.localizedDescription)
         }
     }
     
