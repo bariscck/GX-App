@@ -69,11 +69,11 @@ final class GXGamesRemoteRepository: GXGamesRepositoryType {
                     strongSelf._normalNextPageURL = response.next
                 }
                 
-                guard response.results.count > 0 else {
+                guard let results = response.results, results.count > 0 else {
                     return completion(.success([]))
                 }
                 
-                let entities: [GXGameEntity] = response.results.map(GXGameEntity.init(gameResponse:))
+                let entities: [GXGameEntity] = results.map(GXGameEntity.init(gameResponse:))
                 completion(.success(entities))
             case .failure(let error):
                 completion(.failure(.serverError(error)))

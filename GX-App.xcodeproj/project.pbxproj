@@ -42,6 +42,7 @@
 		237396B7242361B100C1DCB4 /* GXFavouritesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237396B6242361B100C1DCB4 /* GXFavouritesRepository.swift */; };
 		237396BA2423633100C1DCB4 /* GXFavouritesLocalRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237396B92423633100C1DCB4 /* GXFavouritesLocalRepository.swift */; };
 		237396BD242363C600C1DCB4 /* GXFavouritesMockRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237396BC242363C600C1DCB4 /* GXFavouritesMockRepository.swift */; };
+		237396C2242374B000C1DCB4 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237396C1242374B000C1DCB4 /* Array+Extensions.swift */; };
 		23B835ED24223C0A004AA241 /* GXStorageContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B835EC24223C0A004AA241 /* GXStorageContext.swift */; };
 		23B835F124223C65004AA241 /* GXRealmStorageContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B835F024223C65004AA241 /* GXRealmStorageContext.swift */; };
 		23BDF0052420D8D30055C3B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF0042420D8D30055C3B9 /* AppDelegate.swift */; };
@@ -107,6 +108,7 @@
 		237396B6242361B100C1DCB4 /* GXFavouritesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXFavouritesRepository.swift; sourceTree = "<group>"; };
 		237396B92423633100C1DCB4 /* GXFavouritesLocalRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXFavouritesLocalRepository.swift; sourceTree = "<group>"; };
 		237396BC242363C600C1DCB4 /* GXFavouritesMockRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXFavouritesMockRepository.swift; sourceTree = "<group>"; };
+		237396C1242374B000C1DCB4 /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		23B835EC24223C0A004AA241 /* GXStorageContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXStorageContext.swift; sourceTree = "<group>"; };
 		23B835F024223C65004AA241 /* GXRealmStorageContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXRealmStorageContext.swift; sourceTree = "<group>"; };
 		23BDF0012420D8D30055C3B9 /* GameX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameX.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -193,6 +195,7 @@
 				2365EEDA242106A400A70EE7 /* UILabel+Extensions.swift */,
 				2365EEFC2421255A00A70EE7 /* Bundle+Extensions.swift */,
 				23CAA753242168E00007D2FA /* UICollectionView+Extensions.swift */,
+				237396C1242374B000C1DCB4 /* Array+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -670,6 +673,7 @@
 				236D92A7242262F10095966F /* GXGameDetailEntity.swift in Sources */,
 				2365A8F12420F66C00F48D9C /* GXGameHeaderView.swift in Sources */,
 				2365A8F72420FADA00F48D9C /* GXFeedbackGenerator.swift in Sources */,
+				237396C2242374B000C1DCB4 /* Array+Extensions.swift in Sources */,
 				23F521B324220A0500AE157E /* GXGamesLocalRepository.swift in Sources */,
 				23B835ED24223C0A004AA241 /* GXStorageContext.swift in Sources */,
 				23BDF0052420D8D30055C3B9 /* AppDelegate.swift in Sources */,

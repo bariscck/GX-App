@@ -46,22 +46,28 @@ final class GXGamesRepository: GXGamesRepositoryType {
     // MARK: REPOSITORY
     
     func fetchGameList(query: String?, completion: @escaping (Result<[GXGameEntity], GXGameServiceError>) -> Void) {
-        // Fetching from local
-        localRepository.fetchGameList(query: query) { [weak self] (result) in
-            guard let strongSelf = self else { return }
-            // Displaying local results if remote doesnt have next page
-            if strongSelf.remoteHasNextPage == false {
-                completion(result)
-            }
+        
+        if let query = query {
             // Fetching from remote
-            strongSelf.remoteRepository.fetchGameList(query: query, completion: { (result) in
-                // Updating local results if its not have query and result is successful
-                if query == nil, case .success(let response) = result {
-                    try! strongSelf.storageContext.save(response, update: true)
+            remoteRepository.fetchGameList(query: query, completion: completion)
+        } else {
+            // Fetching from local
+            localRepository.fetchGameList(query: query) { [weak self] (result) in
+                guard let strongSelf = self else { return }
+                // Displaying local results if remote doesnt have next page
+                if strongSelf.remoteHasNextPage == false {
+                    completion(result)
                 }
-                // Displaying updated data
-                completion(result)
-            })
+                // Fetching from remote
+                strongSelf.remoteRepository.fetchGameList(query: query, completion: { (result) in
+                    // Updating local results if result is successful
+                    if case .success(let response) = result {
+                        try! strongSelf.storageContext.save(response, update: true)
+                    }
+                    // Displaying updated data
+                    completion(result)
+                })
+            }
         }
     }
     

@@ -28,7 +28,7 @@ final class GXGamesMockRepository: GXGamesRepositoryType {
         }
         
         let response = Bundle.main.decode(GXGameListResponse.self, from: "gamelist-response.json")
-        let entities = response.results.map(GXGameEntity.init(gameResponse:))
+        let entities = response.results?.map(GXGameEntity.init(gameResponse:)) ?? []
         
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             completion(.success(entities))

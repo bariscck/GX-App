@@ -11,7 +11,7 @@ import Foundation
 protocol GXGameListViewModelInputs {
     func viewDidLoaded()
     func viewWillAppeared()
-    func fetchGameList()
+    func fetchGameList(isSearch: Bool)
     func setDisplayingIndex(index: Int)
     func setSearchActive(isActive: Bool)
     func setSearchQuery(query: String?)
@@ -56,7 +56,8 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     private var currentlyDisplayingIndex: Int = 0 {
         didSet {
             if currentlyDisplayingIndex == displayedPresentations.count - 1 {
-                fetchGameList()
+                fetchGameList(isSearch: isSearchActive)
+                
             }
         }
     }
@@ -68,17 +69,18 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
             reloadNotifier()
         }
     }
-    private var isLoading: Bool = false {
-        didSet {
-            reloadNotifier()
-        }
-    }
+    
+    private var isLoading: Bool = false
     
     private var searchQuery: String? {
         didSet {
+            defer {
+                if searchQuery != oldValue {
+                    reloadNotifier()
+                }
+            }
             guard let searchQuery = searchQuery, searchQuery.count > 3 else {
                 _searchedPresentationsResults = []
-                reloadNotifier()
                 return
             }
         }
@@ -106,20 +108,19 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     // MARK: INPUTS
     
     func viewDidLoaded() {
-        fetchGameList()
+        setSearchActive(isActive: false)
+        fetchGameList(isSearch: false)
     }
     
     func viewWillAppeared() {
         reloadNotifier()
     }
     
-    func fetchGameList() {
+    func fetchGameList(isSearch: Bool) {
         guard isLoading == false else { return }
         
-        let query = searchQuery?.trimmingCharacters(in: .whitespacesAndNewlines)
-        
-        if let query = query {
-            guard query.count > 3 else {
+        if isSearch {
+            guard (searchQuery ?? "").count > 3 else {
                 return
             }
         }
@@ -135,7 +136,9 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
                 
                 let presentations = entities.map(GXGamePresentation.init(entity:))
                 
-                if let query = query, query.count > 3 {
+                print(presentations.map { $0.title })
+                
+                if isSearch {
                     strongSelf._searchedPresentationsResults.append(contentsOf: presentations)
                 } else {
                     strongSelf._gamePresentationsResults.append(contentsOf: presentations)
@@ -156,7 +159,7 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     }
     
     func setSearchQuery(query: String?) {
-        searchQuery = query
+        searchQuery = query?.trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
     // MARK: OUTPUTS
@@ -179,17 +182,4 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
         return item
     }
     
-    // MARK: HELPERS
-    
-//    private func checkIsSearching(for query: String?) -> Bool {
-//        return (query ?? "").trimmingCharacters(in: .whitespacesAndNewlines).count > 0
-//    }
-    
-}
-
-extension Sequence where Iterator.Element: Hashable {
-    func unique() -> [Iterator.Element] {
-        var seen: Set<Iterator.Element> = []
-        return filter { seen.insert($0).inserted }
-    }
 }

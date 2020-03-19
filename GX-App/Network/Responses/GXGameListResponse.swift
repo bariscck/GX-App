@@ -9,10 +9,10 @@
 import Foundation
 
 struct GXGameListResponse: Decodable {
-    let count: Int
+    let count: Int?
     let next: URL?
     let previous: String?
-    let results: [GXGameResponse]
+    let results: [GXGameResponse]?
 }
 
 struct GXGameResponse: Decodable {
