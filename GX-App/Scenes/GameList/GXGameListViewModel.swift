@@ -10,6 +10,7 @@ import Foundation
 
 protocol GXGameListViewModelInputs {
     func viewDidLoaded()
+    func viewWillAppeared()
     func fetchGameList()
     func setDisplayingIndex(index: Int)
     func setSearchActive(isActive: Bool)
@@ -67,7 +68,12 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
             reloadNotifier()
         }
     }
-    private var isLoading: Bool = false
+    private var isLoading: Bool = false {
+        didSet {
+            reloadNotifier()
+        }
+    }
+    
     private var searchQuery: String? {
         didSet {
             guard let searchQuery = searchQuery, searchQuery.count > 3 else {
@@ -103,6 +109,10 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
         fetchGameList()
     }
     
+    func viewWillAppeared() {
+        reloadNotifier()
+    }
+    
     func fetchGameList() {
         guard isLoading == false else { return }
         
@@ -121,6 +131,8 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
             
             switch result {
             case .success(let entities):
+                strongSelf.isLoading = false
+                
                 let presentations = entities.map(GXGamePresentation.init(entity:))
                 
                 if let query = query, query.count > 3 {
@@ -128,9 +140,6 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
                 } else {
                     strongSelf._gamePresentationsResults.append(contentsOf: presentations)
                 }
-                
-                strongSelf.isLoading = false
-                strongSelf.reloadNotifier()
             case .failure(let error):
                 strongSelf.isLoading = false
                 strongSelf.didReceiveServiceErrorNotifier(error)
@@ -167,15 +176,14 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
         let item = displayedPresentations[index]
         viewedGamePresentationIds.update(with: item.id)
         item.setViewed()
-        reloadNotifier()
         return item
     }
     
     // MARK: HELPERS
     
-    private func checkIsSearching(for query: String?) -> Bool {
-        return (query ?? "").trimmingCharacters(in: .whitespacesAndNewlines).count > 0
-    }
+//    private func checkIsSearching(for query: String?) -> Bool {
+//        return (query ?? "").trimmingCharacters(in: .whitespacesAndNewlines).count > 0
+//    }
     
 }
 

@@ -21,10 +21,6 @@ final class GXGameDetailEntity: Object {
         return "id"
     }
     
-    var owner: GXGameEntity? {
-        return realm?.object(ofType: GXGameEntity.self, forPrimaryKey: id)
-    }
-    
     convenience init(detailResponse: GXGameResponse) {
         self.init()
         id = detailResponse.id

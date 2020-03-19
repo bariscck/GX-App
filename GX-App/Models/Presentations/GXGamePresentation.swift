@@ -38,18 +38,13 @@ final class GXGamePresentation {
         genresText = entity.genres.map { $0.name }.joined(separator: ", ")
     }
     
-}
-
-extension GXGamePresentation {
-    convenience init?(detailEntity: GXGameDetailEntity) {
-        guard let owner = detailEntity.owner else {
-            return nil
-        }
-        self.init(entity: owner)
-        description = detailEntity.descriptionTextRaw ?? "No description."
+    func update(with detailEntity: GXGameDetailEntity) {
+        let description = detailEntity.descriptionTextRaw ?? ""
+        self.description = description.count > 0 ? description : "No description provided for this game."
         redditLink = Link(type: .reddit, url: URL(string: detailEntity.reddit ?? ""))
         websiteLink = Link(type: .website, url: URL(string: detailEntity.website ?? ""))
     }
+    
 }
 
 extension GXGamePresentation: Hashable {

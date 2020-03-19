@@ -83,9 +83,8 @@ final class GXGameDetailViewModel: GXGameDetailViewModelType, GXGameDetailViewMo
             switch result {
             case .success(let entity):
                 guard let entity = entity else { return }
-                guard let presentation = GXGamePresentation.init(detailEntity: entity) else {
-                    return
-                }
+                let presentation = strongSelf.currentPresentation
+                presentation.update(with: entity)
                 strongSelf.isLoading = false
                 strongSelf.currentPresentation = presentation
             case .failure(let error):

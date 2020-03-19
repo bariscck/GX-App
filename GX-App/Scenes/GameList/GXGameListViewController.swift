@@ -57,6 +57,11 @@ final class GXGameListViewController: UIViewController {
         viewModel.inputs.viewDidLoaded()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.inputs.viewWillAppeared()
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         collectionView.collectionViewLayout.invalidateLayout()
