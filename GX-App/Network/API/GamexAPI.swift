@@ -16,17 +16,18 @@ enum GameXAPI {
 
 extension GameXAPI: TargetType {
     var baseURL: URL {
-        let defaultURL = URL(string: "https://api.rawg.io/api/games")!
-        
+        let baseURLString = Bundle.main.loadConfig(for: .serverURL) + "games"
+        let baseURL = URL(string: baseURLString)!
+        print(baseURL)
         switch self {
         case .games(_, let nextURL):
             if let nextURL = nextURL {
                 return nextURL
             } else {
-                return defaultURL
+                return baseURL
             }
         default:
-            return defaultURL
+            return baseURL
         }
     }
     

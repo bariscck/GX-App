@@ -9,6 +9,24 @@
 import Foundation
 
 extension Bundle {
+    
+    enum ConfigType: String {
+        case serverURL = "SERVER_URL"
+    }
+    
+    func loadConfig(for type: ConfigType) -> String {
+        guard let path = Bundle.main.path(forResource: "Info", ofType: "plist") else {
+            fatalError("Info.plist is not found.")
+        }
+        guard
+            let dict = NSDictionary(contentsOfFile: path),
+            let config = dict[type.rawValue] as? String
+        else {
+            fatalError("Error: Info.plist is not contains \(type.rawValue)")
+        }
+        return config
+    }
+    
     func decode<T: Decodable>(_ type: T.Type, from file: String,
                               dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .deferredToDate,
                               keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys) -> T {
