@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import GX_App
+@testable import GameX
 
 class GX_AppTests: XCTestCase {
 

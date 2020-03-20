@@ -31,6 +31,19 @@ final class GXGameListViewController: UIViewController, GXAlertPresenter {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: PROPERTIES
+    
+    private var navigationTitle: String {
+        get {
+            switch viewState {
+            case .gameList:
+                return "Games"
+            case .favourites:
+                return "Favourites"
+            }
+        }
+    }
+    
     // MARK: VIEWS
     
     @IBOutlet weak var tableView: UITableView! {
@@ -72,24 +85,25 @@ final class GXGameListViewController: UIViewController, GXAlertPresenter {
     }
     
     private func setupNavigationItem(for state: GXGameListViewState) {
-        switch state {
-        case .gameList:
-            navigationItem.title = "Games"
+        navigationItem.title = navigationTitle
+        navigationItem.largeTitleDisplayMode = .automatic
+        
+        if state == .gameList {
             navigationItem.searchController = searchController
             navigationItem.hidesSearchBarWhenScrolling = false
-        case .favourites:
-            navigationItem.title = "Favourites"
         }
-        
-        navigationItem.largeTitleDisplayMode = .automatic
     }
     
     private func setupVMBindings() {
         viewModel.outputs.reloadNotifier = { [unowned self] in
             if self.viewState == .favourites {
-                if self.viewModel.outputs.numberOfItems() == 0 {
+                let numberOfItems = self.viewModel.outputs.numberOfItems()
+                
+                if numberOfItems == 0 {
+                    self.navigationItem.title = self.navigationTitle
                     self.tableView.emptyMessage(message: "There is no favourites found.")
                 } else {
+                    self.navigationItem.title = self.navigationTitle + " (\(numberOfItems))"
                     self.tableView.restore()
                 }
             }
