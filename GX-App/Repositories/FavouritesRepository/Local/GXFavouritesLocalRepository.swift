@@ -50,7 +50,7 @@ final class GXFavouritesLocalRepository: GXFavouritesRepositoryType {
             }
             if let entity = entity {
                 try! strongSelf.storageContext.update {
-                    entity.games.append(game)
+                    entity.games.insert(game, at: 0)
                 }
             } else {
                 let entity = GXGameListEntity(type: .favourite, games: [game])

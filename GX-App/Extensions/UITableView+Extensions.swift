@@ -39,3 +39,24 @@ extension UITableView {
     }
     
 }
+
+extension UITableView {
+    
+    func emptyMessage(message: String) {
+
+        let rect = CGRect(origin: CGPoint(x: 0, y: 0), size: bounds.size)
+        let messageLabel = UILabel(frame: rect)
+        messageLabel.text = message
+        messageLabel.numberOfLines = 0
+        messageLabel.textAlignment = .center
+        messageLabel.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+        messageLabel.sizeToFit()
+
+        backgroundView = messageLabel
+    }
+    
+    func restore() {
+        backgroundView = nil
+    }
+    
+}

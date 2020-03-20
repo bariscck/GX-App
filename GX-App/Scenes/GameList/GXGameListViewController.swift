@@ -85,7 +85,14 @@ final class GXGameListViewController: UIViewController, GXAlertPresenter {
     }
     
     private func setupVMBindings() {
-        viewModel.outputs.reloadNotifier = {
+        viewModel.outputs.reloadNotifier = { [unowned self] in
+            if self.viewState == .favourites {
+                if self.viewModel.outputs.numberOfItems() == 0 {
+                    self.tableView.emptyMessage(message: "There is no favourites found.")
+                } else {
+                    self.tableView.restore()
+                }
+            }
             DispatchQueue.main.async { [weak self] in
                 self?.tableView.reloadData()
             }
@@ -98,20 +105,15 @@ final class GXGameListViewController: UIViewController, GXAlertPresenter {
     }
     
     private func presentRemoveFavouriteAlert(for presentation: GXGamePresentation, index: Int) {
-        let alertController = UIAlertController(title: "Are you sure?",
-                                                message: "\(presentation.title) is removing your favourites",
-                                                preferredStyle: .alert)
-        
         let removeAction = UIAlertAction(title: "Remove", style: .destructive) { [weak self] (act) in
             self?.viewModel.inputs.removeFavourite(index: index)
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
-        alertController.addAction(removeAction)
-        alertController.addAction(cancelAction)
+        presentAlert(title: "Are you sure", message: "\(presentation.title) is removing your favourites",
+                     actions: [removeAction, cancelAction])
         
-        present(alertController, animated: true)
     }
 
 }
@@ -168,6 +170,12 @@ extension GXGameListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         let query = searchController.searchBar.text ?? ""
         viewModel.inputs.setSearchQuery(query: query)
+        
+        if viewModel.outputs.numberOfItems() == 0, (query.count >= 0 && query.count < 3) {
+            tableView.emptyMessage(message: "No game has been searched.")
+        } else {
+            tableView.restore()
+        }
     }
     
 }

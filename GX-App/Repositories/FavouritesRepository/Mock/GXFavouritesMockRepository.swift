@@ -27,7 +27,7 @@ final class GXFavouritesMockRepository: GXFavouritesRepositoryType {
     }
     
     func addFavourite(game: GXGameEntity, completion: @escaping () -> Void) {
-        favourites.append(game)
+        favourites.insert(game, at: 0)
         completion()
     }
     
