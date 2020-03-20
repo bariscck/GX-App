@@ -13,6 +13,7 @@ enum GXGameServiceError: Error {
     case serverError(Error)
     case queryLimitError
     case decodableError
+    case connectionError
 }
 
 protocol GXGamesRepositoryType {
