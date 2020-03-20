@@ -97,7 +97,7 @@ final class GXGameListViewController: UIViewController, GXAlertPresenter {
     private func setupVMBindings() {
         viewModel.outputs.reloadNotifier = { [unowned self] in
             if self.viewState == .favourites {
-                let numberOfItems = self.viewModel.outputs.numberOfItems()
+                let numberOfItems = self.viewModel.outputs.numberOfItems
                 
                 if numberOfItems == 0 {
                     self.navigationItem.title = self.navigationTitle
@@ -135,15 +135,16 @@ final class GXGameListViewController: UIViewController, GXAlertPresenter {
 extension GXGameListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.outputs.numberOfItems()
+        return viewModel.outputs.numberOfItems
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeue(cellClass: GXGameListCell.self, forIndexPath: indexPath)
         cell.selectionStyle = .none
         
-        let presentation = viewModel.outputs.itemForIndex(indexPath.row)
-        cell.setup(with: presentation, updateBackgroundColor: viewState == .gameList)
+        if let presentation = viewModel.outputs.itemForIndex(indexPath.row) {
+            cell.setup(with: presentation, updateBackgroundColor: viewState == .gameList)
+        }
         
         return cell
     }
@@ -164,9 +165,11 @@ extension GXGameListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            presentRemoveFavouriteAlert(for: viewModel.outputs.itemForIndex(indexPath.row), index: indexPath.row)
+        
+        guard editingStyle == .delete, let presentation = viewModel.outputs.itemForIndex(indexPath.item) else {
+            return
         }
+        presentRemoveFavouriteAlert(for: presentation, index: indexPath.row)
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
@@ -185,7 +188,7 @@ extension GXGameListViewController: UISearchResultsUpdating {
         let query = searchController.searchBar.text ?? ""
         viewModel.inputs.setSearchQuery(query: query)
         
-        if viewModel.outputs.numberOfItems() == 0, (query.count >= 0 && query.count < 3) {
+        if viewModel.outputs.numberOfItems == 0, (query.count >= 0 && query.count < 3) {
             tableView.emptyMessage(message: "No game has been searched.")
         } else {
             tableView.restore()
@@ -197,7 +200,7 @@ extension GXGameListViewController: UISearchResultsUpdating {
 extension GXGameListViewController: UISearchBarDelegate {
         
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        viewModel.inputs.fetchGameList(isSearch: true)
+        viewModel.inputs.fetchGameList()
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {

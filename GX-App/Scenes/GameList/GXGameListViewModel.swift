@@ -11,7 +11,7 @@ import Foundation
 protocol GXGameListViewModelInputs {
     func viewDidLoaded()
     func viewWillAppeared()
-    func fetchGameList(isSearch: Bool)
+    func fetchGameList()
     func fetchFavouriteList()
     func setDisplayingIndex(index: Int)
     func setSearchActive(isActive: Bool)
@@ -22,8 +22,8 @@ protocol GXGameListViewModelInputs {
 protocol GXGameListViewModelOutputs {
     var reloadNotifier: () -> Void { get set }
     var didReceiveServiceErrorNotifier: (GXGameServiceError) -> Void { get set }
-    func numberOfItems() -> Int
-    func itemForIndex(_ index: Int) -> GXGamePresentation
+    var numberOfItems: Int { get }
+    func itemForIndex(_ index: Int) -> GXGamePresentation?
     func selectedItemForIndex(_ index: Int) -> GXGamePresentation
 }
 
@@ -64,7 +64,7 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     private var currentlyDisplayingIndex: Int = 0 {
         didSet {
             if currentlyDisplayingIndex == displayedPresentations.count - 1 {
-                fetchGameList(isSearch: isSearchActive)
+                fetchGameList()
             }
         }
     }
@@ -133,7 +133,7 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
         
         switch viewState {
         case .gameList:
-            fetchGameList(isSearch: false)
+            fetchGameList()
         case .favourites:
             fetchFavouriteList()
         }
@@ -149,10 +149,10 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
         }
     }
     
-    func fetchGameList(isSearch: Bool) {
+    func fetchGameList() {
         guard isLoading == false else { return }
         
-        if isSearch {
+        if isSearchActive {
             // Trim query characters for whitespaces
             let trimmedQuery = searchQuery?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
             // Check query count is valid. Count must be at least 4
@@ -173,7 +173,7 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
                     return // TODO: SHOW NO RESULTS FOUND
                 }
                 
-                if isSearch {
+                if strongSelf.isSearchActive {
                     strongSelf._searchedPresentationsResults.append(contentsOf: presentations)
                     strongSelf._searchedNextURL = entity?.nextURL
                 } else {
@@ -226,11 +226,14 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     var reloadNotifier: () -> Void = {}
     var didReceiveServiceErrorNotifier: (GXGameServiceError) -> Void = {_ in}
     
-    func numberOfItems() -> Int {
+    var numberOfItems: Int {
         return displayedPresentations.count
     }
     
-    func itemForIndex(_ index: Int) -> GXGamePresentation {
+    func itemForIndex(_ index: Int) -> GXGamePresentation? {
+        guard index < displayedPresentations.count else {
+            return nil
+        }
         return displayedPresentations[index]
     }
     

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		234151DD2424EBB800CC0253 /* GXGameListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234151DC2424EBB800CC0253 /* GXGameListViewModelTests.swift */; };
+		234151DF2424FACA00CC0253 /* GXGameDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234151DE2424FACA00CC0253 /* GXGameDetailViewModelTests.swift */; };
 		2365A8D02420DCE700F48D9C /* GXGameListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2365A8CE2420DCE700F48D9C /* GXGameListViewController.swift */; };
 		2365A8D12420DCE700F48D9C /* GXGameListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2365A8CF2420DCE700F48D9C /* GXGameListViewController.xib */; };
 		2365A8D32420DCFE00F48D9C /* GXGameListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2365A8D22420DCFE00F48D9C /* GXGameListViewModel.swift */; };
@@ -78,6 +80,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		234151DC2424EBB800CC0253 /* GXGameListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXGameListViewModelTests.swift; sourceTree = "<group>"; };
+		234151DE2424FACA00CC0253 /* GXGameDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXGameDetailViewModelTests.swift; sourceTree = "<group>"; };
 		2365A8CE2420DCE700F48D9C /* GXGameListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXGameListViewController.swift; sourceTree = "<group>"; };
 		2365A8CF2420DCE700F48D9C /* GXGameListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GXGameListViewController.xib; sourceTree = "<group>"; };
 		2365A8D22420DCFE00F48D9C /* GXGameListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXGameListViewModel.swift; sourceTree = "<group>"; };
@@ -391,6 +395,8 @@
 			isa = PBXGroup;
 			children = (
 				23BDF01B2420D8D40055C3B9 /* GX_AppTests.swift */,
+				234151DC2424EBB800CC0253 /* GXGameListViewModelTests.swift */,
+				234151DE2424FACA00CC0253 /* GXGameDetailViewModelTests.swift */,
 				23BDF01D2420D8D40055C3B9 /* Info.plist */,
 			);
 			path = "GX-AppTests";
@@ -729,6 +735,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				234151DF2424FACA00CC0253 /* GXGameDetailViewModelTests.swift in Sources */,
+				234151DD2424EBB800CC0253 /* GXGameListViewModelTests.swift in Sources */,
 				23BDF01C2420D8D40055C3B9 /* GX_AppTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -930,7 +938,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GX-App.app/GX-App";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GameX.app/GameX";
 			};
 			name = Debug;
 		};
@@ -953,7 +961,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GX-App.app/GX-App";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GameX.app/GameX";
 			};
 			name = Release;
 		};

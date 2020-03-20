@@ -21,17 +21,27 @@ final class GXGamesMockRepository: GXGamesRepositoryType {
     // MARK: REPOSITORY
     
     func fetchGameList(query: String?, nextURL: URL?, completion: @escaping (Result<GXGameListEntity?, GXGameServiceError>) -> Void) {
+        let response = Bundle.main.decode(GXGameListResponse.self, from: "gamelist-response.json")
+        var games: [GXGameResponse]?
+        
         if let query = query {
-            guard query.count > 3 else {
-                return completion(.failure(.queryLimitError))
-            }
+            let filteredGames = response.results?.filter({
+                $0.name.lowercased().contains(query.lowercased())
+            })
+            games = filteredGames
+        } else {
+            games = response.results
         }
         
-        let response = Bundle.main.decode(GXGameListResponse.self, from: "gamelist-response.json")
-        let entity = GXGameListEntity(gameListResponse: response, type: .list)
+        let mappedGames = games?.map(GXGameEntity.init(gameResponse:))
+        let result = GXGameListEntity(type: .list, games: mappedGames ?? [])
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-            completion(.success(entity))
+        if delay > 0 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                completion(.success(result))
+            }
+        } else {
+            completion(.success(result))
         }
     }
     
