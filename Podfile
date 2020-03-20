@@ -7,7 +7,7 @@ target 'GX-App' do
 
   # Pods for GX-App
 	
-    pod 'Moya'
+    	pod 'Moya'
 	pod 'Kingfisher'
 	pod 'RealmSwift'
 
