@@ -63,6 +63,53 @@ final class GXGameListViewModelTests: XCTestCase {
         
     }
     
+    func testFetchGameListWithSearchingScenario() throws {
+        // GIVEN
+        XCTAssertTrue(viewModel.outputs.numberOfItems == 0)
+        
+        // WHEN
+        viewModel.inputs.fetchGameList()
+        
+        // THEN
+        XCTAssertTrue(viewModel.outputs.numberOfItems > 0)
+        let fetchedItem = viewModel.outputs.itemForIndex(0)
+        XCTAssertNotNil(fetchedItem)
+        
+        // WHEN
+        viewModel.inputs.setSearchActive(isActive: true)
+        
+        // THEN
+        XCTAssertTrue(viewModel.outputs.numberOfItems == 0)
+        
+        // GIVEN
+        viewModel.inputs.setSearchQuery(query: "portal")
+        
+        // WHEN
+        viewModel.inputs.fetchGameList()
+        
+        // THEN
+        XCTAssertTrue(viewModel.outputs.numberOfItems > 0)
+        let searchedItem = viewModel.outputs.itemForIndex(0)
+        XCTAssertNotNil(searchedItem)
+        
+        // GIVEN
+        viewModel.inputs.setSearchQuery(query: "askjafakjsfk :))")
+        XCTAssertTrue(viewModel.outputs.numberOfItems == 0)
+        
+        // WHEN
+        viewModel.inputs.fetchGameList()
+        
+        // THEN
+        XCTAssertTrue(viewModel.outputs.numberOfItems == 0)
+        
+        // WHEN
+        viewModel.inputs.setSearchActive(isActive: false)
+        
+        // THEN --> This must be 10 because we fetched before game list without searching
+        XCTAssertTrue(viewModel.outputs.numberOfItems == 10)
+        
+    }
+    
     func testFetchFavourites() throws {
         viewModel = GXGameListViewModel(viewState: .favourites, dependency: .init(gamesRepository: gamesRepository,
                                                                                   favouritesRepository: favouritesRepository))
