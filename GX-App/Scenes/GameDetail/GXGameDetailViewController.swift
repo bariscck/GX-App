@@ -91,7 +91,6 @@ final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateHeaderViewFrame()
-        tableView.performBatchUpdates(nil)
     }
     
     private func setupNavigationItem() {
