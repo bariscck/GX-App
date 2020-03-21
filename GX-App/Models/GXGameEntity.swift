@@ -47,10 +47,6 @@ final class GXGenreEntity: Object {
     @objc dynamic private(set) var id: Int = 0
     @objc dynamic private(set) var name: String = ""
     
-    override class func primaryKey() -> String? {
-        return "id"
-    }
-    
     convenience init(id: Int, name: String) {
         self.init()
         self.id = id
