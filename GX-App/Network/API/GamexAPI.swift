@@ -16,9 +16,9 @@ enum GameXAPI {
 
 extension GameXAPI: TargetType {
     var baseURL: URL {
-        let baseURLString = Bundle.main.loadConfig(for: .serverURL) + "games"
+        let baseURLString = GXConfigs.loadConfig(type: .serverURL) + "games"
         let baseURL = URL(string: baseURLString)!
-        print(baseURL)
+        
         switch self {
         case .games(_, let nextURL):
             if let nextURL = nextURL {
