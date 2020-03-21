@@ -91,6 +91,7 @@ final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateHeaderViewFrame()
+        tableView.performBatchUpdates(nil)
     }
     
     private func setupNavigationItem() {
@@ -106,7 +107,7 @@ final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
     }
     
     private func updateHeaderViewFrame() {
-        var headerFrame = CGRect(x: 0, y: -headerHeight, width: view.bounds.width, height: headerHeight)
+        var headerFrame = CGRect(x: 0, y: -headerHeight, width: tableView.bounds.width, height: headerHeight)
         
         if tableView.contentOffset.y < headerHeight {
             headerFrame.origin.y = tableView.contentOffset.y
