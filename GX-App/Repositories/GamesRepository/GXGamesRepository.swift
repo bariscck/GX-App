@@ -83,6 +83,10 @@ final class GXGamesRepository: GXGamesRepositoryType {
             guard let strongSelf = self else { return }
             // Displaying local result
             completion(result)
+            
+            // If local response is enough (data is static) uncomment next method
+            //guard case .success(let response) = result, response == nil else { return }
+            
             // Fetching from remote
             strongSelf.remoteRepository.fetchGameDetail(gameId: gameId, completion: { (result) in
                 // Updating local result if success and result is not empty

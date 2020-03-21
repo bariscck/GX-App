@@ -66,22 +66,11 @@ final class GXGameDetailViewModel: GXGameDetailViewModelType, GXGameDetailViewMo
         get { return self } set {}
     }
     
-    var currentPresentation: GXGamePresentation {
-        didSet {
-            presentationFetchedNotifier(currentPresentation)
-            reloadNotifier()
-        }
-    }
-    
     // MARK: INPUTS
     
     func viewDidLoaded() {
+        checkIsInFavourite()
         fetchGameDetail()
-        
-        dependency.favouritesRepository.checkIsFavourited(id: currentPresentation.id) { [weak self] (isFavourited) in
-            print(isFavourited)
-            self?.isInFavouriteNotifier(isFavourited)
-        }
     }
     
     func fetchGameDetail() {
@@ -119,6 +108,13 @@ final class GXGameDetailViewModel: GXGameDetailViewModelType, GXGameDetailViewMo
     
     // MARK: OUTPUTS
     
+    var currentPresentation: GXGamePresentation {
+        didSet {
+            presentationFetchedNotifier(currentPresentation)
+            reloadNotifier()
+        }
+    }
+    
     var reloadNotifier: () -> Void = {}
     var isInFavouriteNotifier: (Bool) -> Void = {_ in}
     var presentationFetchedNotifier: (GXGamePresentation) -> Void = {_ in}
@@ -133,6 +129,14 @@ final class GXGameDetailViewModel: GXGameDetailViewModelType, GXGameDetailViewMo
             fatalError("Error: \(GXGameDetailTableLayoutItems.self) does not contain index: \(index)")
         }
         return item
+    }
+    
+    // MARK: HELPERS
+    
+    private func checkIsInFavourite() {
+        dependency.favouritesRepository.checkIsFavourited(id: currentPresentation.id) { [weak self] (isFavourited) in
+            self?.isInFavouriteNotifier(isFavourited)
+        }
     }
     
 }
