@@ -47,7 +47,9 @@ final class GXGameDetailViewController: UIViewController, GXAlertPresenter {
             favouriteBtn.tintColor = favouriteState == .favorited ? .gray : view.tintColor
         }
     }
-    private let headerHeight: CGFloat = 290
+    private var headerHeight: CGFloat {
+        return UIScreen.main.bounds.height / 2.8
+    }
     
     // MARK: VIEWS
     
