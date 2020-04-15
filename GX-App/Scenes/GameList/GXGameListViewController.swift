@@ -33,6 +33,8 @@ final class GXGameListViewController: UIViewController, GXAlertPresenter {
     
     // MARK: PROPERTIES
     
+    private let paginationDistance: CGFloat = 200
+    
     private var navigationTitle: String {
         get {
             switch viewState {
@@ -149,13 +151,6 @@ extension GXGameListViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if viewState == .gameList {
-            // Update viewmodel's displaying index for pagination
-            viewModel.inputs.setDisplayingIndex(index: indexPath.item)
-        }
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Generate feedback when item selected
         GXFeedbackGenerator.generate()
@@ -180,6 +175,18 @@ extension GXGameListViewController: UITableViewDataSource, UITableViewDelegate {
         return .none
     }
     
+}
+
+extension GXGameListViewController: UIScrollViewDelegate {
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint,
+                                   targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        guard viewState == .gameList else { return }
+        let distance = scrollView.contentSize.height - (targetContentOffset.pointee.y + scrollView.bounds.height)
+        
+        if distance < paginationDistance {
+            viewModel.inputs.fetchGameList()
+        }
+    }
 }
 
 extension GXGameListViewController: UISearchResultsUpdating {

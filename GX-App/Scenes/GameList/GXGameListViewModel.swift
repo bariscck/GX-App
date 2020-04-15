@@ -13,7 +13,6 @@ protocol GXGameListViewModelInputs {
     func viewWillAppeared()
     func fetchGameList()
     func fetchFavouriteList()
-    func setDisplayingIndex(index: Int)
     func setSearchActive(isActive: Bool)
     func setSearchQuery(query: String?)
     func removeFavourite(index: Int)
@@ -59,15 +58,6 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
     // MARK: PROPERTIES
     
     private var isLoading: Bool = false
-    
-    // Pagination for displaying index
-    private var currentlyDisplayingIndex: Int = 0 {
-        didSet {
-            if currentlyDisplayingIndex == displayedPresentations.count - 1 {
-                fetchGameList()
-            }
-        }
-    }
     
     /// Search Properties
     
@@ -200,10 +190,6 @@ final class GXGameListViewModel: GXGameListViewModelType, GXGameListViewModelInp
                 print(error.localizedDescription)
             }
         }
-    }
-    
-    func setDisplayingIndex(index: Int) {
-        currentlyDisplayingIndex = index
     }
     
     func setSearchActive(isActive: Bool) {
